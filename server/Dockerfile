@@ -11,7 +11,7 @@ RUN npm install
 COPY . .
 
 # Exponer el puerto 3000 (el puerto en el que se ejecutará la aplicación)
-EXPOSE 3000
+EXPOSE 3001
 
 EXPOSE 27017
 
