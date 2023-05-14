@@ -14,7 +14,7 @@
 #     ports:
 #       - '27017:27017'
 
-version: '3'
+version: "3"
 services:
   db:
     image: mongo
