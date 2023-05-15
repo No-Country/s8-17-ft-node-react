@@ -5,10 +5,9 @@ type Props = {};
 
 const Hero = (props: Props) => {
   return (
-    <div>
-      <h1>
-        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur
-        cupidatat.
+    <div className="flex flex-col items-center justify-center">
+      <h1 className="font-title text-center font-semibold text-5xl">
+        Lorem ipsum dolor sit amet, qui minim labore adipisicing
       </h1>
       <SearchBar />
     </div>
