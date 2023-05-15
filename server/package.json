@@ -1,5 +1,5 @@
 {
-  "name":"nc-s8-node-react-back",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
