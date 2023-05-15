@@ -6,9 +6,9 @@ export class UserRegisterDto {
   email: string;
 
   @IsNotEmpty()
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,{
-    message: 'Password too weak'
-  })
+//  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,{
+//    message: 'Password too weak'
+//  })
   password: string;
 
   @IsNotEmpty()
