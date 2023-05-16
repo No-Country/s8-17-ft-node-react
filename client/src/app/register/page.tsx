@@ -17,7 +17,7 @@ export default function Register() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     registerUser(form)
-      .then(res => res.status === 200)
+      .then(res => console.log(res))
       .then(() =>
         Swal.fire({
           title: "User registered succesfully!",

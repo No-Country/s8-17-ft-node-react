@@ -12,10 +12,8 @@ export const registerUser = async (newUser: UserRegister): Promise<any> => {
 };
 
 export const loginUser = async (user: UserAuth): Promise<any> => {
-  return await axios
-    .post(`${baseUrl}/api/auth/login`, {
-      email: user.email,
-      password: user.password
-    })
-    .then(res => console.log(res));
+  return await axios.post(`${baseUrl}/api/auth/login`, {
+    email: user.email,
+    password: user.password
+  });
 };

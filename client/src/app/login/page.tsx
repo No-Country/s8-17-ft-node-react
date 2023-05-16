@@ -3,8 +3,11 @@ import Image from "next/image";
 import useForm from "@/hooks/useForm";
 import { UserAuth } from "@/types";
 import { loginUser } from "@/api";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const { form, handleChange } = useForm<UserAuth>({
     email: "",
     password: ""
@@ -12,7 +15,18 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    loginUser(form);
+    loginUser(form)
+      .then(res => (document.cookie = `token=${res.data.token}`))
+      .then(() => {
+        router.push("/");
+      })
+      .catch(error =>
+        Swal.fire({
+          title: error.response.data.message,
+          icon: "error",
+          confirmButtonColor: "#FF8811"
+        })
+      );
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
