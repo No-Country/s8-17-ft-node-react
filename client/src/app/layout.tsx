@@ -1,3 +1,4 @@
+import { Footer } from "@/components";
 import "./globals.css";
 import { Poppins, Commissioner } from "next/font/google";
 
@@ -23,7 +24,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${comissioner.variable} ${poppins.variable}`}>{children}</body>
+      <body className={`${comissioner.variable} ${poppins.variable}`}>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
