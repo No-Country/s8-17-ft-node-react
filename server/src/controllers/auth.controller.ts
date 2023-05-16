@@ -3,6 +3,7 @@ import { UserService } from "../services/user.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
+import jwt from "jsonwebtoken";
 
 export class AuthController {
   constructor(private userService: UserService) {}
@@ -15,21 +16,36 @@ export class AuthController {
       return res.status(400).json(errors.map((err) => err.constraints));
     }
     try {
-        const existingUser = await this.userService.findByEmail(req.body.email);
-        if (existingUser) 
+        const user = await this.userService.findByEmail(req.body.email);
+        if (user)
             return res.status(400).json({ message: "User already exists" });
-        const user = await this.userService.register(req.body);
-        return res.status(200).json(user);
+        const newUser = await this.userService.register(req.body);
+        return res.status(200).json(newUser);
     } catch (error) {
         console.log(error);
         
         return res.status(500).json(error);
     }   
   }
-  auth(req, res) {
-    // auth logic
+  async auth(req: Request, res: Response): Promise<Response>{
+    try {
+    const user = await this.userService.findOne(res.locals.jwtPayload.id);
+    return res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
   }
-  login(req, res) {
-    // login logic
-  }
+  async login(req: Request, res: Response): Promise<Response>{
+    // if (!(req.body.email && req.body.password)) {
+    //   return res.status(400).json({ message: "Username and Password are required!" });
+    // }
+    try {
+      const response = await this.userService.login(req.body); 
+      return res.status(200).json(response);
+  }catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+  } 
+}
 }
