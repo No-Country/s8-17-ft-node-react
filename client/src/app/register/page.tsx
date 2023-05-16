@@ -1,10 +1,13 @@
 "use client";
-import { registerUser } from "@/Api";
+import { registerUser } from "@/api";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function Register() {
+  const router = useRouter();
   const { form, handleChange } = useForm<UserRegister>({
     name: "",
     email: "",
@@ -13,9 +16,26 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerUser(form);
+    registerUser(form)
+      .then(res => res.status === 200)
+      .then(() =>
+        Swal.fire({
+          title: "User registered succesfully!",
+          icon: "success",
+          iconColor: "#FF8811",
+          confirmButtonColor: "#FF8811"
+        }).then(() => {
+          router.push("/");
+        })
+      )
+      .catch(error =>
+        Swal.fire({
+          title: error.response.data.message,
+          icon: "error",
+          confirmButtonColor: "#FF8811"
+        })
+      );
   };
-
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
