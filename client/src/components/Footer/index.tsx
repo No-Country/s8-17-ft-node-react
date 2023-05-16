@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+
 const Footer = () => {
   return (
     <footer className="max-w-7xl pt-24 mt-24 relative mx-auto font-font1 md:text-sm text-xs lg:text-base">

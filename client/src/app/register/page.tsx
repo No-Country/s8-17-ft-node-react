@@ -1,6 +1,6 @@
 "use client";
 import useForm from "@/hooks/useForm";
-import { UserRegister } from "@/Interfaces";
+import { UserRegister } from "@/types";
 import Image from "next/image";
 
 export default function Register() {
