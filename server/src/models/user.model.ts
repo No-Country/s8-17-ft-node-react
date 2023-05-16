@@ -16,6 +16,7 @@ export class User{
   @IsNotEmpty()
   @IsString()
   public name!: string;
+  
   @Prop({
     required: true,
     unique: true,
