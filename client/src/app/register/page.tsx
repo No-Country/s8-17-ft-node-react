@@ -1,20 +1,41 @@
 "use client";
+import { registerUser } from "@/api";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function Register() {
+  const router = useRouter();
   const { form, handleChange } = useForm<UserRegister>({
     name: "",
     email: "",
     password: ""
   });
 
-  console.log(form);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault;
+    e.preventDefault();
+    registerUser(form)
+      .then(res => res.status === 200)
+      .then(() =>
+        Swal.fire({
+          title: "User registered succesfully!",
+          icon: "success",
+          iconColor: "#FF8811",
+          confirmButtonColor: "#FF8811"
+        }).then(() => {
+          router.push("/");
+        })
+      )
+      .catch(error =>
+        Swal.fire({
+          title: error.response.data.message,
+          icon: "error",
+          confirmButtonColor: "#FF8811"
+        })
+      );
   };
-
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
@@ -27,7 +48,10 @@ export default function Register() {
             tipografías o de borradores de diseño para probar el diseño visual Name is email
             password Continue
           </p>
-          <form className="w-[50%] h-[300px] flex flex-col items-center justify-evenly">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[50%] h-[300px] flex flex-col items-center justify-evenly"
+          >
             <input
               placeholder="Name is"
               onChange={handleChange}
