@@ -17,9 +17,8 @@ export class UserService {
   }
   public async login(body: any) : Promise<{user:User, token:string}> {
     const user = await this.userRepository.findOne({ email: body.email });
-    if (!user || !(await bcrypt.compare(body.password, user.password))) {
-      throw new Error("Invalid credentials");
-    }
+    if (!user || !(await bcrypt.compare(body.password, user.password))) 
+        return null;
 
     return {
       user,

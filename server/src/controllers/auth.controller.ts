@@ -44,7 +44,9 @@ export class AuthController {
       return res.status(400).json(errors.map((err) => err.constraints));
     }
     try {
-      const response = await this.userService.login(req.body); 
+      const response = await this.userService.login(req.body);
+      if (!response)
+          return res.status(400).json({ message: "Invalid credentials" });
       return res.status(200).json(response);
   }catch (error) {
       console.log(error);

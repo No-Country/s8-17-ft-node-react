@@ -10,8 +10,4 @@ export class UserLoginDto {
    message: 'Password too weak'
  })
   password: string;
-
-  @IsNotEmpty()
-  @Length(3, 40)
-  name: string;
 }
