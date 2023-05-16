@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import useForm from "@/hooks/useForm";
-import { UserAuth } from "@/Interfaces";
+import { UserAuth } from "@/types";
 
 export default function Login() {
   const { form, handleChange } = useForm<UserAuth>({

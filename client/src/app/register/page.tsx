@@ -1,6 +1,7 @@
 "use client";
+import { registerUser } from "@/Api";
 import useForm from "@/hooks/useForm";
-import { UserRegister } from "@/Interfaces";
+import { UserRegister } from "@/types";
 import Image from "next/image";
 
 export default function Register() {
@@ -10,9 +11,9 @@ export default function Register() {
     password: ""
   });
 
-  console.log(form);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault;
+    e.preventDefault();
+    registerUser(form);
   };
 
   return (
@@ -27,7 +28,10 @@ export default function Register() {
             tipografías o de borradores de diseño para probar el diseño visual Name is email
             password Continue
           </p>
-          <form className="w-[50%] h-[300px] flex flex-col items-center justify-evenly">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[50%] h-[300px] flex flex-col items-center justify-evenly"
+          >
             <input
               placeholder="Name is"
               onChange={handleChange}
