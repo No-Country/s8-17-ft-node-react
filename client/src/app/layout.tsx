@@ -23,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={comissioner.className}>{children}</body>
+      <body className={`${comissioner.variable} ${poppins.variable}`}>{children}</body>
     </html>
   );
 }
