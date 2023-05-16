@@ -13,7 +13,8 @@ module.exports = {
       },
       fontFamily: {
         font1: ["Poppins", "sans-serif"],
-        font2: ["Commissioner", "sans-serif"]
+        font2: ["Commissioner", "sans-serif"],
+        font3: ["Bebas Neue", "sans-serif"],
       },
       colors: {
         "primary-americanOrange": "#FF8811",
