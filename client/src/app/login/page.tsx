@@ -2,6 +2,7 @@
 import Image from "next/image";
 import useForm from "@/hooks/useForm";
 import { UserAuth } from "@/types";
+import { loginUser } from "@/api";
 
 export default function Login() {
   const { form, handleChange } = useForm<UserAuth>({
@@ -9,7 +10,10 @@ export default function Login() {
     password: ""
   });
 
-  console.log(form);
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    loginUser(form);
+  };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
@@ -22,7 +26,10 @@ export default function Login() {
             Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de
             tipografías o de borradores de diseño para probar el diseño visual
           </p>
-          <form className="w-[50%] h-[300px] flex flex-col items-center justify-evenly">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[50%] h-[300px] flex flex-col items-center justify-evenly"
+          >
             <input
               placeholder="Email"
               type="email"
