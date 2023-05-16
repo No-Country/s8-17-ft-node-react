@@ -9,7 +9,11 @@ export class UserService {
 
   public async register(data: UserRegisterDto) {
     const passwordHash = await bcrypt.hash(data.password, 10);
-    return this.userRepository.create({ ...data, password: passwordHash });
+    const user = await this.userRepository.create({ ...data, password: passwordHash });
+    return {
+      user,
+      token: this.generateToken(user),
+    }
   }
   public async login(body: any) : Promise<{user:User, token:string}> {
     const user = await this.userRepository.findOne({ email: body.email });
