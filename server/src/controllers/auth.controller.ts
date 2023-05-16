@@ -3,7 +3,7 @@ import { UserService } from "../services/user.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
-import jwt from "jsonwebtoken";
+import { UserLoginDto } from "../dto/user/userLogin.dto";
 
 export class AuthController {
   constructor(private userService: UserService) {}
@@ -37,9 +37,12 @@ export class AuthController {
     }
   }
   async login(req: Request, res: Response): Promise<Response>{
-    // if (!(req.body.email && req.body.password)) {
-    //   return res.status(400).json({ message: "Username and Password are required!" });
-    // }
+    const userLoginDto = plainToClass(UserLoginDto, req.body);
+
+    const errors = await validate(userLoginDto);
+    if (errors.length > 0) {
+      return res.status(400).json(errors.map((err) => err.constraints));
+    }
     try {
       const response = await this.userService.login(req.body); 
       return res.status(200).json(response);
