@@ -25,8 +25,14 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
-  auth(req, res) {
-    // auth logic
+  async auth(req: Request, res: Response): Promise<Response> {
+    try {
+      const user = await this.userService.findOne(res.locals.jwtPayload.id);
+      return res.status(200).json(user);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+    }
   }
   async login(req: Request, res: Response): Promise<Response> {
     if (!(req.body.email && req.body.password)) {
