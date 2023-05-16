@@ -1,4 +1,4 @@
-import { Footer } from "@/components";
+import { Navbar, Footer } from "@/components";
 import "./globals.css";
 import { Poppins, Commissioner } from "next/font/google";
 
@@ -25,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${comissioner.variable} ${poppins.variable}`}>
+        <Navbar />
         {children}
         <Footer />
       </body>
