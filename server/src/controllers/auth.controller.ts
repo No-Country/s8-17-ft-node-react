@@ -27,22 +27,25 @@ export class AuthController {
         return res.status(500).json(error);
     }   
   }
-  auth(req, res) {
-    // auth logic
+  async auth(req: Request, res: Response): Promise<Response>{
+    try {
+    const user = await this.userService.findOne(res.locals.jwtPayload.id);
+    return res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
   }
   async login(req: Request, res: Response): Promise<Response>{
-    if (!(req.body.email && req.body.password)) {
-      return res.status(400).json({ message: "Username and Password are required!" });
-    }
+    // if (!(req.body.email && req.body.password)) {
+    //   return res.status(400).json({ message: "Username and Password are required!" });
+    // }
     try {
-      const user = await this.userService.findByEmail(req.body.email);
-      if (user.password !== req.body.password) {
-        return res.status(400).json({ message: "Username or Password incorrect!" });
-      }
-      const token = jwt.sign({ _id: user._id, name: user.name }, 's8-17-ft-node-react', { expiresIn: '1h' });
-      res.json( {message: 'OK', token: token} );
-    } catch {
-      return res.status(400).json({ message: "Username or Password incorrect!" });
-    }
-  }
+      const response = await this.userService.login(req.body); 
+      return res.status(200).json(response);
+  }catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+  } 
+}
 }
