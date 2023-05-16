@@ -15,16 +15,15 @@ export class UserService {
       token: this.generateToken(user),
     }
   }
-  public async login(body: any) : Promise<{user:User, token:string}> {
+  public async login(body: any): Promise<{ user: User; token: string }> {
     const user = await this.userRepository.findOne({ email: body.email });
     if (!user || !(await bcrypt.compare(body.password, user.password))) 
         return null;
 
     return {
       user,
-      token: this.generateToken(user),
-    }
-    
+      token: this.generateToken(user)
+    };
   }
   public async auth() {
     // auth logic
@@ -34,19 +33,18 @@ export class UserService {
     return this.userRepository.findOne({ email });
   }
 
-  public async findOne(body : Partial<User>) {  
+  public async findOne(body: Partial<User>) {
     return this.userRepository.findOne(body);
   }
 
-  private generateToken(user: User) { 
+  private generateToken(user: User) {
     return jwt.sign(
       {
         id: user.id,
-        email: user.email,
+        email: user.email
       },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
   }
-
 }
