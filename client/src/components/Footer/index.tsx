@@ -4,7 +4,7 @@ import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react
 
 const Footer = () => {
   return (
-    <footer className="max-w-7xl pt-24 mt-24 relative mx-auto font-font1 md:text-sm text-xs lg:text-base">
+    <footer className="max-w-7xl pt-24 mt-24 relative mx-auto font-text md:text-sm text-xs lg:text-base">
       <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] border-t-[15px] z-30 border-secondary-brightPink absolute bottom-0 rounded-t-[60px]" />
       <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] border-t-[30px] z-20 border-complementary-crayola absolute bottom-0 rounded-t-[60px]" />
       <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] bg-text-eerieBlack absolute bottom-0 rounded-t-[60px] text-white">

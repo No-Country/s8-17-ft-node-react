@@ -12,3 +12,41 @@ export interface UserProfile {
   picture: string;
   nationality: string;
 }
+
+
+export interface IRecipe {
+  name:             string;
+  description:      string;
+  ingredients:      string[];
+  steps:            string[];
+  time:             Time;
+  portions:         number;
+  alerts:           any[];
+  diet:             any[];
+  difficulty:       string;
+  category:         string[];
+  image:            string;
+  nutritionalValue: NutritionalValue;
+}
+
+export interface NutritionalValue {
+  of100g:    Of100G;
+  ofPortion: Of100G;
+}
+
+export interface Of100G {
+  calories:      number;
+  fat:           number;
+  carbohydrates: number;
+  protein:       number;
+  sugar:         number;
+  fiber:         number;
+  salt:          number;
+}
+
+export interface Time {
+  preparation: number;
+  cooking:     number;
+  rest:        number;
+  total:       number;
+}
