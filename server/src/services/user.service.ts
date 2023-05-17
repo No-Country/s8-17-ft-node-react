@@ -3,6 +3,7 @@ import UserModel, { User } from "../models/user.model";
 import { UserRegisterDto } from "src/dto/user/userRegister.dto";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);
@@ -24,8 +25,18 @@ export class UserService {
       token: this.generateToken(user)
     };
   }
-  public async auth() {
-    // auth logic
+  public async loginGoogle(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
+    let userDB = await this.userRepository.findOne({ email: user.email });
+    if (!userDB) {
+      userDB = await this.userRepository.create({
+        email: user.email,
+        name: user.name,
+      });
+    }
+    return {
+      user: userDB,
+      token: this.generateToken(userDB),
+    };
   }
 
   public async findByEmail(email: string) {
