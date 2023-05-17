@@ -1,20 +1,43 @@
-import { Prop, getModelForClass } from "@typegoose/typegoose";
+import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
-export class User{
-  @Prop({
+import { v4 as uuidv4 } from "uuid";
+import { Diet } from "./diet.model";
+
+export class User {
+  @prop({
     required: true,
+    unique: true,
+    default: uuidv4
+  })
+  public id!: string;
+
+  @prop({
+    required: true
   })
   @IsNotEmpty()
   @IsString()
   public name!: string;
-  @Prop({
+
+  @prop({
     required: true,
-    unique: true,
+    unique: true
   })
+  @IsNotEmpty()
+  @IsString()
   public email!: string;
-  @Prop()
-  public password: string;
 
+  @prop({
+    required: false
+  })
+  public password?: string;
+
+  @prop({
+    required: false,
+    type: () => String,
+    ref: Diet
+  })
+  public recipeFav?: Ref<Diet>[];
 }
-export const UserModel = getModelForClass(User);
 
+const UserModel = getModelForClass(User);
+export default UserModel;

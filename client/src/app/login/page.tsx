@@ -2,14 +2,36 @@
 import Image from "next/image";
 import useForm from "@/hooks/useForm";
 import { UserAuth } from "@/types";
+import { loginUser } from "@/backend";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Login() {
+  const router = useRouter();
   const { form, handleChange } = useForm<UserAuth>({
     email: "",
     password: ""
   });
 
-  console.log(form);
+  const { mutate } = useMutation(loginUser, {
+    onSuccess: response => {
+      window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
+      router.push("/");
+    },
+    onError: (error: any) => {
+      Swal.fire({
+        title: error.response.data.message,
+        icon: "error",
+        confirmButtonColor: "#FF8811"
+      });
+    }
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate(form);
+  };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
@@ -22,7 +44,10 @@ export default function Login() {
             Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de
             tipografías o de borradores de diseño para probar el diseño visual
           </p>
-          <form className="w-[50%] h-[300px] flex flex-col items-center justify-evenly">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[50%] h-[300px] flex flex-col items-center justify-evenly"
+          >
             <input
               placeholder="Email"
               type="email"

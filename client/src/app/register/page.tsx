@@ -1,20 +1,68 @@
 "use client";
+import { registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export default function Register() {
+  const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+  const router = useRouter();
   const { form, handleChange } = useForm<UserRegister>({
     name: "",
     email: "",
     password: ""
   });
 
-  console.log(form);
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault;
+  const handleRegisterGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/google`;
   };
 
+  const handleRegisterFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/facebook`;
+  };
+
+  const { mutate } = useMutation(registerUser, {
+    onSuccess: () => {
+      Swal.fire({
+        title: "User registered succesfully!",
+        icon: "success",
+        iconColor: "#FF8811",
+        confirmButtonColor: "#FF8811"
+      }).then(() => {
+        router.push("/");
+      });
+    },
+    onError: (error: any) => {
+      Swal.fire({
+        title: error.response.data.message
+          ? error.response.data.message
+          : error.response.data[0].matches,
+        icon: "error",
+        confirmButtonColor: "#FF8811"
+      });
+    }
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    mutate(form);
+
+    // registerUser(form)
+    //   .then(res => console.log(res))
+    //   .then(() =>
+    //
+    //   )
+    //   .catch(error => {
+    //
+    //   });
+  };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
@@ -27,7 +75,10 @@ export default function Register() {
             tipografías o de borradores de diseño para probar el diseño visual Name is email
             password Continue
           </p>
-          <form className="w-[50%] h-[300px] flex flex-col items-center justify-evenly">
+          <form
+            onSubmit={handleSubmit}
+            className="w-[50%] h-[300px] flex flex-col items-center justify-evenly"
+          >
             <input
               placeholder="Name is"
               onChange={handleChange}
@@ -60,10 +111,16 @@ export default function Register() {
             </button>
           </form>
           <div className="w-[150px] flex items-center justify-around">
-            <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+            <button
+              onClick={handleRegisterFacebook}
+              className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+            >
               <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
             </button>
-            <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+            <button
+              onClick={handleRegisterGoogle}
+              className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+            >
               <Image src="/Google.png" width={30} height={30} alt="Google" />
             </button>
           </div>
