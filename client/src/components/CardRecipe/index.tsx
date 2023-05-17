@@ -1,7 +1,10 @@
-// "use client";
+"use client";
 import { IRecipe } from "@/types";
-import { useState } from "react";
-import { FaDownload } from "react-icons/fa";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { FaDownload, FaShareAlt } from "react-icons/fa";
+
+// TODO: pasar id por params y buscar en base de datos
 
 const CardRecipe = () => {
   const [recipe, setRecipe] = useState<IRecipe>({
@@ -49,21 +52,57 @@ const CardRecipe = () => {
     }
   });
 
+  // TODO: traer la receta
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch("ruta-de-la-api");
+  //     const data = await response.json();
+  //     setRecipe(data);
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   return (
-    <div className="w-full flex flex-col flex-center h-fit">
+    <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
       {/* NAME OF THE RECIPE */}
-      <div>
-        <h1>{recipe.name}</h1>
+      <div className="py-4">
+        <h1 className="text-2xl font-bold mb-2 font-title text-center">{recipe.name}</h1>
       </div>
       {/* IMAGE OF THE RECIPE */}
+      {/* <div className="py-4">
+        <Image src={"/#"} alt="image" width={500} height={300} />
+      </div> */}
       {/* INGREDIENTS */}
+      <div className="py-4">
+        <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
+        <ul>
+          {recipe.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
+      </div>
       {/* PREPARATION */}
+      <div className="py-4">
+        <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
+        <ol>
+          {recipe.steps.map((step, index) => (
+            <li key={index}>
+              {index + 1} - {step}
+            </li>
+          ))}
+        </ol>
+      </div>
       {/* TABLE NUTRITIONAL VALUES */}
 
-      <button>
-        Download as PDF
-        <FaDownload />
-      </button>
+      <div className="flex justify-between mt-4 py-4">
+        <button className="flex items-center bg-primary-americanOrange hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
+          Download as PDF <FaDownload className="ml-1" />
+        </button>
+        <button className="flex items-center bg-secondary-brightPink hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
+          Share <FaShareAlt className="ml-1" />
+        </button>
+      </div>
     </div>
   );
 };

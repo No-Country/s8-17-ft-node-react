@@ -1,10 +1,12 @@
-import { CardRecipe } from '@/components'
-import React from 'react'
+import { CardRecipe } from "@/components";
+import React from "react";
 
 const Recipe = () => {
   return (
-    <CardRecipe />
-  )
-}
+    <main className="flex flex-col min-h-screen flex-center">
+      <CardRecipe />
+    </main>
+  );
+};
 
-export default Recipe
+export default Recipe;
