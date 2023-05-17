@@ -6,6 +6,7 @@ import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { UserLoginDto } from "../dto/user/userLogin.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import dotenv from "dotenv";
+import { User } from "../models/user.model";
 dotenv.config();
 
 export class AuthController {
@@ -28,9 +29,11 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
-  async auth(_req: Request, res: Response): Promise<Response> {
+  async auth(req: Request, res: Response): Promise<Response> {
+
     try {
-      const user = await this.userService.findOne(res.locals.jwtPayload.id);
+      const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
+      const user = await this.userService.findOne(partialUser);
       return res.status(200).json(user);
     } catch (error) {
       console.log(error);

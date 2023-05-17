@@ -22,10 +22,15 @@ export const google = async (): Promise<any> => {
   return await axios.get(`${baseUrl}/api/auth/google`);
 };
 
-export const profile = async (token: string): Promise<any> => {
+export const profile = async (): Promise<any> => {
+  const loggedUserJSON = window.localStorage.getItem("loggedUser");
+  let user = null;
+  if (loggedUserJSON) {
+    user = JSON.parse(loggedUserJSON);
+  }
   return await axios.get(`${baseUrl}/api/auth/profile`, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${user.token}`
     }
   });
 };

@@ -27,7 +27,7 @@ export default function Register() {
     window.location.href = `${baseUrl}/api/auth/facebook`;
   };
 
-  const { mutate, isError, isLoading } = useMutation(registerUser, {
+  const { mutate } = useMutation(registerUser, {
     onSuccess: () => {
       Swal.fire({
         title: "User registered succesfully!",
