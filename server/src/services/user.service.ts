@@ -11,6 +11,7 @@ export class UserService {
   public async register(data: UserRegisterDto) {
     const passwordHash = await bcrypt.hash(data.password, 10);
     const user = await this.userRepository.create({ ...data, password: passwordHash });
+    delete user.password;
     return {
       user,
       token: this.generateToken(user),
@@ -20,7 +21,7 @@ export class UserService {
     const user = await this.userRepository.findOne({ email: body.email });
     if (!user || !(await bcrypt.compare(body.password, user.password))) 
         return null;
-
+    delete user.password;
     return {
       user,
       token: this.generateToken(user)
@@ -34,6 +35,7 @@ export class UserService {
         name: user.name,
       });
     }
+    delete userDB.password;
     return {
       user: userDB,
       token: this.generateToken(userDB),
@@ -41,11 +43,15 @@ export class UserService {
   }
 
   public async findByEmail(email: string) {
-    return this.userRepository.findOne({ email });
+    const user = await this.userRepository.findOne({ email });
+    delete user.password;
+    return user;
   }
 
   public async findOne(body: Partial<User>) {
-    return this.userRepository.findOne(body);
+    const user = await this.userRepository.findOne(body);
+    delete user.password;
+    return user;
   }
 
   private generateToken(user: User) {
