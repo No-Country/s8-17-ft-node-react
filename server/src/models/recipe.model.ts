@@ -6,7 +6,7 @@ import { Diet } from "./diet.model";
 import { User } from "./user.model";
 // import { Alert } from "./alert.model";
 
-class Recipe {
+export class Recipe {
   @prop({
     required: true,
     unique: true,
