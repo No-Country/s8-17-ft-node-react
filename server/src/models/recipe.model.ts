@@ -1,77 +1,79 @@
-import { Prop, getModelForClass, Ref } from "@typegoose/typegoose";
+import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
-import { User } from "./user.model";
-import { Diets } from "./diets.model";
 import { Category } from "./category.model";
+import { Diet } from "./diet.model";
+import { User } from "./user.model";
 // import { Alert } from "./alert.model";
 
 class Recipe {
-  @Prop({
+  @prop({
     required: true,
     unique: true,
     default: uuidv4
   })
   id: string; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
   name: string; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
   description: string; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
+  @IsNotEmpty()
   ingredients: string[]; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
+  @IsNotEmpty()
   steps: string[]; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
+  @IsNotEmpty()
   time: {
-    // is check
     preparation: number;
     cooking: number;
     rest: number;
     total: number;
-  };
+  }; // is check
 
-  @Prop({
+  @prop({
     required: true
   })
   @IsNotEmpty()
   @IsNumber()
   portions: number; // is check
 
-  //   @Prop({ type: () => String, ref: Alert })
-  //   alerts: Ref<Alert>[];
+  // @Prop({ type: () => String, ref: Alert })
+  // alerts: Ref<Alert>[];
 
-    @Prop({ type: () => String, ref: Diets, required: false })
-    diets: Ref<Diets>[];
+  @prop({ type: () => String, ref: Category, required: false })
+  category: Ref<Category>[];
 
-    @Prop({ type: () => String, ref: Category, required: false })
-    category: Ref<Category>[];
-    
-  @Prop()
+  @prop({ type: () => String, ref: Diet, required: false })
+  diets: Ref<Diet>[];
+
+  @prop()
   difficulty: string;
 
-  @Prop()
+  @prop()
   image: string;
 
-  @Prop()
+  @prop()
   nutritionalValue: {
     of100g: {
       calories: number;
@@ -93,10 +95,10 @@ class Recipe {
     };
   };
 
-  @Prop({ ref: User, required: true })
+  @prop({ ref: User, required: true })
+  @IsNotEmpty()
   createdBy: Ref<User>;
 }
-
 
 const RecipeModel = getModelForClass(Recipe);
 export default RecipeModel;
