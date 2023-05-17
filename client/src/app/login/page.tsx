@@ -2,7 +2,7 @@
 import Image from "next/image";
 import useForm from "@/hooks/useForm";
 import { UserAuth } from "@/types";
-import { loginUser } from "@/api";
+import { loginUser } from "@/backend";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
