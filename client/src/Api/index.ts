@@ -17,3 +17,7 @@ export const loginUser = async (user: UserAuth): Promise<any> => {
     password: user.password
   });
 };
+
+export const registerGoogle = async () => {
+  return await axios.get(`${baseUrl}/api/auth/google`);
+};
