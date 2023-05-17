@@ -50,4 +50,16 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
+  async google(req: Request, res: Response): Promise<Response> {
+    // google auth logic
+    return res.status(200).json({ message: "Google auth" });
+  }
+
+  async googleCallback(req: Request, res: Response): Promise<Response> {
+    // google auth callback logic
+    console.log(req.user);
+    
+    return res.status(200).json({ message: "Google auth callback" });
+  }
+
 }
