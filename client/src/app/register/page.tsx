@@ -1,5 +1,5 @@
 "use client";
-import { registerUser } from "@/api";
+import { registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import { useMutation } from "@tanstack/react-query";
