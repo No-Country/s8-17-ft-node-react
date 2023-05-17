@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
-import { plainToClass } from "class-transformer";
-import { validate } from "class-validator";
-import { UserRegisterDto } from "../dto/user/userRegister.dto";
-import { UserLoginDto } from "../dto/user/userLogin.dto";
+// import { plainToClass } from "class-transformer";
+// import { validate } from "class-validator";
+// import { UserRegisterDto } from "../dto/user/userRegister.dto";
+// import { UserLoginDto } from "../dto/user/userLogin.dto";
 
 export class AuthController {
   constructor(private userService: UserService) {}
@@ -25,7 +25,7 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
-  async auth(req: Request, res: Response): Promise<Response> {
+  async auth(_req: Request, res: Response): Promise<Response> {
     try {
       const user = await this.userService.findOne(res.locals.jwtPayload.id);
       return res.status(200).json(user);
