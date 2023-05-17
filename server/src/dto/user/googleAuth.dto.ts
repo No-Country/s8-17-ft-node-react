@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from "class-validator";
+import { IsEmail, IsString, isNotEmpty } from "class-validator";
 
 export class GoogleAuthDto {
     @IsString({
@@ -20,18 +20,10 @@ export class GoogleAuthDto {
     })
     email: string;
 
-    @IsString({
-        message: "Invalid image"
-    })  
-    image: string;
+   
+    image?: string;
 
-    @IsString({
-        message: "Invalid accessToken"
-    })
-    accessToken: string;
+    accessToken?: string;
 
-    @IsString({
-        message: "Invalid refreshToken"
-    })
-    refreshToken: string;
+    refreshToken?: string;
 }

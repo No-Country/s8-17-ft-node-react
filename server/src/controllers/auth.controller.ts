@@ -5,6 +5,8 @@ import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { UserLoginDto } from "../dto/user/userLogin.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
+import dotenv from "dotenv";
+dotenv.config();
 
 export class AuthController {
   constructor(private userService: UserService) {}
