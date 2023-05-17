@@ -1,6 +1,7 @@
-import { Prop, getModelForClass } from "@typegoose/typegoose";
+import { Prop, Ref, getModelForClass } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
+import { Diets } from "./diets.model";
 export class User{
 
   @Prop({
@@ -24,6 +25,13 @@ export class User{
   public email!: string;
   @Prop()
   public password: string;
+
+  @Prop({
+    required: false,
+    type: () => String,
+    ref: Diets
+  })
+  public recipeFav: Ref<Diets>[]; 
 
 }
 export const UserModel = getModelForClass(User);
