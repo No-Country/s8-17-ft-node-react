@@ -17,3 +17,15 @@ export const loginUser = async (user: UserAuth): Promise<any> => {
     password: user.password
   });
 };
+
+export const google = async (): Promise<any> => {
+  return await axios.get(`${baseUrl}/api/auth/google`);
+};
+
+export const profile = async (token: string): Promise<any> => {
+  return await axios.get(`${baseUrl}/api/auth/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};

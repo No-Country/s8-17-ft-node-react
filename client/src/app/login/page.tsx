@@ -16,7 +16,7 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     loginUser(form)
-      .then(res => (document.cookie = `token=${res.data.token}`))
+      .then(res => window.localStorage.setItem("loggedUser", JSON.stringify(res.data)))
       .then(() => {
         router.push("/");
       })

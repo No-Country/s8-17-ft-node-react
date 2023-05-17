@@ -2,8 +2,10 @@
 import { registerUser } from "@/api";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export default function Register() {
@@ -25,29 +27,41 @@ export default function Register() {
     window.location.href = `${baseUrl}/api/auth/facebook`;
   };
 
+  const { mutate, isError, isLoading } = useMutation(registerUser, {
+    onSuccess: () => {
+      Swal.fire({
+        title: "User registered succesfully!",
+        icon: "success",
+        iconColor: "#FF8811",
+        confirmButtonColor: "#FF8811"
+      }).then(() => {
+        router.push("/");
+      });
+    },
+    onError: (error: any) => {
+      Swal.fire({
+        title: error.response.data.message
+          ? error.response.data.message
+          : error.response.data[0].matches,
+        icon: "error",
+        confirmButtonColor: "#FF8811"
+      });
+    }
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    registerUser(form)
-      .then(res => console.log(res))
-      .then(() =>
-        Swal.fire({
-          title: "User registered succesfully!",
-          icon: "success",
-          iconColor: "#FF8811",
-          confirmButtonColor: "#FF8811"
-        }).then(() => {
-          router.push("/");
-        })
-      )
-      .catch(error => {
-        Swal.fire({
-          title: error.response.data.message
-            ? error.response.data.message
-            : error.response.data[0].matches,
-          icon: "error",
-          confirmButtonColor: "#FF8811"
-        });
-      });
+
+    mutate(form);
+
+    // registerUser(form)
+    //   .then(res => console.log(res))
+    //   .then(() =>
+    //
+    //   )
+    //   .catch(error => {
+    //
+    //   });
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
