@@ -24,10 +24,7 @@ class Repository<T> {
     return model;
   }
 
-  public async update(
-    id: string,
-    data: Partial<T>
-  ): Promise<DocumentType<T> | null> {
+  public async update(id: string, data: Partial<T>): Promise<DocumentType<T> | null> {
     return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
@@ -37,12 +34,13 @@ class Repository<T> {
 
   public async deleteAll(filter: Partial<T>): Promise<void> {
     await this.model.deleteMany({
-      ...filter,
+      ...filter
     });
   }
+
   public async count(filter: Partial<T>): Promise<number> {
     return this.model.countDocuments({
-      ...filter,
+      ...filter
     });
   }
 }
