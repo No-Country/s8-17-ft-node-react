@@ -1,1 +1,1 @@
-export {DataBase} from './database';
+export { DataBase } from "./database";
