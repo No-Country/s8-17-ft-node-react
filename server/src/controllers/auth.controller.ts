@@ -55,7 +55,7 @@ export class AuthController {
     return res.status(200).json({ message: "Google auth" });
   }
 
-  async googleCallback(req: Request, res: Response): Promise<Response> {
+  async googleCallback(req: Request, res: Response): Promise<Response | void> {
     const userGoogleLogin = plainToClass(GoogleAuthDto, req.user);
     const errors = await validate(userGoogleLogin);
     if (errors.length > 0) {
@@ -64,7 +64,8 @@ export class AuthController {
     try {
       const response = await this.userService.loginGoogle(userGoogleLogin);
       if (!response) return res.status(400).json({ message: "Invalid credentials" });
-      return res.status(200).json(response);
+
+      return res.redirect(`${process.env.CLIENT_URL}?token=${response.token}`);
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);
