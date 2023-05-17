@@ -28,7 +28,7 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
-  async auth(req: Request, res: Response): Promise<Response> {
+  async auth(_req: Request, res: Response): Promise<Response> {
     try {
       const user = await this.userService.findOne(res.locals.jwtPayload.id);
       return res.status(200).json(user);

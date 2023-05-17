@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 export const checkJWT = (req: Request, res: Response, next: NextFunction) => {
+
   const authorization = <string>req.headers["authorization"];
   if (!authorization) return res.status(401).json({ message: "Not authorized" });
   const token = authorization.split(" ")[1];
