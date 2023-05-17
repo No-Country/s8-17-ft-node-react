@@ -27,7 +27,8 @@ const bootstrap = async () => {
         "Accept",
         "Origin",
         "Access-Control-Allow-Headers",
-        "Access-Control-Request-Headers"
+        "Access-Control-Request-Headers",
+        "Access-Control-Allow-Origin"
       ]
     })
   );

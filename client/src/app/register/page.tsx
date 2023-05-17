@@ -1,5 +1,5 @@
 "use client";
-import { registerUser } from "@/api";
+import { registerUser } from "@/Api";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import Image from "next/image";
