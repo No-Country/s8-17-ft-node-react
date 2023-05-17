@@ -34,13 +34,13 @@ export class UserService {
     if (!userDB) {
       userDB = await this.userRepository.create({
         email: user.email,
-        name: user.name,
+        name: user.name
       });
     }
     delete userDB.password;
     return {
       user: userDB,
-      token: this.generateToken(userDB),
+      token: this.generateToken(userDB)
     };
   }
 

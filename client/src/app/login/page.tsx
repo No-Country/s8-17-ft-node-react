@@ -5,6 +5,7 @@ import { UserAuth } from "@/types";
 import { loginUser } from "@/api";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Login() {
   const router = useRouter();
@@ -13,20 +14,23 @@ export default function Login() {
     password: ""
   });
 
+  const { mutate } = useMutation(loginUser, {
+    onSuccess: response => {
+      window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
+      router.push("/");
+    },
+    onError: (error: any) => {
+      Swal.fire({
+        title: error.response.data.message,
+        icon: "error",
+        confirmButtonColor: "#FF8811"
+      });
+    }
+  });
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    loginUser(form)
-      .then(res => (document.cookie = `token=${res.data.token}`))
-      .then(() => {
-        router.push("/");
-      })
-      .catch(error =>
-        Swal.fire({
-          title: error.response.data.message,
-          icon: "error",
-          confirmButtonColor: "#FF8811"
-        })
-      );
+    mutate(form);
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
