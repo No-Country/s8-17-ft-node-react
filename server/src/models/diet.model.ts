@@ -2,7 +2,7 @@ import { getModelForClass, prop } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
 
-export class Category {
+export class Diet {
   @prop({
     required: true,
     unique: true,
@@ -25,5 +25,5 @@ export class Category {
   public description!: string;
 }
 
-const CategoryModel = getModelForClass(Category);
-export default CategoryModel;
+const DietModel = getModelForClass(Diet);
+export default DietModel;
