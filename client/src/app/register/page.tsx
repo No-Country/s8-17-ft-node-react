@@ -1,5 +1,5 @@
 "use client";
-import { registerGoogle, registerUser } from "@/api";
+import { registerUser } from "@/api";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import Image from "next/image";
@@ -17,8 +17,12 @@ export default function Register() {
 
   const handleRegisterGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    // window.location.href = `${baseUrl}/api/auth/login`;
-    registerGoogle();
+    window.location.href = `${baseUrl}/api/auth/google`;
+  };
+
+  const handleRegisterFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/facebook`;
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -93,7 +97,10 @@ export default function Register() {
             </button>
           </form>
           <div className="w-[150px] flex items-center justify-around">
-            <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+            <button
+              onClick={handleRegisterFacebook}
+              className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+            >
               <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
             </button>
             <button
