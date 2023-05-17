@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
-import { UserRegisterDto } from "../dto/user/userRegister.dto";
-import { UserLoginDto } from "../dto/user/userLogin.dto";
+// import { UserRegisterDto } from "../dto/user/userRegister.dto";
+// import { UserLoginDto } from "../dto/user/userLogin.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import dotenv from "dotenv";
 dotenv.config();
@@ -28,6 +28,7 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
+
   async auth(_req: Request, res: Response): Promise<Response> {
     try {
       const user = await this.userService.findOne(res.locals.jwtPayload.id);
@@ -37,6 +38,7 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
+
   async login(req: Request, res: Response): Promise<Response> {
     // const userLoginDto = plainToClass(UserLoginDto, req.body);
 
@@ -53,6 +55,7 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
+
   async google(req: Request, res: Response): Promise<Response> {
     return res.status(200).json({ message: "Google auth" });
   }

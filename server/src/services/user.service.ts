@@ -16,6 +16,7 @@ export class UserService {
       token: this.generateToken(user)
     };
   }
+
   public async login(body: any): Promise<{ user: User; token: string }> {
     const user = await this.userRepository.findOne({ email: body.email });
     if (!user || !(await bcrypt.compare(body.password, user.password))) return null;
@@ -25,17 +26,18 @@ export class UserService {
       token: this.generateToken(user)
     };
   }
+
   public async loginGoogle(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
     let userDB = await this.userRepository.findOne({ email: user.email });
     if (!userDB) {
       userDB = await this.userRepository.create({
         email: user.email,
-        name: user.name,
+        name: user.name
       });
     }
     return {
       user: userDB,
-      token: this.generateToken(userDB),
+      token: this.generateToken(userDB)
     };
   }
 

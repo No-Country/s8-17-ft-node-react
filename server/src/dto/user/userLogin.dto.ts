@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, Length, Matches } from "class-validator";
+import { IsEmail, IsNotEmpty, Matches } from "class-validator";
 
 export class UserLoginDto {
   @IsNotEmpty()
@@ -6,8 +6,8 @@ export class UserLoginDto {
   email: string;
 
   @IsNotEmpty()
- @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,{
-   message: 'Password too weak'
- })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {
+    message: "Password too weak"
+  })
   password: string;
 }
