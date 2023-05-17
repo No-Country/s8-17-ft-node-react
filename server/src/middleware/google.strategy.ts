@@ -1,10 +1,9 @@
-import passport, { initialize } from "passport";
+import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import dotenv from "dotenv";
 import session from "express-session";
 import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
 import express from "express";
-
+import dotenv from "dotenv";
 dotenv.config();
 
 class PassportConfig {
@@ -22,14 +21,9 @@ class PassportConfig {
           callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
         },
         (accessToken, refreshToken, profile, done) => {
-          console.log(
-            "accessToken: ", 
-            accessToken,
-            "refreshToken: ",
-            refreshToken,
-          );
-          
-          const user : GoogleAuthDto = {
+          console.log("accessToken: ", accessToken, "refreshToken: ", refreshToken);
+
+          const user: GoogleAuthDto = {
             id: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
@@ -48,16 +42,14 @@ class PassportConfig {
     // crear el dto de facebook
     // crear el metodo en el service (se puede copiar el de google o usar el mismo)
     // crear el metodo en el controller (se puede copiar el de google o usar el mismo)
-    
+
     // passport.use(
     //     "facebook",
     //     new FacebookStrategy(
     // )
   }
 
-  initialize(
-    app: express.Application,
-  ) {
+  initialize(app: express.Application) {
     app.use(this.useSessionMiddleware());
     app.use(this.useSession());
     app.use(passport.initialize());
@@ -76,7 +68,7 @@ class PassportConfig {
     });
   }
 
-  authenticate(strategy : string, options : any) {
+  authenticate(strategy: string, options: any) {
     return passport.authenticate(strategy, options);
   }
 }

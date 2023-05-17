@@ -17,6 +17,7 @@ export class UserService {
       token: this.generateToken(user)
     };
   }
+
   public async login(body: any): Promise<{ user: User; token: string }> {
     const user = await this.userRepository.findOne({ email: body.email });
 
@@ -29,6 +30,7 @@ export class UserService {
       token: this.generateToken(user)
     };
   }
+
   public async loginGoogle(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
     let userDB = await this.userRepository.findOne({ email: user.email });
     if (!userDB) {
