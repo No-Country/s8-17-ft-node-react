@@ -4,6 +4,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { UserLoginDto } from "../dto/user/userLogin.dto";
+import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
 
 export class AuthController {
   constructor(private userService: UserService) {}
@@ -51,15 +52,22 @@ export class AuthController {
     }
   }
   async google(req: Request, res: Response): Promise<Response> {
-    // google auth logic
     return res.status(200).json({ message: "Google auth" });
   }
 
   async googleCallback(req: Request, res: Response): Promise<Response> {
-    // google auth callback logic
-    console.log(req.user);
-    
-    return res.status(200).json({ message: "Google auth callback" });
+    const userGoogleLogin = plainToClass(GoogleAuthDto, req.user);
+    const errors = await validate(userGoogleLogin);
+    if (errors.length > 0) {
+      return res.status(400).json(errors.map(err => err.constraints));
+    }
+    try {
+      const response = await this.userService.loginGoogle(userGoogleLogin);
+      if (!response) return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json(error);
+    }
   }
-
 }

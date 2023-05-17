@@ -2,6 +2,7 @@ import passport, { initialize } from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import dotenv from "dotenv";
 import session from "express-session";
+import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ class PassportConfig {
           callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`
         },
         (accessToken, refreshToken, profile, done) => {
-          const user = {
+          const user : GoogleAuthDto = {
             id: profile.id,
             name: profile.displayName,
             email: profile.emails[0].value,
@@ -52,7 +53,7 @@ class PassportConfig {
     });
   }
 
-  authenticate(strategy, options) {
+  authenticate(strategy : string, options : any) {
     return passport.authenticate(strategy, options);
   }
 }
