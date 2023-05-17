@@ -34,7 +34,7 @@ const bootstrap = async () => {
   );
   app.use(morgan("dev"));
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(initializePassport()); // initialize passport
+  await initializePassport(app);
 
   app.use("/api", rootRoutes);
 
