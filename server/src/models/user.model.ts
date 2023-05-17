@@ -27,11 +27,9 @@ export class User {
   public email!: string;
 
   @prop({
-    required: true
+    required: false
   })
-  @IsNotEmpty()
-  @IsString()
-  public password!: string;
+  public password?: string;
 
   @prop({
     required: false,
