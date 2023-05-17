@@ -4,7 +4,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { UserLoginDto } from "../dto/user/userLogin.dto";
-import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
+import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 
 export class AuthController {
   constructor(private userService: UserService) {}

@@ -33,6 +33,18 @@ class PassportConfig {
         }
       )
     );
+    // TODO: npm install passport-facebook
+    // conseguir algunas credenciales de facebook
+    // crear las estrategias de passport
+    // conectar los endpoints de facebook en auth controller y auth routes
+    // crear el dto de facebook
+    // crear el metodo en el service (se puede copiar el de google o usar el mismo)
+    // crear el metodo en el controller (se puede copiar el de google o usar el mismo)
+    
+    // passport.use(
+    //     "facebook",
+    //     new FacebookStrategy(
+    // )
   }
 
   initialize() {
