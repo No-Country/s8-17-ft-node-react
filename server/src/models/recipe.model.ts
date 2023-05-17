@@ -12,39 +12,39 @@ class Recipe {
     unique: true,
     default: uuidv4
   })
-  id: string; // is check
+  id!: string; // is check
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  name: string; // is check
+  name!: string; // is check
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  description: string; // is check
+  description!: string; // is check
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  ingredients: string[]; // is check
+  ingredients!: string[]; // is check
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  steps: string[]; // is check
+  steps!: string[]; // is check
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  time: {
+  time!: {
     preparation: number;
     cooking: number;
     rest: number;
@@ -56,25 +56,31 @@ class Recipe {
   })
   @IsNotEmpty()
   @IsNumber()
-  portions: number; // is check
+  portions!: number; // is check
 
   // @Prop({ type: () => String, ref: Alert })
   // alerts: Ref<Alert>[];
 
   @prop({ type: () => String, ref: Category, required: false })
-  category: Ref<Category>[];
+  category?: Ref<Category>[];
 
   @prop({ type: () => String, ref: Diet, required: false })
-  diets: Ref<Diet>[];
+  diets?: Ref<Diet>[];
 
-  @prop()
-  difficulty: string;
+  @prop({
+    required: false
+  })
+  difficulty?: string;
 
-  @prop()
-  image: string;
+  @prop({
+    required: false
+  })
+  image?: string;
 
-  @prop()
-  nutritionalValue: {
+  @prop({
+    required: false
+  })
+  nutritionalValue?: {
     of100g: {
       calories: number;
       fat: number;
@@ -97,7 +103,7 @@ class Recipe {
 
   @prop({ ref: User, required: true })
   @IsNotEmpty()
-  createdBy: Ref<User>;
+  createdBy!: Ref<User>;
 }
 
 const RecipeModel = getModelForClass(Recipe);

@@ -8,21 +8,21 @@ export class Category {
     unique: true,
     default: uuidv4
   })
-  public id: string;
+  public id!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  public name: string;
+  public name!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  public description: string;
+  public description!: string;
 }
 
 const CategoryModel = getModelForClass(Category);

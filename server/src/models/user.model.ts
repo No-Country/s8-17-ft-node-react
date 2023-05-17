@@ -9,7 +9,7 @@ export class User {
     unique: true,
     default: uuidv4
   })
-  public id: string;
+  public id!: string;
 
   @prop({
     required: true
@@ -31,14 +31,14 @@ export class User {
   })
   @IsNotEmpty()
   @IsString()
-  public password: string;
+  public password!: string;
 
   @prop({
     required: false,
     type: () => String,
     ref: Diet
   })
-  public recipeFav: Ref<Diet>[];
+  public recipeFav?: Ref<Diet>[];
 }
 
 const UserModel = getModelForClass(User);
