@@ -22,3 +22,5 @@ const categoriesToSeed: Array<Category> = [
       "In modern use, dinner usually refer to the main meal of the day eaten in the evening. Formerly, dinner typically referred to a main meal eaten in the middle of the day."
   }
 ];
+
+export default categoriesToSeed;

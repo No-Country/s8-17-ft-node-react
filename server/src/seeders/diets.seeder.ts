@@ -42,3 +42,5 @@ const dietsToSeed: Array<Diet> = [
       "A restrictive diet that only includes meat, fish, and other animal foods like eggs and certain dairy products. It excludes all other foods, including fruits, vegetables, legumes, grains, nuts, and seeds."
   }
 ];
+
+export default dietsToSeed;
