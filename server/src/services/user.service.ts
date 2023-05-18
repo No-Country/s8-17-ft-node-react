@@ -1,9 +1,9 @@
 import Repository from "../utils/repository";
 import UserModel, { User } from "../models/user.model";
-import { UserRegisterDto } from "src/dto/user/userRegister.dto";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
+import { UserRegisterDto } from "../dto/user/userRegister.dto";
+import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);

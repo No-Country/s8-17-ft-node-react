@@ -5,12 +5,19 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import morgan from "morgan";
-import rootRoutes from "./routes/index.routes";
+import rootRoutes from "./routes";
 import initializePassport from "./middleware/google.strategy";
+import UserModel from "./models/user.model";
+import seed from "./seeders";
 
 const bootstrap = async () => {
   dotenv.config();
   await DataBase.initialize();
+
+  const users = await UserModel.find();
+  if (!users.length) {
+    await seed();
+  }
 
   const app = express();
 
