@@ -19,7 +19,9 @@ export const loginUser = async (user: UserAuth): Promise<any> => {
 };
 
 export const google = async (): Promise<any> => {
-  return await axios.get(`${baseUrl}/api/auth/google`);
+  const response = await axios.get(`${baseUrl}/api/auth/google`);
+
+  return response;
 };
 
 export const profile = async (): Promise<any> => {
@@ -28,9 +30,12 @@ export const profile = async (): Promise<any> => {
   if (loggedUserJSON) {
     user = JSON.parse(loggedUserJSON);
   }
-  return await axios.get(`${baseUrl}/api/auth/profile`, {
+  const response = await axios.get(`${baseUrl}/api/auth/profile`, {
     headers: {
-      Authorization: `Bearer ${user.token}`
+      Authorization: `Bearer ${user?.token}`
     }
   });
+  const profile = response.data;
+
+  return profile;
 };

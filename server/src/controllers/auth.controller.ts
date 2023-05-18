@@ -20,8 +20,8 @@ export class AuthController {
       return res.status(400).json(errors.map(err => err.constraints));
     }
     try {
-      const user = await this.userService.findByEmail(req.body.email);
-      if (user) return res.status(400).json({ message: "User already exists" });
+      // const user = await this.userService.findByEmail(req.body.email);
+      // if (user) return res.status(400).json({ message: "User already exists" });
       const newUser = await this.userService.register(req.body);
       return res.status(200).json(newUser);
     } catch (error) {
