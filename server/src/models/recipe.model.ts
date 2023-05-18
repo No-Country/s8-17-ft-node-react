@@ -62,7 +62,7 @@ export class Recipe {
   // alerts: Ref<Alert>[];
 
   @prop({ type: () => String, ref: Category, required: false })
-  category?: Ref<Category>[];
+  categories?: Ref<Category>[];
 
   @prop({ type: () => String, ref: Diet, required: false })
   diets?: Ref<Diet>[];
