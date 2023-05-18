@@ -1,6 +1,6 @@
 import { Diet } from "../models/diet.model";
 
-const dietsToSeed: Array<Diet> = [
+const dietsToSeed: Array<Partial<Diet>> = [
   {
     name: "gluten-free",
     description:
@@ -16,7 +16,6 @@ const dietsToSeed: Array<Diet> = [
     description: "No ingredients may contain meat or meat by-products, such as bones or gelatin."
   },
   {
-    id: "bgkag1t69a315n0ogdlbvenlb",
     name: "vegan",
     description:
       "No ingredients may contain meat or meat by-products, such as bones or gelatin, nor may they contain eggs, dairy, or honey."

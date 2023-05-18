@@ -1,6 +1,6 @@
 import { Category } from "../models/category.model";
 
-const categoriesToSeed: Array<Category> = [
+const categoriesToSeed: Array<Partial<Category>> = [
   {
     name: "breakfast",
     description:
