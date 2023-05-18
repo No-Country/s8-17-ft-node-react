@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
 
@@ -9,9 +10,11 @@ const SearchBar = () => {
         className="w-full h-full border-b py-2 outline-none border-text-taupeGray"
         placeholder="Search..."
       />
-      <button>
-        <IoSearchOutline className="w-8 h-8 text-text-taupeGray" />
-      </button>
+      <Link href="/generator">
+        <button>
+          <IoSearchOutline className="w-8 h-8 text-text-taupeGray" />
+        </button>
+      </Link>
     </div>
   );
 };
