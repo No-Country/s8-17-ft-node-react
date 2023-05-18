@@ -4,11 +4,10 @@ import { v4 as uuidv4 } from "uuid";
 
 export class Category {
   @prop({
-    required: true,
     unique: true,
     default: uuidv4
   })
-  public id!: string;
+  public id?: string;
 
   @prop({
     required: true
