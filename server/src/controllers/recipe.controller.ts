@@ -34,8 +34,8 @@ export class RecipeController {
   private generateTemplatePrompt(data: GenerateRecipeDto): string {
     return `Generate a cooking recipe according to the following parameters:
     - Ingredients: ${data.ingredients}
-    - Diet: ${data.diets}
-    - Category: ${data.categories} 
+    - Diets: ${data.diets}
+    - Categories: ${data.categories} 
     - Difficulty: ${data.difficulty}
 
     Output format:
@@ -51,9 +51,9 @@ export class RecipeController {
         total: string
       },
       portions: number,
-      diet: string[],
+      diets: string[],
       difficulty: ${data.difficulty},
-      category: string[],
+      categories: string[],
       image: string,
       nutritionalValue: {
         of100g: {
@@ -98,9 +98,9 @@ export class RecipeController {
         total: "30 minutes"
       },
       portions: 2,
-      diet: ["Ketogenic"],
+      diets: ["Ketogenic"],
       difficulty: "Easy",
-      category: ["Breakfast"],
+      categories: ["Breakfast"],
       image: "crispy-keto-potato-breakfast.jpg",
       nutritionalValue: {
         of100g: {
