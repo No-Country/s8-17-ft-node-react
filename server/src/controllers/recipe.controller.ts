@@ -19,13 +19,13 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
+
       // const prompt: string = this.generateTemplatePrompt(generateRecipeDto);
       // const recipe = await this.openAIService.createRecipe(prompt);
+      // await this.recipeService.save(recipe);
       const defaultResponse = this.defaultResponse();
 
-      // await this recipeService.save(recipe);
       return res.status(200).json(defaultResponse);
-      // const recipeGenerated = await this.recipeService.generate(req.body);
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -47,32 +47,30 @@ export class RecipeController {
       time: {
         preparation: string,
         cooking: string,
-        rest: string,
         total: string
       },
       portions: number,
       diets: string[],
       difficulty: ${data.difficulty},
       categories: string[],
-      image: string,
       nutritionalValue: {
         of100g: {
           calories: number,
           fat: number,
           carbohydrates: number,
           protein: number,
-          sugar: number,
-          fiber: number,
-          salt: number
+          cholesterol: number,
+          // alcohol: number,
+          // fiber: number
         },
         ofPortion: {
           calories: number,
           fat: number,
           carbohydrates: number,
           protein: number,
-          sugar: number,
-          fiber: number,
-          salt: number
+          cholesterol: number,
+          // alcohol: number,
+          // fiber: number
         }
       }
     }`;
@@ -94,32 +92,30 @@ export class RecipeController {
       time: {
         preparation: "10 minutes",
         cooking: "20 minutes",
-        rest: "-",
         total: "30 minutes"
       },
       portions: 2,
       diets: ["Ketogenic"],
       difficulty: "Easy",
       categories: ["Breakfast"],
-      image: "crispy-keto-potato-breakfast.jpg",
       nutritionalValue: {
         of100g: {
           calories: 97,
           fat: 4.3,
           carbohydrates: 16.3,
-          protein: 2.2,
-          sugar: 0.4,
-          fiber: 2.2,
-          salt: 0.2
+          protein: 2.2
+          // fiber: 2.2,
+          // sugar: 0.4,
+          // salt: 0.2
         },
         ofPortion: {
           calories: 98,
           fat: 4.4,
           carbohydrates: 16.5,
-          protein: 2.3,
-          sugar: 0.4,
-          fiber: 2.3,
-          salt: 0.3
+          protein: 2.3
+          // fiber: 2.3,
+          // sugar: 0.4,
+          // salt: 0.3
         }
       }
     };
