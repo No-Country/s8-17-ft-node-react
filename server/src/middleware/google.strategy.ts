@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import session from "express-session";
-import { GoogleAuthDto } from "src/dto/user/googleAuth.dto";
+import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
