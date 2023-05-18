@@ -3,6 +3,7 @@ import { registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import { useMutation } from "@tanstack/react-query";
+import { profile } from "@/backend";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -28,7 +29,8 @@ export default function Register() {
   };
 
   const { mutate } = useMutation(registerUser, {
-    onSuccess: () => {
+    onSuccess: response => {
+      window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
       Swal.fire({
         title: "User registered succesfully!",
         icon: "success",
@@ -51,17 +53,7 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     mutate(form);
-
-    // registerUser(form)
-    //   .then(res => console.log(res))
-    //   .then(() =>
-    //
-    //   )
-    //   .catch(error => {
-    //
-    //   });
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">

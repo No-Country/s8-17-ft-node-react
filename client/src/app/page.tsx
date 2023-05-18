@@ -1,8 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Hero } from "@/components";
-import { profile } from "@/backend";
 
 export default function Home() {
   return (
