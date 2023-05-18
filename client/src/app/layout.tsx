@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <ReactQueryProvider>
       <html lang="en">
-        <body className={`${comissioner.variable} ${poppins.variable}`}>
+        <body className={`${comissioner.variable} ${poppins.variable} w-full h-full`}>
           <Navbar />
           {children}
           <Footer />

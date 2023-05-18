@@ -3,6 +3,7 @@ import { IRecipe } from "@/types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaDownload, FaShareAlt } from "react-icons/fa";
+import { useQueryClient } from "@tanstack/react-query";
 
 // TODO: pasar id por params y buscar en base de datos
 
@@ -51,8 +52,11 @@ const CardRecipe = () => {
       }
     }
   });
+  // TODO: traer info usando query
+  // const queryClient = useQueryClient();
+  // const data = queryClient.getQueriesData<IRecipe>('recipe');
 
-  // TODO: traer la receta
+  // TODO: traer la receta con fetch
   // useEffect(() => {
   //   const fetchData = async () => {
   //     const response = await fetch("ruta-de-la-api");
@@ -63,6 +67,8 @@ const CardRecipe = () => {
   //   fetchData();
   // }, []);
 
+  // TODO: traer receta con localstorage
+  // const [recipe, setRecipe] = useState<IRecipe>(JSON.parse(localStorage.getItem('recipe')))
   return (
     <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
       {/* NAME OF THE RECIPE */}

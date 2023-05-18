@@ -17,7 +17,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-screen h-[97px] bg-[#fff] flex justify-between items-center px-8">
+    <header className="w-full h-[97px] bg-[#fff] flex justify-between items-center px-8">
       <div className="mr-335">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" width={209} height={38} />
