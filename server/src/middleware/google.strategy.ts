@@ -11,6 +11,9 @@ class PassportConfig {
     passport.serializeUser((user: any, done) => {
       done(null, user.id);
     });
+    passport.deserializeUser((user: any, done) => {
+      done(null, user);
+    });
 
     passport.use(
       "google",

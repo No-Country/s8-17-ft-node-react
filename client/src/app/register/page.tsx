@@ -1,5 +1,5 @@
 "use client";
-import { registerUser } from "@/backend";
+import { google, registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -53,7 +53,34 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(form);
+
+    if (form.email === "" && form.password === "") {
+      Swal.fire({
+        title: "All fields is required!",
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else if (form.email === "") {
+      Swal.fire({
+        title: "Email is required!",
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else if (form.password === "") {
+      Swal.fire({
+        title: "Password is required!",
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else if (form.name === "") {
+      Swal.fire({
+        title: "Name is required!",
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else {
+      mutate(form);
+    }
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
