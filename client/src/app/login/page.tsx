@@ -32,7 +32,7 @@ export default function Login() {
     e.preventDefault();
     if (form.email === "" && form.password === "") {
       Swal.fire({
-        title: "Email and Password is required!",
+        title: "All fields is required!",
         icon: "warning",
         confirmButtonColor: "#FF8811"
       });
