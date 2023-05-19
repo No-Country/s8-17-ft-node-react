@@ -12,6 +12,7 @@ export class UserService {
     const passwordHash = await bcrypt.hash(data.password, 10);
     const user = await this.userRepository.create({ ...data, password: passwordHash });
     delete user.password;
+
     return {
       user,
       token: this.generateToken(user)
@@ -20,8 +21,8 @@ export class UserService {
 
   public async login(body: any): Promise<{ user: User; token: string }> {
     const user = await this.userRepository.findOne({ email: body.email });
-
-    if (!user || !(await bcrypt.compare(body.password, user.password))) return null;
+    if (!user) throw new Error("Invalid email.");
+    if (!(await bcrypt.compare(body.password, user.password))) throw new Error("Invalid password.");
     delete user.password;
 
     return {
@@ -39,6 +40,7 @@ export class UserService {
       });
     }
     delete userDB.password;
+
     return {
       user: userDB,
       token: this.generateToken(userDB)
@@ -47,13 +49,15 @@ export class UserService {
 
   public async findByEmail(email: string) {
     const user = await this.userRepository.findOne({ email });
-    delete user.password;
+    user ? delete user.password : null;
+
     return user;
   }
 
   public async findOne(body: Partial<User>) {
     const user = await this.userRepository.findOne(body);
-    delete user.password;
+    user ? delete user.password : null;
+
     return user;
   }
 
