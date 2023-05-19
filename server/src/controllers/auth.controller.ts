@@ -20,12 +20,13 @@ export class AuthController {
       return res.status(400).json(errors.map(err => err.constraints));
     }
     try {
-      // const user = await this.userService.findByEmail(req.body.email);
-      // if (user) return res.status(400).json({ message: "User already exists" });
+      const user = await this.userService.findByEmail(req.body.email);
+      if (user) return res.status(400).json({ errorMessage: "Email already registered." });
+
       const newUser = await this.userService.register(req.body);
       return res.status(200).json(newUser);
     } catch (error) {
-      console.log(error);
+      console.log("register error: ", error);
       return res.status(500).json(error);
     }
   }
@@ -36,25 +37,24 @@ export class AuthController {
       const user = await this.userService.findOne(partialUser);
       return res.status(200).json(user);
     } catch (error) {
-      console.log(error);
+      console.log("auth error: ", error);
       return res.status(500).json(error);
     }
   }
 
   async login(req: Request, res: Response): Promise<Response> {
     const userLoginDto = plainToClass(UserLoginDto, req.body);
-
     const errors = await validate(userLoginDto);
     if (errors.length > 0) {
       return res.status(400).json(errors.map(err => err.constraints));
     }
     try {
       const response = await this.userService.login(req.body);
-      if (!response) return res.status(400).json({ message: "Invalid credentials" });
       return res.status(200).json(response);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json(error);
+    } catch (error: any) {
+      return error.message
+        ? res.status(400).json({ errorMessage: error.message })
+        : res.status(500).json({ errorMessage: error });
     }
   }
 
@@ -74,7 +74,7 @@ export class AuthController {
 
       return res.redirect(`${process.env.CLIENT_URL}?token=${response.token}`);
     } catch (error) {
-      console.log(error);
+      console.log("googleCallback error: ", error);
       return res.status(500).json(error);
     }
   }
