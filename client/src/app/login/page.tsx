@@ -30,7 +30,21 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(form);
+    if (form.email === "" && form.password === "") {
+      Swal.fire({
+        title: "All fields is required!",
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else if (form.email === "" || form.password === "") {
+      Swal.fire({
+        title: `${form.email === "" ? "Email" : "Password"} is required!`,
+        icon: "warning",
+        confirmButtonColor: "#FF8811"
+      });
+    } else {
+      mutate(form);
+    }
   };
   return (
     <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
