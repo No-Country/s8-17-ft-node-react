@@ -2,11 +2,12 @@
 import { google, registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
+import { alerts } from "@/utils/alert";
+import { USER_TOKEN } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";
-import { profile } from "@/backend";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export default function Register() {
@@ -30,23 +31,22 @@ export default function Register() {
 
   const { mutate } = useMutation(registerUser, {
     onSuccess: response => {
-      window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
-      Swal.fire({
+      // window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
+      Cookies.set(USER_TOKEN, JSON.stringify(response.data), { sameSite: "Lax", expires: 1 });
+
+      alerts({
         title: "User registered succesfully!",
-        icon: "success",
-        iconColor: "#FF8811",
-        confirmButtonColor: "#FF8811"
+        icon: "success"
       }).then(() => {
         router.push("/");
       });
     },
     onError: (error: any) => {
-      Swal.fire({
+      alerts({
         title: error.response.data.message
           ? error.response.data.message
           : error.response.data[0].matches,
-        icon: "error",
-        confirmButtonColor: "#FF8811"
+        icon: "error"
       });
     }
   });
@@ -55,41 +55,37 @@ export default function Register() {
     e.preventDefault();
 
     if (form.email === "" && form.password === "") {
-      Swal.fire({
+      alerts({
         title: "All fields is required!",
-        icon: "warning",
-        confirmButtonColor: "#FF8811"
+        icon: "warning"
       });
     } else if (form.email === "") {
-      Swal.fire({
+      alerts({
         title: "Email is required!",
-        icon: "warning",
-        confirmButtonColor: "#FF8811"
+        icon: "warning"
       });
     } else if (form.password === "") {
-      Swal.fire({
+      alerts({
         title: "Password is required!",
-        icon: "warning",
-        confirmButtonColor: "#FF8811"
+        icon: "warning"
       });
     } else if (form.name === "") {
-      Swal.fire({
+      alerts({
         title: "Name is required!",
-        icon: "warning",
-        confirmButtonColor: "#FF8811"
+        icon: "warning"
       });
     } else {
       mutate(form);
     }
   };
   return (
-    <div className="w-screen h-screen bg-[#fff] flex items-center justify-center">
+    <div className="w-screen h-screen bg-white flex items-center justify-center">
       <main className="w-[800px] h-[600px] flex items-center">
         <section className="h-[460px] w-[60%] flex flex-col items-center">
-          <h1 className="font-semibold text-4xl text-[#FF8811] gap-18 leading-[57px]">
+          <h1 className="font-semibold text-4xl text-primary-500 gap-18 leading-[57px]">
             Create account
           </h1>
-          <p className="w-[335px] font-light text-[12px] leading-[18px] text-[#514B46] text-center">
+          <p className="w-[335px] font-light text-[12px] leading-[18px] text-fg-normal text-center">
             Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de
             tipografías o de borradores de diseño para probar el diseño visual Name is email
             password Continue
@@ -104,7 +100,7 @@ export default function Register() {
               name="name"
               value={form.name}
               type="text"
-              className="w-[335px] h-[47px] text-[#514B46] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-[20px] px-[20px] py-[10px] gap-[10px] bg-[#FCFBFB] outline-none"
+              className="w-[335px] h-[47px] text-fg-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-[20px] px-[20px] py-[10px] gap-[10px] bg-[#FCFBFB] outline-none"
             />
             <input
               placeholder="Email"
