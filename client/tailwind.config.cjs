@@ -53,9 +53,9 @@ module.exports = {
           800: "#62532c",
           900: "#312a16"
         },
-        "fg-dark": "#1E1E1E",
-        "fg-normal": "#514B46",
-        "fg-light": "#FCFBFB"
+        dark: "#1E1E1E",
+        normal: "#514B46",
+        light: "#FCFBFB"
       }
     }
   },

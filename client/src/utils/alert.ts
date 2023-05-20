@@ -15,10 +15,10 @@ export const alerts = ({
   timer
 }: SweetAlertOptions) => {
   // TODO: fix colors.
-  let color: string = colors.americanOrange;
+  let color: string = colors.primary;
   switch (icon) {
     case "info":
-      color = colors.brightPink;
+      color = colors.secondary;
       break;
     case "warning":
       color = colors.error;
@@ -27,7 +27,7 @@ export const alerts = ({
       color = colors.error;
       break;
     default:
-      color = colors.americanOrange;
+      color = colors.primary;
       break;
   }
 
@@ -41,10 +41,10 @@ export const alerts = ({
     html: html,
     confirmButtonText: confirmButtonText,
     confirmButtonAriaLabel: confirmButtonAriaLabel,
-    color: colors.eerieBlack,
+    color: colors.dark,
     iconColor: color,
-    confirmButtonColor: colors.americanOrange,
-    cancelButtonColor: colors.taupeGray,
+    confirmButtonColor: colors.primary,
+    cancelButtonColor: colors.light,
     timer: timer
   });
 };
