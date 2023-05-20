@@ -1,7 +1,7 @@
 import { Navbar, Footer } from "@/components";
 import "./globals.css";
 import { Poppins, Commissioner } from "next/font/google";
-import ReactQueryProvider from "./ReactQueryProvide";
+import ReactQueryProvider from "@/utils/provider";
 
 const poppins = Poppins({
   weight: ["500", "600", "700"],
@@ -26,14 +26,14 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ReactQueryProvider>
-      <html lang="en">
-        <body className={`${comissioner.variable} ${poppins.variable} w-full h-full`}>
+    <html lang="en">
+      <body className={`${comissioner.variable} ${poppins.variable} w-full h-full`}>
+        <ReactQueryProvider>
           <Navbar />
           {children}
           <Footer />
-        </body>
-      </html>
-    </ReactQueryProvider>
+        </ReactQueryProvider>
+      </body>
+    </html>
   );
 }
