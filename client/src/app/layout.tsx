@@ -27,7 +27,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${comissioner.variable} ${poppins.variable} w-full h-full`}>
+      <body
+        className={`${comissioner.variable} ${poppins.variable} ${poppins.className} w-full h-full`}
+      >
         <ReactQueryProvider>
           <Navbar />
           {children}
