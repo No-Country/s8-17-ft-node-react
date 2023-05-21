@@ -14,10 +14,10 @@ const HomeInfo = () => {
         <div className="w-full flex items-center justify-between gap-8">
           <Image src={img1} alt="img 1" className="w-1/3 md:w-full" />
           <div className="flex flex-col justify-center gap-5">
-            <h2 className="font-title text-primary-americanOrange font-semibold text-3xl">
+            <h2 className="font-title text-primary-500 font-semibold text-3xl">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </h2>
-            <p className="font-title font-normal text-lg text-text-eerieBlack">
+            <p className="font-title font-normal text-lg text-dark">
               Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones
               de tipografías o de borradores de diseño para probar el diseño visual antes de
               insertar el texto final.
@@ -31,10 +31,10 @@ const HomeInfo = () => {
         <div className="w-full flex flex-row-reverse items-center justify-between gap-8">
           <Image src={img2} alt="img 2" className="w-1/3 md:w-full" />
           <div className="flex flex-col justify-center gap-5">
-            <h2 className="font-title text-primary-americanOrange font-semibold text-3xl">
+            <h2 className="font-title text-primary-500 font-semibold text-3xl">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </h2>
-            <p className="font-title font-normal text-lg text-text-eerieBlack">
+            <p className="font-title font-normal text-lg text-dark">
               Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones
               de tipografías o de borradores de diseño para probar el diseño visual antes de
               insertar el texto final.

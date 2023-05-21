@@ -1,7 +1,6 @@
 "use client";
 import { profile } from "@/backend";
 import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,14 +16,12 @@ export default function Navbar() {
   };
 
   return (
-    <header className="w-full h-[97px] bg-[#fff] flex justify-between items-center px-8">
-      <div className="mr-335">
-        <Link href="/">
-          <Image src="/logo.svg" alt="logo" width={209} height={38} />
-        </Link>
-      </div>
-      <nav className="flex space-x-10 ml-335 md:ml-0">
-        <div className="flex items-center space-x-10 text-[#FF8811] font-semibold">
+    <header className="w-full h-[97px] flex justify-between items-center px-8">
+      <Link href="/">
+        <Image src="/logo.svg" alt="logo" width={209} height={38} />
+      </Link>
+      <nav className="flex space-x-10">
+        <div className="flex items-center space-x-10 text-primary-500 font-semibold">
           <Link href="/">
             <span>Home</span>
           </Link>
@@ -37,12 +34,12 @@ export default function Navbar() {
         </div>
         <div className="flex items-center space-x-6">
           <Link href="/login">
-            <button className="text-[#FF8811] font-semibold border border-[#FF8811] border-solid rounded-full px-4 py-2 bg-white shadow-lg">
+            <button className="text-primary-500 font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-white shadow-lg">
               Sign in
             </button>
           </Link>
           <Link href="/register">
-            <button className="text-white font-semibold border border-[#FF8811] border-solid rounded-full px-4 py-2 bg-[#FF8811] shadow-lg">
+            <button className="text-white font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-primary-500 shadow-lg">
               Create Account
             </button>
           </Link>

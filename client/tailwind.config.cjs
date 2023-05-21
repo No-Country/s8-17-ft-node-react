@@ -53,9 +53,10 @@ module.exports = {
           800: "#62532c",
           900: "#312a16"
         },
-        dark: "#1E1E1E",
-        normal: "#514B46",
-        light: "#FCFBFB"
+        dark: "#1E1E1E", // eerieBlack
+        normal: "#514B46", // darkLiver
+        light: "#898989", // taupeGray
+        white: "#FCFBFB"
       }
     }
   },
