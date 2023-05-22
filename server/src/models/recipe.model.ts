@@ -47,7 +47,6 @@ export class Recipe {
   time!: {
     preparation: number;
     cooking: number;
-    rest: number;
     total: number;
   }; // is check
 
@@ -86,18 +85,22 @@ export class Recipe {
       fat: number;
       carbohydrates: number;
       protein: number;
-      sugar: number;
-      fiber: number;
-      salt: number;
+      cholesterol: number;
+      // alcohol: number;
+      // fiber: number;
+      // sugar: number;
+      // salt: number;
     };
     ofPortion: {
       calories: number;
       fat: number;
       carbohydrates: number;
       protein: number;
-      sugar: number;
-      fiber: number;
-      salt: number;
+      cholesterol: number;
+      // alcohol: number;
+      // fiber: number;
+      // sugar: number;
+      // salt: number;
     };
   };
 
