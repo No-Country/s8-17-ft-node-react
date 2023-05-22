@@ -24,8 +24,13 @@ class Repository<T> {
     return model;
   }
 
-  public async update(id: string, data: Partial<T>): Promise<DocumentType<T> | null> {
-    return this.model.findByIdAndUpdate(id, data, { new: true });
+  public async update(
+    id: Partial<T>,
+    data: Partial<T>,
+    options: boolean
+  ): Promise<DocumentType<T> | null> {
+    return this.model.findOneAndUpdate(id, data, { upsert: options });
+    // return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
   public async delete(id: string): Promise<DocumentType<T> | null> {
