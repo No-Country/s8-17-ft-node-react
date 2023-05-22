@@ -1,18 +1,20 @@
 "use client";
-import { profile } from "@/backend";
-import { useQuery } from "@tanstack/react-query";
+
+import { useAuth } from "@/hooks/useAuth";
+import { USER_TOKEN } from "@/utils/constants";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { FiLogOut } from "react-icons/fi";
 
 export default function Navbar() {
-  // const { data } = useQuery(["user"], profile);
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
 
   const handleLogOut = () => {
-    window.localStorage.removeItem("loggedUser");
-    window.location.reload();
+    // window.localStorage.removeItem("loggedUser");
+    Cookies.remove(USER_TOKEN, { sameSite: "Lax" });
+    router.refresh();
   };
 
   return (
@@ -32,17 +34,26 @@ export default function Navbar() {
             <span>Contact</span>
           </Link>
         </div>
-        <div className="flex items-center space-x-6">
-          <Link href="/login">
-            <button className="text-primary-500 font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-white shadow-lg">
-              Sign in
-            </button>
-          </Link>
-          <Link href="/register">
-            <button className="text-white font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-primary-500 shadow-lg">
-              Create Account
-            </button>
-          </Link>
+        <div className="flex items-center space-x-3">
+          {!isLoading && isAuthenticated ? (
+            <>
+              <div className="flex items-center">Hola {user?.name}</div>
+              <button onClick={handleLogOut}>Sign out</button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <button className="text-primary-500 font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-white shadow-lg">
+                  Sign in
+                </button>
+              </Link>
+              <Link href="/register">
+                <button className="text-white font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-primary-500 shadow-lg">
+                  Create Account
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

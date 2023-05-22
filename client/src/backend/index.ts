@@ -4,11 +4,15 @@ import axios from "axios";
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const registerUser = async (newUser: UserRegister): Promise<any> => {
-  return await axios.post(`${baseUrl}/api/auth/register`, {
+  const response = await axios.post(`${baseUrl}/api/auth/register`, {
     name: newUser.name,
     email: newUser.email,
     password: newUser.password
   });
+
+  const { token } = response.data;
+
+  return token;
 };
 
 export const loginUser = async (user: UserAuth): Promise<any> => {
@@ -16,7 +20,10 @@ export const loginUser = async (user: UserAuth): Promise<any> => {
     email: user.email,
     password: user.password
   });
-  return response;
+
+  const { token } = response.data;
+
+  return token;
 };
 
 export const google = async (): Promise<any> => {
@@ -24,12 +31,17 @@ export const google = async (): Promise<any> => {
   return response;
 };
 
-export const profile = async (token: null | string): Promise<any> => {
+export const getProfile = async (token: null | string): Promise<any> => {
   const response = await axios.get(`${baseUrl}/api/auth/profile`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
   const profile = response.data;
 
   return profile;

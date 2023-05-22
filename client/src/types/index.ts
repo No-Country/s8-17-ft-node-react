@@ -7,7 +7,7 @@ export interface UserRegister extends UserAuth {
   name: string;
 }
 
-export interface UserProfile {
+export interface UserProfile extends UserRegister {
   lastName: string;
   picture: string;
   nationality: string;

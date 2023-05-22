@@ -5,13 +5,14 @@ import useForm from "@/hooks/useForm";
 import { UserAuth } from "@/types";
 import { loginUser } from "@/backend";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { alerts } from "@/utils/alert";
 import Cookies from "js-cookie";
 import { USER_TOKEN } from "@/utils/constants";
 import CookMeal from "public/CookMeal.png";
 
 export default function Login() {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { form, handleChange } = useForm<UserAuth>({
     email: "",
@@ -21,7 +22,8 @@ export default function Login() {
   const { mutate } = useMutation(loginUser, {
     onSuccess: response => {
       // window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
-      Cookies.set(USER_TOKEN, JSON.stringify(response.data), { sameSite: "Lax", expires: 1 });
+      Cookies.set(USER_TOKEN, response, { sameSite: "Lax", expires: 1 });
+      queryClient.invalidateQueries(["user", "authStatus"]);
       router.push("/");
     },
     onError: (error: any) => {

@@ -32,7 +32,7 @@ export default function Register() {
   const { mutate } = useMutation(registerUser, {
     onSuccess: response => {
       // window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
-      Cookies.set(USER_TOKEN, JSON.stringify(response.data), { sameSite: "Lax", expires: 1 });
+      Cookies.set(USER_TOKEN, response, { sameSite: "Lax", expires: 1 });
 
       alerts({
         title: "User registered succesfully!",
@@ -42,6 +42,7 @@ export default function Register() {
       });
     },
     onError: (error: any) => {
+      console.log(error.response.data);
       alerts({
         title: error.response.data.message
           ? error.response.data.message
