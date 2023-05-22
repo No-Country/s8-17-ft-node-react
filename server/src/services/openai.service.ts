@@ -23,6 +23,8 @@ export class OpenAIServiceIntance {
 
     return response.data.choices[0].text;
   }
+
+  // generar la imagen de la receta en una llamada aparte
 }
 
 const OpenAIService = new OpenAIServiceIntance(

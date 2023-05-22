@@ -7,5 +7,6 @@ const recipeRoutes = Router();
 const recipeController = new RecipeController(new RecipeService());
 
 recipeRoutes.post("/generate", checkJWT, recipeController.generate.bind(recipeController));
+recipeRoutes.post("/save", checkJWT, recipeController.save.bind(recipeController));
 
 export default recipeRoutes;

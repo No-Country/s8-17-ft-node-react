@@ -12,10 +12,11 @@ export const registerUser = async (newUser: UserRegister): Promise<any> => {
 };
 
 export const loginUser = async (user: UserAuth): Promise<any> => {
-  return await axios.post(`${baseUrl}/api/auth/login`, {
+  const response = await axios.post(`${baseUrl}/api/auth/login`, {
     email: user.email,
     password: user.password
   });
+  return response;
 };
 
 export const google = async (): Promise<any> => {
@@ -23,15 +24,10 @@ export const google = async (): Promise<any> => {
   return response;
 };
 
-export const profile = async (): Promise<any> => {
-  const loggedUserJSON = window.localStorage.getItem("loggedUser");
-  let user = null;
-  if (loggedUserJSON) {
-    user = JSON.parse(loggedUserJSON);
-  }
+export const profile = async (token: null | string): Promise<any> => {
   const response = await axios.get(`${baseUrl}/api/auth/profile`, {
     headers: {
-      Authorization: `Bearer ${user?.token}`
+      Authorization: `Bearer ${token}`
     }
   });
   const profile = response.data;
@@ -45,9 +41,6 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
   if (loggedUserJSON) {
     user = JSON.parse(loggedUserJSON);
   }
-
-  console.log(user?.token);
-  console.log(data);
 
   const response = await axios.post(
     `${baseUrl}/api/recipe/generate`,
@@ -63,6 +56,6 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
       }
     }
   );
-  console.log(response);
+
   return response;
 };

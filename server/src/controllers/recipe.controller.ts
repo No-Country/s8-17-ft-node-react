@@ -31,6 +31,15 @@ export class RecipeController {
     }
   }
 
+  async save(req: Request, res: Response): Promise<Response> {
+    try {
+      await this.recipeService.save(req.body);
+      res.status(200).json({ message: "The recipe has been saved successfully!" });
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error });
+    }
+  }
+
   private generateTemplatePrompt(data: GenerateRecipeDto): string {
     return `Generate a cooking recipe according to the following parameters:
     - Ingredients: ${data.ingredients}
@@ -50,33 +59,30 @@ export class RecipeController {
         total: string
       },
       portions: number,
+      categories: string[],
       diets: string[],
       difficulty: ${data.difficulty},
-      categories: string[],
       nutritionalValue: {
         of100g: {
           calories: number,
           fat: number,
           carbohydrates: number,
           protein: number,
-          cholesterol: number,
-          // alcohol: number,
-          // fiber: number
+          cholesterol: number
         },
         ofPortion: {
           calories: number,
           fat: number,
           carbohydrates: number,
           protein: number,
-          cholesterol: number,
-          // alcohol: number,
-          // fiber: number
+          cholesterol: number
         }
       }
     }`;
   }
 
   private defaultResponse(): any {
+    // falta la propiedad image que se podría obtener con un llamado aparte a la api de openAI
     return {
       name: "Crispy Keto Potato Breakfast",
       description:
@@ -95,15 +101,17 @@ export class RecipeController {
         total: "30 minutes"
       },
       portions: 2,
+      categories: ["Breakfast"],
       diets: ["Ketogenic"],
       difficulty: "Easy",
-      categories: ["Breakfast"],
       nutritionalValue: {
         of100g: {
           calories: 97,
           fat: 4.3,
           carbohydrates: 16.3,
-          protein: 2.2
+          protein: 2.2,
+          cholesterol: 2.1
+          // alcohol: 0
           // fiber: 2.2,
           // sugar: 0.4,
           // salt: 0.2
@@ -112,7 +120,9 @@ export class RecipeController {
           calories: 98,
           fat: 4.4,
           carbohydrates: 16.5,
-          protein: 2.3
+          protein: 2.3,
+          cholesterol: 2.2
+          // alcohol: 0
           // fiber: 2.3,
           // sugar: 0.4,
           // salt: 0.3
