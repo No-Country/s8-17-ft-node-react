@@ -13,4 +13,10 @@ export class RecipeService {
     data.recipe.createdBy = user;
     await this.recipeRepository.create(data.recipe);
   }
+
+  public async getByUserId(id: string): Promise<Array<Recipe>> {
+    // lo que se le debe pasar como id es la propiedad _id del usuario, no su id !!
+    const userRecipes: Array<Recipe> = await RecipeModel.find({ createdBy: id });
+    return userRecipes;
+  }
 }
