@@ -4,7 +4,7 @@ import { Poppins, Commissioner } from "next/font/google";
 import ReactQueryProvider from "@/utils/provider";
 
 const poppins = Poppins({
-  weight: ["500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   subsets: ["latin"],
   variable: "--font-poppins"
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <ReactQueryProvider>
           <Navbar />
-          {children}
+          <main className="w-full h-full">{children}</main>
           <Footer />
         </ReactQueryProvider>
       </body>
