@@ -4,17 +4,17 @@ const usersToSeed: Array<Partial<User>> = [
   {
     name: "John",
     email: "john@example.com",
-    password: "pass123"
+    password: "Pass1234"
   },
   {
     name: "Mary",
     email: "mary@example.com",
-    password: "pass123"
+    password: "Pass1234"
   },
   {
     name: "William",
     email: "william@example.com",
-    password: "pass123"
+    password: "Pass1234"
   }
 ];
 
