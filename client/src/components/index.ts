@@ -7,3 +7,4 @@ export { default as HomeCards } from "./HomeCards";
 export { default as HomeInfo } from "./HomeInfo";
 export { default as Contact } from "./Contact";
 export { default as ContactForm } from "./ContactForm";
+export { default as Testimonials } from "./Testimonials";
