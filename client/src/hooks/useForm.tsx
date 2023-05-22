@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 export default function useForm<T>(state: T) {
   const [form, setForm] = useState(state);
 
-  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = target;
     setForm({
       ...form,
