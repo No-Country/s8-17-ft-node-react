@@ -14,7 +14,6 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<Response> {
     const userRegisterDto = plainToClass(UserRegisterDto, req.body);
-
     const errors = await validate(userRegisterDto);
     if (errors.length > 0) {
       return res.status(400).json(errors.map(err => err.constraints));
@@ -52,7 +51,7 @@ export class AuthController {
       const response = await this.userService.login(req.body);
       return res.status(200).json(response);
     } catch (error: any) {
-      return error.message
+      return error.message === "Invalid email." || "Invalid password."
         ? res.status(400).json({ errorMessage: error.message })
         : res.status(500).json({ errorMessage: error });
     }
