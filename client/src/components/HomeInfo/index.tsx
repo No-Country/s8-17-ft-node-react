@@ -10,7 +10,7 @@ const HomeInfo = () => {
   return (
     <div className="container h-max flex flex-col justify-center items-center gap-4">
       <div className="w-full flex items-center justify-center gap-8">
-        <Image src={svg1} alt="svg 1" />
+        <Image src={svg1} alt="svg 1" className="hidden lg:block" />
         <div className="w-full flex items-center justify-between gap-8">
           <Image src={img1} alt="img 1" className="w-1/3 md:w-full" />
           <div className="flex flex-col justify-center gap-5">
@@ -24,10 +24,10 @@ const HomeInfo = () => {
             </p>
           </div>
         </div>
-        <Image src={svg2} alt="svg 2" className="self-start" />
+        <Image src={svg2} alt="svg 2" className="self-start hidden lg:block" />
       </div>
       <div className="w-full flex items-center justify-center gap-8">
-        <Image src={svg2} alt="svg 2" className="self-end" />
+        <Image src={svg2} alt="svg 2" className="self-end hidden lg:block" />
         <div className="w-full flex flex-row-reverse items-center justify-between gap-8">
           <Image src={img2} alt="img 2" className="w-1/3 md:w-full" />
           <div className="flex flex-col justify-center gap-5">
@@ -41,7 +41,7 @@ const HomeInfo = () => {
             </p>
           </div>
         </div>
-        <Image src={svg1} alt="svg 1" className="self-end" />
+        <Image src={svg1} alt="svg 1" className="self-end hidden lg:block" />
       </div>
     </div>
   );
