@@ -4,6 +4,7 @@ import { GenerateRecipeDto } from "../dto/recipe/generateRecipe.dto";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
+import { Recipe } from "src/models/recipe.model";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
@@ -22,7 +23,6 @@ export class RecipeController {
 
       // const prompt: string = this.generateTemplatePrompt(generateRecipeDto);
       // const recipe = await this.openAIService.createRecipe(prompt);
-      // await this.recipeService.save(recipe);
       const defaultResponse = this.defaultResponse();
 
       return res.status(200).json(defaultResponse);
@@ -36,7 +36,20 @@ export class RecipeController {
       await this.recipeService.save(req.body);
       res.status(200).json({ message: "The recipe has been saved successfully!" });
     } catch (error: any) {
-      return res.status(500).json({ errorMessage: error });
+      if (error.name === "CastError")
+        return res.status(400).json({ errorMessage: "Invalid User ID." });
+      return res.status(500).json({ errorMessage: error.message });
+    }
+  }
+
+  async getByUserId(req: Request, res: Response): Promise<Response> {
+    try {
+      const userRecipes: Array<Recipe> = await this.recipeService.getByUserId(req.params.id);
+      res.status(200).json(userRecipes);
+    } catch (error: any) {
+      if (error.name === "CastError")
+        return res.status(400).json({ errorMessage: "Invalid User ID." });
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
