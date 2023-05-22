@@ -1,30 +1,29 @@
 "use client";
-import { profile } from "@/backend";
-import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
+
+import { useAuth } from "@/hooks/useAuth";
+import { USER_TOKEN } from "@/utils/constants";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { FiLogOut } from "react-icons/fi";
 
 export default function Navbar() {
-  // const { data } = useQuery(["user"], profile);
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
 
   const handleLogOut = () => {
-    window.localStorage.removeItem("loggedUser");
-    window.location.reload();
+    // window.localStorage.removeItem("loggedUser");
+    Cookies.remove(USER_TOKEN, { sameSite: "Lax" });
+    router.refresh();
   };
 
   return (
-    <header className="w-full h-[97px] bg-[#fff] flex justify-between items-center px-8">
-      <div className="mr-335">
-        <Link href="/">
-          <Image src="/logo.svg" alt="logo" width={209} height={38} />
-        </Link>
-      </div>
-      <nav className="flex space-x-10 ml-335 md:ml-0">
-        <div className="flex items-center space-x-10 text-[#FF8811] font-semibold">
+    <header className="w-full h-[97px] flex justify-between items-center px-8">
+      <Link href="/">
+        <Image src="/logo.svg" alt="logo" width={209} height={38} />
+      </Link>
+      <nav className="flex space-x-10">
+        <div className="flex items-center space-x-10 text-primary-500 font-semibold">
           <Link href="/">
             <span>Home</span>
           </Link>
@@ -35,17 +34,26 @@ export default function Navbar() {
             <span>Contact</span>
           </Link>
         </div>
-        <div className="flex items-center space-x-6">
-          <Link href="/login">
-            <button className="text-[#FF8811] font-semibold border border-[#FF8811] border-solid rounded-full px-4 py-2 bg-white shadow-lg">
-              Sign in
-            </button>
-          </Link>
-          <Link href="/register">
-            <button className="text-white font-semibold border border-[#FF8811] border-solid rounded-full px-4 py-2 bg-[#FF8811] shadow-lg">
-              Create Account
-            </button>
-          </Link>
+        <div className="flex items-center space-x-3">
+          {!isLoading && isAuthenticated ? (
+            <>
+              <div className="flex items-center">Hola {user?.name}</div>
+              <button onClick={handleLogOut}>Sign out</button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <button className="text-primary-500 font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-white shadow-lg">
+                  Sign in
+                </button>
+              </Link>
+              <Link href="/register">
+                <button className="text-white font-semibold border border-primary-500 border-solid rounded-full px-4 py-2 bg-primary-500 shadow-lg">
+                  Create Account
+                </button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>
