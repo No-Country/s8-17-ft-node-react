@@ -111,7 +111,7 @@ const ProfileUser = () => {
           </div>
           {errors.password && (
             <span className="text-red-500">
-              <b>Este campo es requerido</b>
+              <b>The field is required</b>
             </span>
           )}
         </div>
@@ -124,10 +124,10 @@ const ProfileUser = () => {
               type={showConfirmPassword ? "text" : "password"}
               className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-lg px-5 py-3 bg-white outline-none"
               {...register("confirmPassword", {
-                required: "Este campo es requerido",
+                required: "The field is required",
                 validate: {
-                  empty: value => value.trim() !== "" || "El campo no puede estar vacío ",
-                  match: value => value === password || "Las contraseñas no coinciden"
+                  empty: value => value.trim() !== "" || "The field cannot be empty",
+                  match: value => value === password || "Passwords do not match"
                 }
               })}
             />
