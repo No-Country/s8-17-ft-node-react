@@ -1,15 +1,20 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
-import { USER_TOKEN } from "@/utils/constants";
+import { colors, USER_TOKEN } from "@/utils/constants";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { HiLogout } from "react-icons/hi";
 
 export default function Navbar() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+
+  console.log(user);
+  console.log(isAuthenticated);
+  console.log(isLoading);
 
   const handleLogOut = () => {
     // window.localStorage.removeItem("loggedUser");
@@ -36,10 +41,10 @@ export default function Navbar() {
         </div>
         <div className="flex items-center space-x-3">
           {!isLoading && isAuthenticated ? (
-            <>
-              <div className="flex items-center">Hola {user?.name}</div>
-              <button onClick={handleLogOut}>Sign out</button>
-            </>
+            <div className="w-[180px] flex items-center justify-evenly bg-primary-500 text-primary-500 border border-primary-500 p-2 rounded-full">
+              <h1 className="text-lg font-bold text-white">Hola {user?.name}</h1>
+              <HiLogout onClick={handleLogOut} color={"#FFF"} />
+            </div>
           ) : (
             <>
               <Link href="/login">
