@@ -8,5 +8,6 @@ const recipeController = new RecipeController(new RecipeService());
 
 recipeRoutes.post("/generate", checkJWT, recipeController.generate.bind(recipeController));
 recipeRoutes.post("/save", checkJWT, recipeController.save.bind(recipeController));
+recipeRoutes.get("/user/:id", checkJWT, recipeController.getByUserId.bind(recipeController));
 
 export default recipeRoutes;

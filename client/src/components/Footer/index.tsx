@@ -2,13 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
+// TODO: responsive. fix layout
+
 const Footer = () => {
   return (
     <footer className="w-full pt-[550px] md:pt-[400px] lg:pt-[200px]">
       <div className="pt-24 relative  font-text md:text-sm text-xs lg:text-base">
-        <div className="h-[600px] md:h-[500px] lg:h-[250px] border-t-[15px] z-30 border-secondary-brightPink absolute bottom-0 rounded-t-[60px]" />
-        <div className="h-[600px] md:h-[500px] lg:h-[250px] border-t-[30px] z-20 border-complementary-crayola absolute bottom-0 rounded-t-[60px]" />
-        <div className="h-[600px] md:h-[500px] lg:h-[250px] bg-text-eerieBlack absolute bottom-0 rounded-t-[60px] text-white">
+        <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] border-t-[15px] z-30 border-secondary-500 absolute bottom-0 rounded-t-[60px]" />
+        <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] border-t-[30px] z-20 border-complementary-500 absolute bottom-0 rounded-t-[60px]" />
+        <div className="w-full h-[600px] md:h-[500px] lg:h-[250px] bg-dark absolute bottom-0 rounded-t-[60px] text-white">
           <div className="mx-6 pt-10 flex flex-col ">
             {/* Contenedor de LOGO - Roadmap - About - Contact - FollowUs */}
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">

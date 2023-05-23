@@ -1,7 +1,5 @@
 "use client";
-import { Hero, HomeCards, HomeInfo } from "@/components";
-import { profile } from "@/backend";
-import { useEffect } from "react";
+import { Contact, Hero, HomeCards, HomeInfo, Testimonials } from "@/components";
 
 export default function Home() {
   return (
@@ -9,6 +7,8 @@ export default function Home() {
       <Hero />
       <HomeCards />
       <HomeInfo />
+      <Contact />
+      <Testimonials />
     </main>
   );
 }
