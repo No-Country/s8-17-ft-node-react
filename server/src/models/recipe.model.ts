@@ -104,9 +104,9 @@ export class Recipe {
     };
   };
 
-  @prop({ ref: User, required: true })
-  @IsNotEmpty()
-  createdBy!: Ref<User>;
+  // @prop({ ref: User, required: true })
+  // @IsNotEmpty()
+  // createdBy!: Ref<User>;
 }
 
 const RecipeModel = getModelForClass(Recipe);

@@ -18,14 +18,19 @@ class Repository<T> {
     return this.model.find(filter);
   }
 
-  public async create(data: Partial<T>): Promise<DocumentType<T>> {
+  public async create(data: T[]): Promise<DocumentType<T>> {
     const model = new this.model(data) as DocumentType<T>;
     await model.save();
     return model;
   }
 
-  public async update(id: string, data: Partial<T>): Promise<DocumentType<T> | null> {
-    return this.model.findByIdAndUpdate(id, data, { new: true });
+  public async update(
+    id: Partial<T>,
+    data: Partial<T>,
+    options?: boolean
+  ): Promise<DocumentType<T> | null> {
+    return this.model.findOneAndUpdate(id, data, { upsert: options });
+    // return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
   public async delete(id: string): Promise<DocumentType<T> | null> {

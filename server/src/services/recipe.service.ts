@@ -1,22 +1,25 @@
 import Repository from "../utils/repository";
 import RecipeModel, { Recipe } from "../models/recipe.model";
 import UserModel, { User } from "../models/user.model";
+import { Ref } from "@typegoose/typegoose";
 
 export class RecipeService {
   private recipeRepository: Repository<Recipe> = new Repository(RecipeModel);
+  private userRepository: Repository<User> = new Repository(UserModel);
 
-  public async save(data: any): Promise<void> {
-    // lo que se le debe pasar como userId es la propiedad _id del usuario, no su id !!
-    const user: User = await UserModel.findById(data.userId);
+  public async save(id: string, recipe: Recipe[]): Promise<void> {
+    const user: User = await this.userRepository.findOne({ id });
     if (!user) throw new Error("User not found.");
 
-    data.recipe.createdBy = user;
-    await this.recipeRepository.create(data.recipe);
+    await this.userRepository.update({ id }, { favRecipes: recipe }, true);
+    await this.recipeRepository.create(recipe);
   }
 
-  public async getByUserId(id: string): Promise<Array<Recipe>> {
-    // lo que se le debe pasar como id es la propiedad _id del usuario, no su id !!
-    const userRecipes: Array<Recipe> = await RecipeModel.find({ createdBy: id });
+  public async getByUserId(id: string): Promise<Recipe[]> {
+    const user: User = await this.userRepository.findOne({ id });
+    if (!user) throw new Error("User not found.");
+
+    const userRecipes: Recipe[] = user.favRecipes;
     return userRecipes;
   }
 }

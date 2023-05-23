@@ -5,6 +5,8 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
 import { Recipe } from "src/models/recipe.model";
+import { User } from "src/models/user.model";
+import { Ref } from "@typegoose/typegoose";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
@@ -33,21 +35,21 @@ export class RecipeController {
 
   async save(req: Request, res: Response): Promise<Response> {
     try {
-      await this.recipeService.save(req.body);
-      res.status(200).json({ message: "The recipe has been saved successfully!" });
+      await this.recipeService.save(req.body.id, req.body.recipe);
+      return res.status(200).json({ message: "The recipe has been saved successfully!" });
     } catch (error: any) {
-      if (error.name === "CastError")
+      if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
-      return res.status(500).json({ errorMessage: error.message });
+      return res.status(500).json(error);
     }
   }
 
   async getByUserId(req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Array<Recipe> = await this.recipeService.getByUserId(req.params.id);
-      res.status(200).json(userRecipes);
+      const userRecipes: Recipe[] = await this.recipeService.getByUserId(req.body.id);
+      return res.status(200).json(userRecipes);
     } catch (error: any) {
-      if (error.name === "CastError")
+      if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
     }
