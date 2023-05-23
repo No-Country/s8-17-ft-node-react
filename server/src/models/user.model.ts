@@ -32,10 +32,9 @@ export class User {
   public password?: string;
 
   @prop({
-    required: false,
-    ref: Recipe
+    required: false
   })
-  public favRecipes?: Ref<Recipe>[];
+  public favRecipes?: Recipe[];
 }
 
 const UserModel = getModelForClass(User);

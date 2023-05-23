@@ -6,6 +6,7 @@ import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
 import { Recipe } from "src/models/recipe.model";
 import { User } from "src/models/user.model";
+import { Ref } from "@typegoose/typegoose";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
@@ -45,12 +46,12 @@ export class RecipeController {
 
   async getByUserId(req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Partial<User> = await this.recipeService.getByUserId(req.params.id);
+      const userRecipes: Recipe[] = await this.recipeService.getByUserId(req.body.id);
       return res.status(200).json(userRecipes);
     } catch (error: any) {
       if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
-      return res.status(500).json(error);
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
