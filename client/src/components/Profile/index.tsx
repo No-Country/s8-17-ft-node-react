@@ -50,7 +50,7 @@ const ProfileUser = () => {
   };
 
   return (
-    <div className="w-full md:w-2/4 lg:w-2/4 py-4 px-12 bg-yellow-200 rounded-lg lg:translate-x-1/4">
+    <div className="w-full md:w-2/4 lg:w-2/4 py-4 px-12 bg-white rounded-lg lg:translate-x-1/4 shadow-[0px_0px_6px_rgba(0,0,0,0.25)]">
       <h1 className="font-semibold text-2xl md:text-3xl text-dark">Profile</h1>
       <p className="text-sm md:text-base lg:text-lg font-normal text-justify">
         Keep your account secure, update your password regularly, and choose a variety of
