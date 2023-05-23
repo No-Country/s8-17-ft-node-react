@@ -14,8 +14,8 @@ class Repository<T> {
     return this.model.findOne(filter);
   }
 
-  public async findAll(filter?: Partial<T>): Promise<DocumentType<T>[]> {
-    return this.model.find(filter);
+  public async findAll(filter?: Partial<T>, fields?: any): Promise<DocumentType<T>[]> {
+    return this.model.find(filter, fields);
   }
 
   public async create(data: Partial<T>): Promise<DocumentType<T>> {
