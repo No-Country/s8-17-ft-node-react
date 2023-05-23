@@ -1,7 +1,9 @@
 import { Recipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
+// const baseUrl = "http://localhost:3000";
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+
 
 export const registerUser = async (newUser: UserRegister): Promise<any> => {
   const response = await axios.post(`${baseUrl}/api/auth/register`, {
@@ -45,6 +47,7 @@ export const getProfile = async (token: null | string): Promise<any> => {
   const profile = response.data;
 
   return profile;
+  
 };
 
 export const createRecipe = async (data: Recipes): Promise<any> => {

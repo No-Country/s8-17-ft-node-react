@@ -1,6 +1,6 @@
 "use client";
 
-import ContactForm from "../ContactForm";
+import { ContactForm } from "@/components";
 
 //TODO: add images
 
