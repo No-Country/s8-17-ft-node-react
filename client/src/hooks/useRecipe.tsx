@@ -1,10 +1,15 @@
 import { getAllRecipes } from "@/backend";
 import { useAuth } from "@/hooks/useAuth";
 import { checkSession } from "@/utils/checkSession";
-import { IRecipe } from "@/types";
+import { IRecipe, UserProfile } from "@/types";
 
-export const useRecipeById = async ({ recipeId }: { recipeId: string }) => {
-  const { user, isAuthenticated, isLoading } = useAuth();
+export const useRecipeById = async ({
+  recipeId,
+  user
+}: {
+  recipeId: string;
+  user: UserProfile | undefined;
+}) => {
   const token = checkSession();
   const allRecipesFromUser = await getAllRecipes({ userId: user?._id!, token });
 

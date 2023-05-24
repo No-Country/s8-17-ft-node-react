@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
 import { useRecipeById } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
@@ -51,11 +52,11 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
       }
     }
   });
-
+  const { user, isAuthenticated, isLoading } = useAuth();
   // TODO: traer la receta con fetch
   useEffect(() => {
     const fetchData = async () => {
-      const recipe = await useRecipeById({ recipeId });
+      const recipe = await useRecipeById({ recipeId, user });
       if (recipe === null) setRecipe(null);
       setRecipe(recipe!);
     };
