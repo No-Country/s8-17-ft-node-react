@@ -1,14 +1,13 @@
 "use client";
+import { getRecipeById } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaDownload, FaShareAlt } from "react-icons/fa";
-import { useQueryClient } from "@tanstack/react-query";
-
 // TODO: pasar id por params y buscar en base de datos
 
-const CardRecipe = () => {
+const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const [recipe, setRecipe] = useState<IRecipe>({
+    id: "adasd",
     name: "Tortilla de Queso",
     description: "Una rica y nutritiva tortilla de queso para el desayuno.",
     ingredients: ["2 huevos", "50 g de harina", "100 ml de leche", "50 g de queso rallado"],
@@ -52,23 +51,17 @@ const CardRecipe = () => {
       }
     }
   });
-  // TODO: traer info usando query
-  // const queryClient = useQueryClient();
-  // const data = queryClient.getQueriesData<IRecipe>('recipe');
 
   // TODO: traer la receta con fetch
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await fetch("ruta-de-la-api");
-  //     const data = await response.json();
-  //     setRecipe(data);
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const recipe = await getRecipeById(recipeId);
+      setRecipe(recipe);
+    };
 
-  //   fetchData();
-  // }, []);
+    fetchData();
+  }, []);
 
-  // TODO: traer receta con localstorage
-  // const [recipe, setRecipe] = useState<IRecipe>(JSON.parse(localStorage.getItem('recipe')))
   return (
     <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
       {/* NAME OF THE RECIPE */}
@@ -113,4 +106,4 @@ const CardRecipe = () => {
   );
 };
 
-export default CardRecipe;
+export default RecipeCard;
