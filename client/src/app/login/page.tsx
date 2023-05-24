@@ -11,9 +11,16 @@ import CookMeal from "public/CookMeal.png";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@/components";
+import { ImSpinner8 } from "react-icons/im";
+
+const INITIAL_STATE = {
+  email: "",
+  password: ""
+};
 
 const loginSchema = z.object({
-  email: z.string({ required_error: "Email is required" }).email(),
+  email: z.string().email("This field must be an email"),
   password: z.string({ required_error: "Password is required" })
 });
 
@@ -26,9 +33,12 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isSubmitting, touchedFields },
+    trigger
   } = useForm<Schema>({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(loginSchema),
+    defaultValues: INITIAL_STATE,
+    mode: "onBlur"
   });
 
   const { mutate } = useMutation(loginUser, {
@@ -46,7 +56,8 @@ export default function Login() {
     }
   });
 
-  const onSubmit = (data: Schema) => {
+  const onSubmit = async (data: Schema) => {
+    await trigger([], { shouldFocus: true });
     mutate(data);
   };
 
@@ -61,23 +72,36 @@ export default function Login() {
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col items-center justify-evenly gap-6"
+          className="w-full flex flex-col items-center justify-evenly gap-2"
         >
-          <input
-            placeholder="Email"
-            type="email"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-            {...register("email")}
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-            {...register("password")}
-          />
-
-          <button type="submit" className="w-full rounded-3xl px-5 py-3 bg-primary-500 font-bold">
-            Continue
+          <div className="w-full h-full flex flex-col gap-1.5 justify-between">
+            <input
+              placeholder="email"
+              type="text"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("email")}
+            />
+            {touchedFields.email && errors.email && (
+              <ErrorMessage message={errors.email.message!} />
+            )}
+          </div>
+          <div className="w-full h-full flex flex-col gap-1.5 justify-between">
+            <input
+              placeholder="password"
+              type="password"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("password")}
+            />
+            {touchedFields.password && errors.password && (
+              <ErrorMessage message={errors.password.message!} />
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-3xl mt-4 px-5 py-3 bg-primary-500 font-bold"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <ImSpinner8 className="animate-spin" /> : "Continue"}
           </button>
         </form>
         <div className="flex items-center justify-around gap-5">
