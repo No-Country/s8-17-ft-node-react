@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Category } from "./category.model";
 import { Diet } from "./diet.model";
 import { User } from "./user.model";
+import { Difficulty } from "../utils/types";
 // import { Alert } from "./alert.model";
 
 export class Recipe {
@@ -69,7 +70,7 @@ export class Recipe {
   @prop({
     required: false
   })
-  difficulty?: string;
+  difficulty?: Difficulty;
 
   @prop({
     required: false

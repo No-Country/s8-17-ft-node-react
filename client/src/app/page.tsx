@@ -1,5 +1,5 @@
 "use client";
-import { Hero, HomeCards, HomeInfo } from "@/components";
+import { Contact, Hero, HomeCards, HomeInfo, Testimonials } from "@/components";
 
 export default function Home() {
   return (
@@ -7,6 +7,8 @@ export default function Home() {
       <Hero />
       <HomeCards />
       <HomeInfo />
+      <Contact />
+      <Testimonials />
     </main>
   );
 }
