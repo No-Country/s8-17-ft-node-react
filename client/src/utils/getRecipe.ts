@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { checkSession } from "@/utils/checkSession";
 import { IRecipe, UserProfile } from "@/types";
 
-export const useRecipeById = async ({
+export const getRecipeById = async ({
   recipeId,
   user
 }: {
