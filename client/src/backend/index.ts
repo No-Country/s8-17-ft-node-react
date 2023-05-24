@@ -76,13 +76,13 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
 };
 
 export const getAllRecipes = async ({
-  userID,
+  userId,
   token,
 }: {
-  userID: string;
+  userId: string;
   token: null | string;
 }): Promise<IRecipe[]> => {
-  const response = await axios.get(`${baseUrl}/api/recipe/user/${userID}`, {
+  const response = await axios.get(`${baseUrl}/api/recipe/user/${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }

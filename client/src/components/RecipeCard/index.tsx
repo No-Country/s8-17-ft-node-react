@@ -6,7 +6,7 @@ import { FaDownload, FaShareAlt } from "react-icons/fa";
 // TODO: pasar id por params y buscar en base de datos
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
-  const [recipe, setRecipe] = useState<IRecipe>({
+  const [recipe, setRecipe] = useState<IRecipe | null>({
     id: "adasd",
     name: "Tortilla de Queso",
     description: "Una rica y nutritiva tortilla de queso para el desayuno.",
@@ -55,8 +55,9 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   // TODO: traer la receta con fetch
   useEffect(() => {
     const fetchData = async () => {
-      const recipe = await useRecipeById(recipeId);
-      setRecipe(recipe);
+      const recipe = await useRecipeById({ recipeId });
+      if (recipe === null) setRecipe(null);
+      setRecipe(recipe!);
     };
 
     fetchData();
@@ -65,43 +66,53 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   return (
     <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
       {/* NAME OF THE RECIPE */}
-      <div className="py-4">
-        <h1 className="text-2xl font-bold mb-2 font-title text-center">{recipe.name}</h1>
-      </div>
-      {/* IMAGE OF THE RECIPE */}
-      {/* <div className="py-4">
+      {recipe === null ? (
+        <div>
+          <div className="py-4">
+            <h1 className="text-2xl font-bold mb-2 font-title text-center">Recipe not found</h1>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="py-4">
+            <h1 className="text-2xl font-bold mb-2 font-title text-center">{recipe.name}</h1>
+          </div>
+          {/* IMAGE OF THE RECIPE */}
+          {/* <div className="py-4">
         <Image src={"/#"} alt="image" width={500} height={300} />
       </div> */}
-      {/* INGREDIENTS */}
-      <div className="py-4">
-        <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
-        <ul>
-          {recipe.ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-        </ul>
-      </div>
-      {/* PREPARATION */}
-      <div className="py-4">
-        <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
-        <ol>
-          {recipe.steps.map((step, index) => (
-            <li key={index}>
-              {index + 1} - {step}
-            </li>
-          ))}
-        </ol>
-      </div>
-      {/* TABLE NUTRITIONAL VALUES */}
+          {/* INGREDIENTS */}
+          <div className="py-4">
+            <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
+            <ul>
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            </ul>
+          </div>
+          {/* PREPARATION */}
+          <div className="py-4">
+            <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
+            <ol>
+              {recipe.steps.map((step, index) => (
+                <li key={index}>
+                  {index + 1} - {step}
+                </li>
+              ))}
+            </ol>
+          </div>
+          {/* TABLE NUTRITIONAL VALUES */}
 
-      <div className="flex justify-between mt-4 py-4">
-        <button className="flex items-center bg-primary-americanOrange hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
-          Download as PDF <FaDownload className="ml-1" />
-        </button>
-        <button className="flex items-center bg-secondary-brightPink hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
-          Share <FaShareAlt className="ml-1" />
-        </button>
-      </div>
+          <div className="flex justify-between mt-4 py-4">
+            <button className="flex items-center bg-primary-americanOrange hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
+              Download as PDF <FaDownload className="ml-1" />
+            </button>
+            <button className="flex items-center bg-secondary-brightPink hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
+              Share <FaShareAlt className="ml-1" />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
