@@ -1,4 +1,4 @@
-import { getModelForClass, prop, Ref } from "@typegoose/typegoose";
+import { getModelForClass, prop } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
 import { Recipe } from "./recipe.model";
@@ -34,7 +34,7 @@ export class User {
   @prop({
     required: false
   })
-  public favRecipes?: Recipe[];
+  public favRecipes?: Partial<Recipe>[];
 }
 
 const UserModel = getModelForClass(User);
