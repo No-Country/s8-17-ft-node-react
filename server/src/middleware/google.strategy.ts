@@ -1,5 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as FacebookStrategy } from "passport-facebook"
 import session from "express-session";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import express from "express";
@@ -38,18 +39,28 @@ class PassportConfig {
         }
       )
     );
-    // TODO: npm install passport-facebook
-    // conseguir algunas credenciales de facebook
-    // crear las estrategias de passport
-    // conectar los endpoints de facebook en auth controller y auth routes
-    // crear el dto de facebook
-    // crear el metodo en el service (se puede copiar el de google o usar el mismo)
-    // crear el metodo en el controller (se puede copiar el de google o usar el mismo)
 
-    // passport.use(
-    //     "facebook",
-    //     new FacebookStrategy(
-    // )
+    passport.use(
+      "facebook",
+      new FacebookStrategy({
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: `${process.env.SERVER_URL}/api/auth/facebook/callback`
+      },
+      (accessToken, refreshToken, profile, done) => {
+        console.log("accessToken: ", accessToken, "refreshToken: ", refreshToken);
+
+        const user: GoogleAuthDto = {
+          id: profile.id,
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          image: profile.photos[0].value,
+          accessToken,
+          refreshToken
+        };
+        done(null, user);
+      })
+    );
   }
 
   initialize(app: express.Application) {

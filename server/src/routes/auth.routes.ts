@@ -16,5 +16,10 @@ authRoutes.get(
   passportConfig.authenticate("google", { failureRedirect: "/login" }),
   authController.googleCallback.bind(authController)
 );
-
+authRoutes.get("/facebook", passportConfig.authenticate("facebook", { scope: ["profile", "email" ]}));
+authRoutes.get(
+  "/facebook/callback",
+  passportConfig.authenticate("facebook", { failureRedirect: "/login" }),
+  authController.facebookCallback.bind(authController)
+);
 export default authRoutes;
