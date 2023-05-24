@@ -77,4 +77,25 @@ export class AuthController {
       return res.status(500).json(error);
     }
   }
+
+  async facebook(req: Request, res: Response): Promise<Response> {
+    return res.status(200).json({ message: "Facebook auth" });
+  }
+
+  async facebookCallback(req: Request, res: Response): Promise<Response | void> {
+    const userFacebookLogin = plainToClass(GoogleAuthDto, req.user);
+    const errors = await validate(userFacebookLogin);
+    if (errors.length > 0) {
+      return res.status(400).json(errors.map(err => err.constraints));
+    }
+    try {
+      const response = await this.userService.loginFacebook(userFacebookLogin);
+      if (!response) return res.status(400).json({ message: "Invalid credentials" });
+
+      return res.redirect(`${process.env.CLIENT_URL}?token=${response.token}`);
+    } catch (error) {
+      console.log("facebookCallback error: ", error);
+      return res.status(500).json(error);
+    }
+  }
 }

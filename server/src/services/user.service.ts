@@ -47,6 +47,22 @@ export class UserService {
     };
   }
 
+  public async loginFacebook(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
+    let userDB = await this.userRepository.findOne({ email: user.email });
+    if (!userDB) {
+      userDB = await this.userRepository.create({
+        email: user.email,
+        name: user.name
+      });
+    }
+    delete userDB.password;
+
+    return {
+      user: userDB,
+      token: this.generateToken(userDB)
+    };
+  }
+
   public async findByEmail(email: string) {
     const user = await this.userRepository.findOne({ email });
     user ? delete user.password : null;

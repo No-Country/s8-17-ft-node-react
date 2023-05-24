@@ -49,9 +49,9 @@ const ProfileUser = () => {
   };
 
   return (
-    <div className="w-full md:w-2/4 lg:w-2/4 py-4 px-12 bg-white rounded-lg lg:translate-x-1/4 shadow-[0px_0px_6px_rgba(0,0,0,0.25)]">
-      <h1 className="font-semibold text-2xl md:text-3xl text-dark">Profile</h1>
-      <p className="text-sm md:text-base lg:text-lg font-normal text-justify">
+    <div className="w-full md:w-2/4 lg:w-2/4 py-4 px-12 bg-[#FFFFFF] rounded-[18px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)]">
+      <h1 className="font-semibold text-2xl md:text-3xl text-dark mt-12">Profile</h1>
+      <p className="text-sm md:text-base lg:text-lg font-normal text-justify ">
         Keep your account secure, update your password regularly, and choose a variety of
         characters. Avoid using personal data such as names or date of birth.
       </p>
@@ -59,31 +59,36 @@ const ProfileUser = () => {
         className="w-full flex flex-col justify-center gap-2 my-4"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div>
+        <div className="mt-12">
           <label className="font-medium text-base text-normal" htmlFor="name">
-            Name:
+            Full Name:
           </label>
-          <input
-            type="text"
-            id="name"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-lg px-5 py-3 bg-white outline-none"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+          <div className="relative">
+            <input
+              type="text"
+              id="name"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-lg px-5 py-3 bg-[#F6F6F6] outline-none"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <span className="absolute bottom-2 right-5 left-5 w-auto h-px bg-[#ABABAB]"></span>
+          </div>
         </div>
-        <div>
-          <label className="font-medium text-base text-normal" htmlFor="email">
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-lg px-5 py-3 bg-white outline-none"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
+        <div className="relative">
+          <div>
+            <label className="font-medium text-base text-normal" htmlFor="email">
+              Email:
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-lg px-5 py-3 bg-white outline-none"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
+          </div>
+          <span className="absolute bottom-2 right-5 left-5 w-auto h-px bg-[#ABABAB]"></span>
         </div>
-
         <div>
           <label className="font-medium text-base text-normal" htmlFor="password">
             New Password
@@ -107,6 +112,7 @@ const ProfileUser = () => {
                 />
               )}
             </span>
+            <span className="absolute bottom-2 right-5 left-5 w-auto h-px bg-[#ABABAB]"></span>
           </div>
           {errors.password && (
             <span className="text-red-500">
@@ -143,6 +149,7 @@ const ProfileUser = () => {
                 />
               )}
             </span>
+            <span className="absolute bottom-2 right-5 left-5 w-auto h-px bg-[#ABABAB]"></span>
           </div>
 
           {errors.confirmPassword && (
@@ -151,20 +158,18 @@ const ProfileUser = () => {
             </span>
           )}
         </div>
-        <div className="flex gap-2 mt-4">
-          <button
-            className="flex-1 px-6 font-bold text-white bg-lime-500 rounded-lg py-2"
-            type="submit"
-          >
-            Update
-          </button>
-        </div>
+        <button
+          className="w-full self-end lg:w-max px-6 font-bold text-white bg-secondary-500 rounded-lg py-2 mt-4"
+          type="submit"
+        >
+          Update
+        </button>
       </form>
-      <div className="flex gap-2">
+      {/* <div className="flex gap-2">
         <button className="flex-1 px-6 font-bold text-white bg-red-500 rounded-lg py-2">
           Delete
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
