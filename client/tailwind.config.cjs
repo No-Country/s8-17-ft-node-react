@@ -56,7 +56,8 @@ module.exports = {
         dark: "#1E1E1E", // eerieBlack
         normal: "#514B46", // darkLiver
         light: "#898989", // taupeGray
-        white: "#FCFBFB"
+        white: "#FCFBFB",
+        error: "#E63946"
       }
     }
   },
