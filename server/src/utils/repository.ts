@@ -5,7 +5,6 @@ class Repository<T> {
   constructor(model: ReturnModelType<new () => T>) {
     this.model = model;
   }
-
   public async findById(id: string): Promise<DocumentType<T> | null> {
     return this.model.findById(id);
   }
@@ -24,8 +23,19 @@ class Repository<T> {
     return model;
   }
 
-  public async update(id: string, data: Partial<T>): Promise<DocumentType<T> | null> {
-    return this.model.findByIdAndUpdate(id, data, { new: true });
+  public async createAll(data: T[]): Promise<DocumentType<T>> {
+    const model = new this.model(data) as DocumentType<T>;
+    await model.save();
+    return model;
+  }
+
+  public async update(
+    id: Partial<T>,
+    data: any,
+    options?: boolean
+  ): Promise<DocumentType<T> | null> {
+    return this.model.findOneAndUpdate(id, data, { upsert: options });
+    // return this.model.findOneAndUpdate({ id }, { $set: data }, { upsert: options ?? false });
   }
 
   public async delete(id: string): Promise<DocumentType<T> | null> {
@@ -42,6 +52,10 @@ class Repository<T> {
     return this.model.countDocuments({
       ...filter
     });
+  }
+
+  public async save(filter: Partial<T>): Promise<DocumentType<T> | null> {
+    return this.model.findOneAndUpdate(filter, { $set: filter }, { upsert: true });
   }
 }
 
