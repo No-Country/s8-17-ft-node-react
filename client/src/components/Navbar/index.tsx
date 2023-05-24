@@ -12,10 +12,6 @@ export default function Navbar() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
-  console.log(user);
-  console.log(isAuthenticated);
-  console.log(isLoading);
-
   const handleLogOut = () => {
     // window.localStorage.removeItem("loggedUser");
     Cookies.remove(USER_TOKEN, { sameSite: "Lax" });

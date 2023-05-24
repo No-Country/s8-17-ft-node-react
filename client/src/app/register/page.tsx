@@ -1,37 +1,59 @@
 "use client";
+
 import { registerUser } from "@/backend";
-import useForm from "@/hooks/useForm";
-import { UserRegister } from "@/types";
 import { alerts } from "@/utils/alert";
-import { USER_TOKEN } from "@/utils/constants";
+import { API_BASE_URL, USER_TOKEN } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import CookMeal from "public/CookMeal.png";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@/components";
+
+const registerSchema = z
+  .object({
+    name: z.string({ required_error: "Name is required" }).max(100),
+    email: z.string({ required_error: "Email is required" }).email(),
+    password: z
+      .string({ required_error: "Password is required" })
+      .regex(
+        /^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+        "The password must have an uppercase letter"
+      ),
+    confirmPassword: z.string({ required_error: "Password confirmation is required" })
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Password don't match"
+  });
+
+type Schema = z.infer<typeof registerSchema>;
 
 export default function Register() {
-  const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
   const router = useRouter();
-  const { form, handleChange } = useForm<UserRegister>({
-    name: "",
-    email: "",
-    password: ""
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, touchedFields, defaultValues }
+  } = useForm<Schema>({
+    resolver: zodResolver(registerSchema)
   });
 
   const handleRegisterGoogle = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    window.location.href = `${baseUrl}/api/auth/google`;
+    window.location.href = `${API_BASE_URL}/api/auth/google`;
   };
 
   const handleRegisterFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    window.location.href = `${baseUrl}/api/auth/facebook`;
+    window.location.href = `${API_BASE_URL}/api/auth/facebook`;
   };
 
   const { mutate } = useMutation(registerUser, {
     onSuccess: response => {
-      // window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
       Cookies.set(USER_TOKEN, response, { sameSite: "Lax", expires: 1 });
 
       alerts({
@@ -51,33 +73,12 @@ export default function Register() {
     }
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (form.email === "" && form.password === "") {
-      alerts({
-        title: "All fields is required!",
-        icon: "warning"
-      });
-    } else if (form.email === "") {
-      alerts({
-        title: "Email is required!",
-        icon: "warning"
-      });
-    } else if (form.password === "") {
-      alerts({
-        title: "Password is required!",
-        icon: "warning"
-      });
-    } else if (form.name === "") {
-      alerts({
-        title: "Name is required!",
-        icon: "warning"
-      });
-    } else {
-      mutate(form);
-    }
+  const onSubmit = (data: Schema) => {
+    mutate(data);
   };
+
+  console.log(defaultValues);
+
   return (
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <section className="w-full md:w-1/3 flex flex-col items-center justify-center gap-5">
@@ -88,34 +89,56 @@ export default function Register() {
           Continue
         </p>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="w-full flex flex-col items-center justify-evenly gap-6"
         >
-          <input
-            placeholder="Name is"
-            onChange={handleChange}
-            name="name"
-            value={form.name}
-            type="text"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-          />
-          <input
-            placeholder="Email"
-            onChange={handleChange}
-            name="email"
-            value={form.email}
-            type="email"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-          />
-          <input
-            placeholder="Password"
-            onChange={handleChange}
-            name="password"
-            value={form.password}
-            type="password"
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-          />
-          <button type="submit" className="w-full rounded-3xl px-5 py-3 bg-primary-500 font-bold">
+          <div className="relative">
+            <input
+              placeholder="Name is"
+              type="text"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("name")}
+            />
+            {touchedFields.name && errors.name && <ErrorMessage message={errors.name.message!} />}
+          </div>
+          <div className="relative">
+            <input
+              placeholder="Email"
+              type="email"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("email")}
+            />
+            {touchedFields.email && errors.email ? (
+              <ErrorMessage message={errors.email.message!} />
+            ) : null}
+          </div>
+          <div className="relative">
+            <input
+              placeholder="Password"
+              type="password"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("password")}
+            />
+            {touchedFields.password && errors.password && (
+              <ErrorMessage message={errors.password.message!} />
+            )}
+          </div>
+          <div className="relative">
+            <input
+              placeholder="Confirm password"
+              type="password"
+              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              {...register("confirmPassword")}
+            />
+            {touchedFields.confirmPassword && errors.confirmPassword && (
+              <ErrorMessage message={errors.confirmPassword.message!} />
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-3xl px-5 py-3 bg-primary-500 font-bold"
+            disabled={isSubmitting}
+          >
             Continue
           </button>
         </form>

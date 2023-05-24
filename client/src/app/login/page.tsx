@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import useForm from "@/hooks/useForm";
-import { UserAuth } from "@/types";
 import { loginUser } from "@/backend";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -10,13 +8,27 @@ import { alerts } from "@/utils/alert";
 import Cookies from "js-cookie";
 import { USER_TOKEN } from "@/utils/constants";
 import CookMeal from "public/CookMeal.png";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z.string({ required_error: "Email is required" }).email(),
+  password: z.string({ required_error: "Password is required" })
+});
+
+type Schema = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { form, handleChange } = useForm<UserAuth>({
-    email: "",
-    password: ""
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Schema>({
+    resolver: zodResolver(loginSchema)
   });
 
   const { mutate } = useMutation(loginUser, {
@@ -34,22 +46,10 @@ export default function Login() {
     }
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (form.email === "" && form.password === "") {
-      alerts({
-        title: "All fields is required!",
-        icon: "warning"
-      });
-    } else if (form.email === "" || form.password === "") {
-      alerts({
-        title: `${form.email === "" ? "Email" : "Password"} is required!`,
-        icon: "warning"
-      });
-    } else {
-      mutate(form);
-    }
+  const onSubmit = (data: Schema) => {
+    mutate(data);
   };
+
   return (
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <Image src={CookMeal} alt="CookMeal" className="hidden md:block" />
@@ -60,23 +60,22 @@ export default function Login() {
           tipografías o de borradores de diseño para probar el diseño visual
         </p>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="w-full flex flex-col items-center justify-evenly gap-6"
         >
           <input
             placeholder="Email"
             type="email"
-            name="email"
-            onChange={handleChange}
             className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+            {...register("email")}
           />
           <input
             placeholder="Password"
             type="password"
-            name="password"
-            onChange={handleChange}
             className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+            {...register("password")}
           />
+
           <button type="submit" className="w-full rounded-3xl px-5 py-3 bg-primary-500 font-bold">
             Continue
           </button>

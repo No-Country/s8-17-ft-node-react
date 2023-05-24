@@ -10,3 +10,4 @@ export { default as Contact } from "./Contact";
 export { default as ContactForm } from "./ContactForm";
 export { default as Testimonials } from "./Testimonials";
 export { default as Profile } from "./Profile";
+export { default as ErrorMessage } from "./ErrorMessage";

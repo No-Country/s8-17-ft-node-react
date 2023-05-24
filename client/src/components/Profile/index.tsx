@@ -33,7 +33,6 @@ const ProfileUser = () => {
   const confirmPassword = watch("confirmPassword");
 
   const onSubmit = (data: any) => {
-    console.log(data);
     alerts({
       title: "User updated successfully!",
       icon: "success",
