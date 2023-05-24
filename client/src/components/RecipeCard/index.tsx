@@ -1,5 +1,5 @@
 "use client";
-import { getRecipeById } from "@/hooks/useRecipe";
+import { useRecipeById } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
 import { FaDownload, FaShareAlt } from "react-icons/fa";
@@ -55,12 +55,12 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   // TODO: traer la receta con fetch
   useEffect(() => {
     const fetchData = async () => {
-      const recipe = await getRecipeById(recipeId);
+      const recipe = await useRecipeById(recipeId);
       setRecipe(recipe);
     };
 
     fetchData();
-  }, []);
+  }, [recipeId]);
 
   return (
     <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
