@@ -143,8 +143,11 @@ export default function Generator() {
         </div>
         <h1 className="text-3xl">Ingredients</h1>
         <div className="w-[80%] grid grid-cols-6 items-center">
-          {generator.ingredients?.map(e => (
-            <div className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {generator.ingredients?.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <h3 className=" text-primary-500 underline">{e}</h3>
               <button className="absolute top-1 right-1">
                 <Image
@@ -174,8 +177,11 @@ export default function Generator() {
 
         <h1 className="text-3xl">Allergic ingredients</h1>
         <div className="w-[80%] grid grid-cols-6 items-center">
-          {generator.AllergicIngredients?.map(e => (
-            <div className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {generator.AllergicIngredients?.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <h3 className=" text-primary-500 underline">{e}</h3>
 
               <button>
@@ -208,8 +214,11 @@ export default function Generator() {
         <h1 className="text-3xl mt-2">Diet</h1>
 
         <div className="w-[80%] grid grid-cols-4 gap-5 items-center">
-          {dieta.map(e => (
-            <div className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {dieta.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <input
                 type="radio"
                 id={e}
@@ -232,8 +241,11 @@ export default function Generator() {
 
         <h1 className="text-3xl mt-2">Type of food</h1>
         <div className="w-[80%] grid grid-cols-4 items-center">
-          {tipo.map(e => (
-            <div className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {tipo.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <input
                 type="radio"
                 id={e}
@@ -256,8 +268,11 @@ export default function Generator() {
 
         <h1 className="text-3xl">Flavor</h1>
         <div className="w-[80%] grid grid-cols-4 gap-5 items-center">
-          {saborTipos.map(e => (
-            <div className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {saborTipos.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <input
                 type="radio"
                 id={e}
@@ -278,8 +293,11 @@ export default function Generator() {
           ))}
         </div>
         <div className="w-[80%] grid grid-cols-6 items-center">
-          {sabor.map(e => (
-            <div className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {sabor.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <h3 className=" text-primary-500 underline">{e}</h3>
               <button>
                 <Image
@@ -296,8 +314,11 @@ export default function Generator() {
         </div>
         <h1 className="text-3xl">Difficulty</h1>
         <div className="w-[50%] grid grid-cols-3 items-center">
-          {dificultad.map(e => (
-            <div className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] ">
+          {dificultad.map((e, i) => (
+            <div
+              key={i}
+              className="relative w-[90%] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] "
+            >
               <input
                 type="radio"
                 id={e}
