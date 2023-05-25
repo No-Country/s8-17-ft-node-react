@@ -1,4 +1,3 @@
-
 import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
@@ -40,12 +39,10 @@ export class User {
   })
   public alerts?: string[];
 
-
   @prop({
     required: false
   })
-  public ingredientsFav?: string[];
-
+  public favIngredients?: string[];
 }
 
 const UserModel = getModelForClass(User);

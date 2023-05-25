@@ -1,4 +1,4 @@
-import { IRecipe, Recipes, UserAuth, UserRegister } from "@/types";
+import { IRecipe, IRecipes, Recipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
 // const baseUrl = "http://localhost:3000";
@@ -75,14 +75,15 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
   return response;
 };
 
-export const getAllRecipes = async ({
-  userId,
+export const getRecipeById = async ({
   token,
+  recipeId
 }: {
-  userId: string;
   token: null | string;
-}): Promise<IRecipe[]> => {
-  const response = await axios.get(`${baseUrl}/api/recipe/user/${userId}`, {
+  recipeId: string
+}): Promise<IRecipe> => {
+  // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
+  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -91,7 +92,23 @@ export const getAllRecipes = async ({
     throw new Error("Not authorized");
   }
 
-  const allRecipes = response.data;
+  const foundRecipe = response.data;
 
-  return allRecipes;
+  return foundRecipe;
+}
+
+export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
+  // http://localhost:3001/api/recipe/create
+  const response = await axios.get(`${baseUrl}/api/recipe/create`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const allRecipesFromUser = response.data
+
+  return allRecipesFromUser
 }

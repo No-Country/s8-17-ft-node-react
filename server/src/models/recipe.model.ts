@@ -6,7 +6,7 @@ import { Diet } from "./diet.model";
 import { User } from "./user.model";
 import { Difficulty } from "../utils/types";
 
-interface NutritionalValue {
+interface NutritionalValues {
   of100g: {
     calories: number;
     fat: number;
@@ -30,7 +30,6 @@ interface NutritionalValue {
     // salt: number;
   };
 }
-
 
 export class Recipe {
   @prop({
@@ -95,22 +94,21 @@ export class Recipe {
   difficulty?: Difficulty;
 
   @prop({
-    required: false
+    required: false,
+    default: () => "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"
   })
   image?: string;
 
   @prop({
     required: false
   })
-  nutritionalValue?: NutritionalValue;
-
+  nutritionalValues?: NutritionalValues;
 
   @prop({
-    ref: () => 'User',
+    ref: () => "User",
     required: false
   })
   createdBy?: Ref<User | any>;
-
 }
 
 const RecipeModel = getModelForClass(Recipe);

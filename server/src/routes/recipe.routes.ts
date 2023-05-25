@@ -10,8 +10,7 @@ recipeRoutes.post("/generate", checkJWT, recipeController.generate.bind(recipeCo
 recipeRoutes.post("/save", checkJWT, recipeController.save.bind(recipeController));
 recipeRoutes.get("/", recipeController.getAll.bind(recipeController));
 recipeRoutes.get("/favorite", checkJWT, recipeController.getFavoriteByUser.bind(recipeController));
-recipeRoutes.get("/create", checkJWT, recipeController.getCreatedBy.bind(recipeController));
-
-
+recipeRoutes.get("/createdBy", checkJWT, recipeController.getCreatedBy.bind(recipeController));
+recipeRoutes.get("/id/:id", recipeController.getById.bind(recipeController));
 
 export default recipeRoutes;
