@@ -50,9 +50,9 @@ export class RecipeController {
     }
   }
 
-  async getByUserId(req: Request, res: Response): Promise<Response> {
+  async getFavoriteByUser(req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Partial<Recipe>[] = await this.recipeService.getByUserId(req.body.id);
+      const userRecipes: Partial<Recipe>[] = await this.recipeService.getByUserId(res.locals.jwtPayload.id);
       return res.status(200).json(userRecipes);
     } catch (error: any) {
       if (error.message === "User not found.")
@@ -60,6 +60,30 @@ export class RecipeController {
       return res.status(500).json({ errorMessage: error.message });
     }
   }
+
+  async getAll(req: Request, res: Response): Promise<Response> {
+    try{
+      return res.status(200).json({
+        recipes: await this.recipeService.getAll()
+      })
+    }catch(err){
+      return res.status(500).json(err);
+    }
+  }
+
+  async getCreatedBy(req: Request, res: Response): Promise<Response>{
+    try{
+      return res.status(200).json({
+        recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id)
+      })
+    }catch(err){
+      console.log(err);
+      
+      return res.status(500).json(err);
+    }
+  }
+
+
 
   private generateTemplatePrompt(data: GenerateRecipeDto): string {
     return `Generate a cooking recipe according to the following parameters:

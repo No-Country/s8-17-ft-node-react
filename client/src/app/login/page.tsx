@@ -12,6 +12,8 @@ import { USER_TOKEN } from "@/utils/constants";
 import CookMeal from "public/CookMeal.png";
 
 export default function Login() {
+  const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+
   const queryClient = useQueryClient();
   const router = useRouter();
   const { form, handleChange } = useForm<UserAuth>({
@@ -50,6 +52,15 @@ export default function Login() {
       mutate(form);
     }
   };
+  const handleRegisterGoogle = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/google`;
+  };
+
+  const handleRegisterFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/facebook`;
+  };
   return (
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <Image src={CookMeal} alt="CookMeal" className="hidden md:block" />
@@ -82,10 +93,14 @@ export default function Login() {
           </button>
         </form>
         <div className="flex items-center justify-around gap-5">
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button
+          onClick={handleRegisterFacebook}
+          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
             <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
           </button>
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button 
+          onClick={handleRegisterGoogle}
+          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
             <Image src="/Google.png" width={30} height={30} alt="Google" />
           </button>
         </div>
