@@ -65,7 +65,9 @@ export default function Generator() {
     if (!generator.flavor) return alerts({ title: "Flavor is required", icon: "warning" });
     if (!generator.difficulty) return alerts({ title: "Difficulty is required", icon: "warning" });
     else {
-      alerts({ title: "Your Recipe was create succesfully", icon: "success" });
+      alerts({ title: "Your Recipe was create succesfully", icon: "success" }).then(() =>
+        router.push("/recipe/1")
+      );
     }
     // mutate(form);
   };
@@ -129,7 +131,10 @@ export default function Generator() {
 
   return (
     <div className="w-screen h-[170vh] flex justify-evenly">
-      <Menu href={"generator"} />
+      <div className="mt-8">
+        <Menu href={"generator"} />
+      </div>
+
       <section className="w-[70%] h-full flex flex-col justify-evenly">
         <h1 className="text-3xl">Generate recipe</h1>
         <div className="w-[50%] h-[54px] flex items-center bg-white py-4 px-5 rounded-md shadow-md">
