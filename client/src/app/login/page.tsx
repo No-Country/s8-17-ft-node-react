@@ -78,7 +78,9 @@ export default function Login() {
             <input
               placeholder="email"
               type="text"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.email && errors.email ? "shadow-error" : ""
+              }`}
               {...register("email")}
             />
             {touchedFields.email && errors.email && (
@@ -89,7 +91,9 @@ export default function Login() {
             <input
               placeholder="password"
               type="password"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.email && errors.email ? "shadow-error" : ""
+              }`}
               {...register("password")}
             />
             {touchedFields.password && errors.password && (

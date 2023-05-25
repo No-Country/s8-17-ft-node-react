@@ -106,7 +106,9 @@ export default function Register() {
             <input
               placeholder="Name is"
               type="text"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.name && errors.name ? "shadow-error" : ""
+              }`}
               {...register("name")}
             />
             {touchedFields.name && errors.name && <ErrorMessage message={errors.name.message!} />}
@@ -115,7 +117,9 @@ export default function Register() {
             <input
               placeholder="Email"
               type="email"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.email && errors.email ? "shadow-error" : ""
+              }`}
               {...register("email")}
             />
             {touchedFields.email && errors.email ? (
@@ -126,7 +130,9 @@ export default function Register() {
             <input
               placeholder="Password"
               type="password"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.password && errors.password ? "shadow-error" : ""
+              }`}
               {...register("password")}
             />
             {touchedFields.password && errors.password && (
@@ -137,7 +143,9 @@ export default function Register() {
             <input
               placeholder="Confirm password"
               type="password"
-              className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.confirmPassword && errors.confirmPassword ? "shadow-error" : ""
+              }`}
               {...register("confirmPassword")}
             />
             {touchedFields.confirmPassword && errors.confirmPassword && (
