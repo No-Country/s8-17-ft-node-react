@@ -5,12 +5,8 @@ const usersToSeed: Array<Partial<User>> = [
     name: "John",
     email: "Test@example.com",
     password: "Pass1234",
-    alerts:[
-      "lactosa",
-    ],
-    ingredientsFav:[
-      "tomato",
-    ],
+    alerts: ["lactosa"],
+    favIngredients: ["tomato"]
   },
   {
     name: "Mary",

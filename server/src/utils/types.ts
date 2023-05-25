@@ -8,7 +8,7 @@ export enum Difficulty {
   HARD = "hard"
 }
 
-export interface RecipeIterface {
+export interface RecipeInterface {
   ingredients: string[];
   difficulty: Difficulty;
   categories: Ref<Category>[];
