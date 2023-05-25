@@ -1,12 +1,16 @@
 "use client";
-import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
 import { getRecipe } from "@/utils/recipes";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
 import { FaDownload, FaShareAlt } from "react-icons/fa";
-// TODO: pasar id por params y buscar en base de datos
+import { BsArrowLeftCircle } from "react-icons/bs";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
+  const router = useRouter();
+
   const [recipe, setRecipe] = useState<IRecipe | null>({
     _id: "646f425437be53bd8204c4ff",
     name: "Berry Spinach Salad",
@@ -67,7 +71,6 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
     image: "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg",
     __v: 0
   });
-  // TODO: traer la receta con fetch
   useEffect(() => {
     const fetchData = async () => {
       const recipe = await getRecipe({ recipeId });
@@ -79,8 +82,13 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   }, [recipeId]);
 
   return (
-    <div className="min-w-sm mx-auto p-10 my-10 border-4 border-primary-americanOrange rounded-3xl font-text bg-complementary-crayola/50">
-      {/* NAME OF THE RECIPE */}
+    <div className="min-w-sm mx-auto p-10 font-text">
+      <button
+        className="text-primary-500 fixed bottom-2 right-2 z-40 sm:relative sm:top-20 sm:left-10 "
+        onClick={() => router.back()}
+      >
+        <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
+      </button>
       {recipe === null ? (
         <div>
           <div className="py-4">
@@ -89,43 +97,51 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
         </div>
       ) : (
         <>
-          <div className="py-4">
-            <h1 className="text-2xl font-bold mb-2 font-title text-center">{recipe.name}</h1>
+          {/* Top Part */}
+          <div className="border-4 border-slate-300 rounded-md flex flex-col sm:flex-row sm:mx-32 justify-center items-center h-72">
+            {/* NAME OF THE RECIPE */}
+            <div className="sm:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
+              <h1 className="text-2xl font-bold mb-2 font-title text-center capitalize">{recipe.name}</h1>
+            </div>
+            {/* IMAGE OF THE RECIPE */}
+            <div className="sm:w-1/2 h-full w-full relative">
+              <Image src="/RecipeImage.png" alt="recipe image" fill />
+            </div>
           </div>
-          {/* IMAGE OF THE RECIPE */}
-          {/* <div className="py-4">
-        <Image src={"/#"} alt="image" width={500} height={300} />
-      </div> */}
-          {/* INGREDIENTS */}
-          <div className="py-4">
-            <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
-            <ul>
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-              ))}
-            </ul>
+          {/* Bottom Part */}
+          <div className="flex flex-col sm:flex-row sm:mx-16 justify-center items-center">
+            {/* INGREDIENTS */}
+            <div className="">
+              <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
+              <ul>
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index}>{ingredient}</li>
+                ))}
+              </ul>
+            </div>
+            {/* PREPARATION */}
+            <div className="">
+              <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
+              <ol>
+                {recipe.steps.map((step, index) => (
+                  <li key={index}>
+                    {index + 1} - {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
-          {/* PREPARATION */}
-          <div className="py-4">
-            <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
-            <ol>
-              {recipe.steps.map((step, index) => (
-                <li key={index}>
-                  {index + 1} - {step}
-                </li>
-              ))}
-            </ol>
-          </div>
+
           {/* TABLE NUTRITIONAL VALUES */}
 
-          <div className="flex justify-between mt-4 py-4">
+          {/* <div className="flex justify-between mt-4 py-4">
             <button className="flex items-center bg-primary-americanOrange hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
               Download as PDF <FaDownload className="ml-1" />
             </button>
             <button className="flex items-center bg-secondary-brightPink hover:bg-text-eerieBlack text-white font-bold py-2 px-4 rounded-2xl">
               Share <FaShareAlt className="ml-1" />
             </button>
-          </div>
+          </div> */}
         </>
       )}
     </div>
