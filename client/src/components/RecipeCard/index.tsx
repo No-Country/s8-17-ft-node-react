@@ -101,31 +101,43 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
           <div className="border-4 border-slate-300 rounded-md flex flex-col sm:flex-row sm:mx-32 justify-center items-center h-72">
             {/* NAME OF THE RECIPE */}
             <div className="sm:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
-              <h1 className="text-2xl font-bold mb-2 font-title text-center capitalize">{recipe.name}</h1>
+              <h1 className="text-3xl font-bold mb-2 font-title text-center capitalize">
+                {recipe.name}
+              </h1>
             </div>
             {/* IMAGE OF THE RECIPE */}
-            <div className="sm:w-1/2 h-full w-full relative">
+            <div className="sm:w-2/5 h-full w-full relative">
               <Image src="/RecipeImage.png" alt="recipe image" fill />
             </div>
           </div>
           {/* Bottom Part */}
-          <div className="flex flex-col sm:flex-row sm:mx-16 justify-center items-center">
+          <div className="flex flex-col sm:flex-row sm:mx-16 justify-center mt-5">
             {/* INGREDIENTS */}
-            <div className="">
-              <h2 className="text-lg font-bold mb-1 font-title">Ingredients:</h2>
-              <ul>
+            <div className="border-4 border-slate-300 rounded-md sm:w-1/2 py-10 px-2 sm:px-5">
+              <h2 className="text-2xl font-bold mb-1 font-title capitalize text-primary-500">
+                Ingredients:
+              </h2>
+              <ul className="text-xl font-semibold font-text capitalize leading-loose">
                 {recipe.ingredients.map((ingredient, index) => (
                   <li key={index}>{ingredient}</li>
                 ))}
               </ul>
+              <div className="flex flex-col md:flex-row justify-between items-center mt-4 py-4">
+                <button className="flex items-center hover:bg-dark py-2 px-4 rounded-xl border-2 border-slate-300 w-fit">
+                  <p className="capitalize font-bold text-primary-500">glossary</p>
+                </button>
+                <button className="flex items-center hover:bg-dark py-2 px-4 rounded-xl border-2 border-slate-300 w-fit mt-5 md:mt-0">
+                  <p className="capitalize font-bold text-primary-500">equivalence</p>
+                </button>
+              </div>
             </div>
             {/* PREPARATION */}
-            <div className="">
-              <h2 className="text-lg font-bold mb-1 font-title">Preparation:</h2>
-              <ol>
+            <div className="sm:w-3/5 py-10 sm:pl-10">
+              <h2 className="text-2xl font-bold font-title capitalize text-dark mb-5">Preparation:</h2>
+              <ol className="text-base font-normal font-title capitalize list-disc sm:pl-5 px-10">
                 {recipe.steps.map((step, index) => (
                   <li key={index}>
-                    {index + 1} - {step}
+                    {step}
                   </li>
                 ))}
               </ol>
