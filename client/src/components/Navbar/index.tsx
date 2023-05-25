@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { HiLogout } from "react-icons/hi";
 
 export default function Navbar() {
@@ -17,6 +18,11 @@ export default function Navbar() {
     Cookies.remove(USER_TOKEN, { sameSite: "Lax" });
     router.refresh();
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+  }, []);
 
   return (
     <header className="w-full h-[97px] flex justify-between items-center px-8">

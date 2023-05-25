@@ -65,8 +65,10 @@ export interface Time {
 }
 
 export interface Recipes {
-  ingredient: [];
-  diets: [];
-  categories: [];
-  difficulty: any;
+  ingredients: string[];
+  AllergicIngredients: string[];
+  diet: string;
+  type: string;
+  flavor: string;
+  difficulty: string;
 }
