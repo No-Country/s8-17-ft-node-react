@@ -10,3 +10,4 @@ export { default as ContactForm } from "./ContactForm";
 export { default as Testimonials } from "./Testimonials";
 export { default as ProfileUser } from "./Profile";
 export { default as LoadImageUser } from "./LoadImage";
+export { default as Menu } from "./Menu";
