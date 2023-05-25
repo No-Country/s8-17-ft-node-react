@@ -5,7 +5,31 @@ import { Category } from "./category.model";
 import { Diet } from "./diet.model";
 import { User } from "./user.model";
 import { Difficulty } from "../utils/types";
-// import { Alert } from "./alert.model";
+
+interface NutritionalValues {
+  of100g: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+    // alcohol: number;
+    // fiber: number;
+    // sugar: number;
+    // salt: number;
+  };
+  ofPortion: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+    // alcohol: number;
+    // fiber: number;
+    // sugar: number;
+    // salt: number;
+  };
+}
 
 export class Recipe {
   @prop({
@@ -13,33 +37,33 @@ export class Recipe {
     unique: true,
     default: uuidv4
   })
-  id!: string; // is check
+  id!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  name!: string; // is check
+  name!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  description!: string; // is check
+  description!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  ingredients!: string[]; // is check
+  ingredients!: string[];
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  steps!: string[]; // is check
+  steps!: string[];
 
   @prop({
     required: true
@@ -49,22 +73,19 @@ export class Recipe {
     preparation: number;
     cooking: number;
     total: number;
-  }; // is check
+  };
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsNumber()
-  portions!: number; // is check
+  portions!: number;
 
-  // @Prop({ type: () => String, ref: Alert })
-  // alerts: Ref<Alert>[];
-
-  @prop({ type: () => String, ref: Category, required: false })
+  @prop({ ref: Category, required: false })
   categories?: Ref<Category>[];
 
-  @prop({ type: () => String, ref: Diet, required: false })
+  @prop({ ref: Diet, required: false })
   diets?: Ref<Diet>[];
 
   @prop({
@@ -73,41 +94,21 @@ export class Recipe {
   difficulty?: Difficulty;
 
   @prop({
-    required: false
+    required: false,
+    default: () => "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"
   })
   image?: string;
 
   @prop({
     required: false
   })
-  nutritionalValue?: {
-    of100g: {
-      calories: number;
-      fat: number;
-      carbohydrates: number;
-      protein: number;
-      cholesterol: number;
-      // alcohol: number;
-      // fiber: number;
-      // sugar: number;
-      // salt: number;
-    };
-    ofPortion: {
-      calories: number;
-      fat: number;
-      carbohydrates: number;
-      protein: number;
-      cholesterol: number;
-      // alcohol: number;
-      // fiber: number;
-      // sugar: number;
-      // salt: number;
-    };
-  };
+  nutritionalValues?: NutritionalValues;
 
-  // @prop({ ref: User, required: true })
-  // @IsNotEmpty()
-  // createdBy!: Ref<User>;
+  @prop({
+    ref: () => "User",
+    required: false
+  })
+  createdBy?: Ref<User | any>;
 }
 
 const RecipeModel = getModelForClass(Recipe);

@@ -12,12 +12,13 @@ RUN npm install
 # Copiar todos los archivos de la aplicación
 COPY . .
 
-# Exponer los puertos en los que se ejecutará la aplicación y la base de datos
-EXPOSE 3001
-EXPOSE 27017
+COPY .env ./
 
-# Compilar el código TypeScript
+# Compilar el código TypeScript (si es necesario)
 RUN npm run build
+
+# Exponer el puerto en el que se ejecutará la aplicación
+EXPOSE 5000
 
 # Iniciar la aplicación con el comando "npm start"
 CMD ["npm", "start"]

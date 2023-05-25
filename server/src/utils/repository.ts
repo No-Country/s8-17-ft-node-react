@@ -1,12 +1,16 @@
-import { ReturnModelType, DocumentType } from "@typegoose/typegoose";
+import { ReturnModelType, DocumentType, Ref } from "@typegoose/typegoose";
+import { ObjectId } from "mongoose";
 
 class Repository<T> {
   public model: ReturnModelType<new () => T>;
   constructor(model: ReturnModelType<new () => T>) {
     this.model = model;
   }
-  public async findById(id: string): Promise<DocumentType<T> | null> {
-    return this.model.findById(id);
+
+  public async findById(id: string): Promise<DocumentType<T & { _id: ObjectId }> | null> {
+    return this.model.findOne({
+      id
+    });
   }
 
   public async findOne(filter: Partial<T>): Promise<DocumentType<T> | null> {
@@ -15,6 +19,10 @@ class Repository<T> {
 
   public async findAll(filter?: Partial<T>, fields?: any): Promise<DocumentType<T>[]> {
     return this.model.find(filter, fields);
+  }
+
+  public async findAllByRef(filter?: Ref<T>[], fields?: any): Promise<DocumentType<T>[] | null> {
+    return await this.model.find({ _id: { $in: filter } }, fields);
   }
 
   public async create(data: Partial<T>): Promise<DocumentType<T>> {

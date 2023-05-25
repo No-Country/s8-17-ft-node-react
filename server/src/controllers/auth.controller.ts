@@ -30,7 +30,7 @@ export class AuthController {
     }
   }
 
-  async auth(_req: Request, res: Response): Promise<Response> {
+  async auth(req: Request, res: Response): Promise<Response> {
     try {
       const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
       const user = await this.userService.findOne(partialUser);

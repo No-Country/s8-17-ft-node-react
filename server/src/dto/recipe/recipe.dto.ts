@@ -1,8 +1,5 @@
 import { IsNotEmpty, IsString, IsEnum, IsArray, ValidateNested, IsNumber } from "class-validator";
 import { Difficulty } from "../../utils/types";
-import { Ref } from "@typegoose/typegoose";
-import { Diet } from "../../models/diet.model";
-import { Category } from "../../models/category.model";
 import { Type } from "class-transformer";
 
 export class TimeDto {
@@ -45,7 +42,7 @@ export class NutritionalValuesDto {
   ofPortion: ValuesDto;
 }
 
-export class SaveRecipeDto {
+export class RecipeDto {
   @IsString()
   @IsNotEmpty({
     message: "Name is required"
@@ -76,17 +73,16 @@ export class SaveRecipeDto {
   @IsNotEmpty({
     message: "Diets is required"
   })
-  @ValidateNested({ each: true })
-  @Type(() => Diet)
-  diets: Ref<Diet>[];
+  diets: string[];
+
+  @IsString()
+  image?: string;
 
   @IsArray()
   @IsNotEmpty({
     message: "Categories is required"
   })
-  @ValidateNested({ each: true })
-  @Type(() => Category)
-  categories: Ref<Category>[];
+  categories: string[];
 
   @IsEnum(Difficulty)
   difficulty: Difficulty;
