@@ -12,10 +12,10 @@ export class OpenAIServiceIntance {
   async createRecipe(prompt: string) {
     // falta tipar el response pero me da paja
     const response: any = await this.openai.createCompletion({
-      model: "text-davinci-003",
+      model: "gpt-3.5-turbo",
       prompt,
       temperature: 0.8,
-      max_tokens: 600,
+      max_tokens: 1000,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0
