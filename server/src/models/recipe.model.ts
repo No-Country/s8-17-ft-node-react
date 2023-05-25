@@ -75,7 +75,7 @@ export class Recipe {
     cooking: number;
     total: number;
   };
-
+  
   @prop({
     required: true
   })
@@ -95,7 +95,8 @@ export class Recipe {
   difficulty?: Difficulty;
 
   @prop({
-    required: false
+    required: false,
+    default: () => "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"
   })
   image?: string;
 
