@@ -76,7 +76,7 @@ export class RecipeDto {
     message: "Diets is required"
   })
   @IsArray()
-  diets: string[];
+  diets: string[] | {}[];
 
   @IsString()
   image?: string;
@@ -85,7 +85,7 @@ export class RecipeDto {
     message: "Categories is required"
   })
   @IsArray()
-  categories: string[];
+  categories: string[] |  {}[];
 
   @IsEnum(Difficulty)
   difficulty: Difficulty;
