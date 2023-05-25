@@ -8,9 +8,9 @@ const recipeController = new RecipeController(new RecipeService());
 
 recipeRoutes.post("/generate", checkJWT, recipeController.generate.bind(recipeController));
 recipeRoutes.post("/save", checkJWT, recipeController.save.bind(recipeController));
-recipeRoutes.get("/", checkJWT, recipeController.getAll.bind(recipeController));
+recipeRoutes.get("/", recipeController.getAll.bind(recipeController));
 recipeRoutes.get("/favorite", checkJWT, recipeController.getFavoriteByUser.bind(recipeController));
 recipeRoutes.get("/createdBy", checkJWT, recipeController.getCreatedBy.bind(recipeController));
-recipeRoutes.get("/id/:id", checkJWT, recipeController.getById.bind(recipeController));
+recipeRoutes.get("/id/:id", recipeController.getById.bind(recipeController));
 
 export default recipeRoutes;
