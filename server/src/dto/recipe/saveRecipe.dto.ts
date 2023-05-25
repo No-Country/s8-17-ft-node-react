@@ -16,7 +16,7 @@ export class TimeDto {
   total: number;
 }
 
-export class Values {
+export class ValuesDto {
   @IsNumber()
   calories: number;
 
@@ -33,14 +33,16 @@ export class Values {
   cholesterol: number;
 }
 
-export class NutritionalValueDto {
+export class NutritionalValuesDto {
   @IsNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => Values)
-  of100g: Values;
+  @Type(() => ValuesDto)
+  of100g: ValuesDto;
 
   @IsNotEmpty()
-  ofPortion: Values;
+  @ValidateNested({ each: true })
+  @Type(() => ValuesDto)
+  ofPortion: ValuesDto;
 }
 
 export class SaveRecipeDto {
@@ -56,34 +58,32 @@ export class SaveRecipeDto {
   })
   description: string;
 
-  @IsArray({
-    message: "Steps is required"
-  })
+  @IsArray()
   @IsNotEmpty({
     message: "Steps is required"
   })
   @ValidateNested({ each: true })
   steps: string[];
 
+  @IsArray()
   @IsNotEmpty({
     message: "Ingredients is required"
   })
-  @IsArray()
   @IsString({ each: true })
   ingredients: string[];
 
+  @IsArray()
   @IsNotEmpty({
     message: "Diets is required"
   })
-  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Diet)
   diets: Ref<Diet>[];
 
+  @IsArray()
   @IsNotEmpty({
     message: "Categories is required"
   })
-  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Category)
   categories: Ref<Category>[];
@@ -98,16 +98,16 @@ export class SaveRecipeDto {
   @Type(() => TimeDto)
   time: TimeDto;
 
+  @IsNumber()
   @IsNotEmpty({
     message: "Portions is required"
   })
-  @IsNumber()
   portions: number;
 
   @IsNotEmpty({
-    message: "Nutritional value is required"
+    message: "Nutritional values is required"
   })
   @ValidateNested()
-  @Type(() => NutritionalValueDto)
-  nutritionalValue: NutritionalValueDto;
+  @Type(() => NutritionalValuesDto)
+  nutritionalValues: NutritionalValuesDto;
 }
