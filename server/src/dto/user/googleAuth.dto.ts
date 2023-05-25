@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from "class-validator";
+import { IsEmail, IsOptional, IsString } from "class-validator";
 
 export class GoogleAuthDto {
   @IsString({
@@ -20,9 +20,12 @@ export class GoogleAuthDto {
   })
   email: string;
 
+  @IsOptional()
   image?: string;
 
+  @IsOptional()
   accessToken?: string;
 
+  @IsOptional()
   refreshToken?: string;
 }

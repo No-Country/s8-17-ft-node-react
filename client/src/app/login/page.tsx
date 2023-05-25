@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import useForm from "@/hooks/useForm";
-import { UserAuth } from "@/types";
 import { loginUser } from "@/backend";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -10,13 +8,39 @@ import { alerts } from "@/utils/alert";
 import Cookies from "js-cookie";
 import { USER_TOKEN } from "@/utils/constants";
 import CookMeal from "public/CookMeal.png";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ErrorMessage } from "@/components";
+import { ImSpinner8 } from "react-icons/im";
+
+const INITIAL_STATE = {
+  email: "",
+  password: ""
+};
+
+const loginSchema = z.object({
+  email: z.string().email("This field must be an email"),
+  password: z.string({ required_error: "Password is required" })
+});
+
+type Schema = z.infer<typeof loginSchema>;
 
 export default function Login() {
+  const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
+
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { form, handleChange } = useForm<UserAuth>({
-    email: "",
-    password: ""
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, touchedFields },
+    trigger
+  } = useForm<Schema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: INITIAL_STATE,
+    mode: "onBlur"
   });
 
   const { mutate } = useMutation(loginUser, {
@@ -34,22 +58,21 @@ export default function Login() {
     }
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (form.email === "" && form.password === "") {
-      alerts({
-        title: "All fields is required!",
-        icon: "warning"
-      });
-    } else if (form.email === "" || form.password === "") {
-      alerts({
-        title: `${form.email === "" ? "Email" : "Password"} is required!`,
-        icon: "warning"
-      });
-    } else {
-      mutate(form);
-    }
+  const onSubmit = async (data: Schema) => {
+    await trigger([], { shouldFocus: true });
+    mutate(data);
   };
+
+  const handleRegisterGoogle = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/google`;
+  };
+
+  const handleRegisterFacebook = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    window.location.href = `${baseUrl}/api/auth/facebook`;
+  };
+  
   return (
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <Image src={CookMeal} alt="CookMeal" className="hidden md:block" />
@@ -60,32 +83,52 @@ export default function Login() {
           tipografías o de borradores de diseño para probar el diseño visual
         </p>
         <form
-          onSubmit={handleSubmit}
-          className="w-full flex flex-col items-center justify-evenly gap-6"
+          onSubmit={handleSubmit(onSubmit)}
+          className="w-full flex flex-col items-center justify-evenly gap-2"
         >
-          <input
-            placeholder="Email"
-            type="email"
-            name="email"
-            onChange={handleChange}
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            name="password"
-            onChange={handleChange}
-            className="w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none"
-          />
-          <button type="submit" className="w-full rounded-3xl px-5 py-3 bg-primary-500 font-bold">
-            Continue
+          <div className="w-full h-full flex flex-col gap-1.5 justify-between">
+            <input
+              placeholder="email"
+              type="text"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.email && errors.email ? "shadow-error" : ""
+              }`}
+              {...register("email")}
+            />
+            {touchedFields.email && errors.email && (
+              <ErrorMessage message={errors.email.message!} />
+            )}
+          </div>
+          <div className="w-full h-full flex flex-col gap-1.5 justify-between">
+            <input
+              placeholder="password"
+              type="password"
+              className={`w-full text-normal shadow-[0px_0px_6px_rgba(0,0,0,0.25)] rounded-3xl px-5 py-3 bg-white outline-none ${
+                touchedFields.email && errors.email ? "shadow-error" : ""
+              }`}
+              {...register("password")}
+            />
+            {touchedFields.password && errors.password && (
+              <ErrorMessage message={errors.password.message!} />
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-3xl mt-4 px-5 py-3 bg-primary-500 font-bold"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <ImSpinner8 className="animate-spin" /> : "Continue"}
           </button>
         </form>
         <div className="flex items-center justify-around gap-5">
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button
+          onClick={handleRegisterFacebook}
+          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
             <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
           </button>
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button 
+          onClick={handleRegisterGoogle}
+          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
             <Image src="/Google.png" width={30} height={30} alt="Google" />
           </button>
         </div>

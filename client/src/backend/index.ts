@@ -1,4 +1,4 @@
-import { Recipes, UserAuth, UserRegister } from "@/types";
+import { IRecipe, IRecipes, Recipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
 // const baseUrl = "http://localhost:3000";
@@ -47,7 +47,7 @@ export const getProfile = async (token: null | string): Promise<any> => {
   const profile = response.data;
 
   return profile;
-  
+
 };
 
 export const createRecipe = async (data: Recipes): Promise<any> => {
@@ -74,3 +74,41 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
 
   return response;
 };
+
+export const getRecipeById = async ({
+  token,
+  recipeId
+}: {
+  token: null | string;
+  recipeId: string
+}): Promise<IRecipe> => {
+  // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
+  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const foundRecipe = response.data;
+
+  return foundRecipe;
+}
+
+export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
+  // http://localhost:3001/api/recipe/create
+  const response = await axios.get(`${baseUrl}/api/recipe/create`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const allRecipesFromUser = response.data
+
+  return allRecipesFromUser
+}

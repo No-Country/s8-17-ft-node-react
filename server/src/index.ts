@@ -14,10 +14,10 @@ const bootstrap = async () => {
   dotenv.config();
   await DataBase.initialize();
 
-  const users = await UserModel.find();
-  if (!users.length) {
-    await seed();
-  }
+  // const users = await UserModel.find();
+  // if (!users.length) {
+  //   await seed();
+  // }
 
   const app = express();
 
