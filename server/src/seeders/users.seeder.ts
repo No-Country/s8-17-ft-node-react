@@ -3,17 +3,23 @@ import { User } from "../models/user.model";
 const usersToSeed: Array<Partial<User>> = [
   {
     name: "John",
-    email: "john@example.com",
-    password: "Pass1234"
+    email: "Test@example.com",
+    password: "Pass1234",
+    alerts:[
+      "lactosa",
+    ],
+    ingredientsFav:[
+      "tomato",
+    ],
   },
   {
     name: "Mary",
-    email: "mary@example.com",
+    email: "Test2@example.com",
     password: "Pass1234"
   },
   {
     name: "William",
-    email: "william@example.com",
+    email: "Test3@example.com",
     password: "Pass1234"
   }
 ];

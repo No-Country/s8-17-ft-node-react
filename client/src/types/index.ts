@@ -11,9 +11,12 @@ export interface UserProfile extends UserRegister {
   lastName: string;
   picture: string;
   nationality: string;
+  _id?: string;
+  id?: string;
 }
 
 export interface IRecipe {
+  id: string;
   name: string;
   description: string;
   ingredients: string[];

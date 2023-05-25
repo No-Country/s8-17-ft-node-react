@@ -4,7 +4,33 @@ import { v4 as uuidv4 } from "uuid";
 import { Category } from "./category.model";
 import { Diet } from "./diet.model";
 import { User } from "./user.model";
-// import { Alert } from "./alert.model";
+import { Difficulty } from "../utils/types";
+
+interface NutritionalValue {
+  of100g: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+    // alcohol: number;
+    // fiber: number;
+    // sugar: number;
+    // salt: number;
+  };
+  ofPortion: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+    // alcohol: number;
+    // fiber: number;
+    // sugar: number;
+    // salt: number;
+  };
+}
+
 
 export class Recipe {
   @prop({
@@ -12,33 +38,33 @@ export class Recipe {
     unique: true,
     default: uuidv4
   })
-  id!: string; // is check
+  id!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  name!: string; // is check
+  name!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsString()
-  description!: string; // is check
+  description!: string;
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  ingredients!: string[]; // is check
+  ingredients!: string[];
 
   @prop({
     required: true
   })
   @IsNotEmpty()
-  steps!: string[]; // is check
+  steps!: string[];
 
   @prop({
     required: true
@@ -48,28 +74,25 @@ export class Recipe {
     preparation: number;
     cooking: number;
     total: number;
-  }; // is check
+  };
 
   @prop({
     required: true
   })
   @IsNotEmpty()
   @IsNumber()
-  portions!: number; // is check
+  portions!: number;
 
-  // @Prop({ type: () => String, ref: Alert })
-  // alerts: Ref<Alert>[];
-
-  @prop({ type: () => String, ref: Category, required: false })
+  @prop({ ref: Category, required: false })
   categories?: Ref<Category>[];
 
-  @prop({ type: () => String, ref: Diet, required: false })
+  @prop({ ref: Diet, required: false })
   diets?: Ref<Diet>[];
 
   @prop({
     required: false
   })
-  difficulty?: string;
+  difficulty?: Difficulty;
 
   @prop({
     required: false
@@ -79,34 +102,15 @@ export class Recipe {
   @prop({
     required: false
   })
-  nutritionalValue?: {
-    of100g: {
-      calories: number;
-      fat: number;
-      carbohydrates: number;
-      protein: number;
-      cholesterol: number;
-      // alcohol: number;
-      // fiber: number;
-      // sugar: number;
-      // salt: number;
-    };
-    ofPortion: {
-      calories: number;
-      fat: number;
-      carbohydrates: number;
-      protein: number;
-      cholesterol: number;
-      // alcohol: number;
-      // fiber: number;
-      // sugar: number;
-      // salt: number;
-    };
-  };
+  nutritionalValue?: NutritionalValue;
 
-  @prop({ ref: User, required: true })
-  @IsNotEmpty()
-  createdBy!: Ref<User>;
+
+  @prop({
+    ref: () => 'User',
+    required: false
+  })
+  createdBy?: Ref<User | any>;
+
 }
 
 const RecipeModel = getModelForClass(Recipe);

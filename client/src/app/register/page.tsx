@@ -1,5 +1,5 @@
 "use client";
-import { google, registerUser } from "@/backend";
+import { registerUser } from "@/backend";
 import useForm from "@/hooks/useForm";
 import { UserRegister } from "@/types";
 import { alerts } from "@/utils/alert";
@@ -19,7 +19,7 @@ export default function Register() {
     password: ""
   });
 
-  const handleRegisterGoogle = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleRegisterGoogle = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     window.location.href = `${baseUrl}/api/auth/google`;
   };
@@ -42,7 +42,6 @@ export default function Register() {
       });
     },
     onError: (error: any) => {
-      console.log(error.response.data);
       alerts({
         title: error.response.data.message
           ? error.response.data.message
@@ -121,10 +120,15 @@ export default function Register() {
           </button>
         </form>
         <div className="flex items-center justify-around gap-5">
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button
+          onClick={handleRegisterFacebook}
+          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
             <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
           </button>
-          <button className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button
+            onClick={handleRegisterGoogle}
+            className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+          >
             <Image src="/Google.png" width={30} height={30} alt="Google" />
           </button>
         </div>

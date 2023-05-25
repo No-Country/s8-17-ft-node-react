@@ -4,7 +4,8 @@ import { GenerateRecipeDto } from "../dto/recipe/generateRecipe.dto";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
-import { Recipe } from "src/models/recipe.model";
+import { Recipe } from "../models/recipe.model";
+import { SaveRecipeDto } from "../dto/recipe/saveRecipe.dto";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
@@ -22,9 +23,8 @@ export class RecipeController {
       }
 
       // const prompt: string = this.generateTemplatePrompt(generateRecipeDto);
-      // const recipe = await this.openAIService.createRecipe(prompt);
+      // const recipe : RecipeIterface = await this.openAIService.createRecipe(prompt);
       const defaultResponse = this.defaultResponse();
-
       return res.status(200).json(defaultResponse);
     } catch (error) {
       return res.status(500).json(error);
@@ -33,25 +33,57 @@ export class RecipeController {
 
   async save(req: Request, res: Response): Promise<Response> {
     try {
-      await this.recipeService.save(req.body);
-      res.status(200).json({ message: "The recipe has been saved successfully!" });
+      // const saveRecipeDto = plainToClass(SaveRecipeDto, req.body.recipe);
+      // const errors = await validate(saveRecipeDto);
+      // console.log(saveRecipeDto);
+
+      // if (errors.length > 0) {
+      //   return res.status(400).json(errors.map(err => err.constraints));
+      // }
+
+      await this.recipeService.save(req.body.id, req.body.recipe);
+      return res.status(200).json({ message: "The recipe has been saved successfully!" });
     } catch (error: any) {
-      if (error.name === "CastError")
+      if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
     }
   }
 
-  async getByUserId(req: Request, res: Response): Promise<Response> {
+  async getFavoriteByUser(req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Array<Recipe> = await this.recipeService.getByUserId(req.params.id);
-      res.status(200).json(userRecipes);
+      const userRecipes: Partial<Recipe>[] = await this.recipeService.getByUserId(res.locals.jwtPayload.id);
+      return res.status(200).json(userRecipes);
     } catch (error: any) {
-      if (error.name === "CastError")
+      if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
     }
   }
+
+  async getAll(req: Request, res: Response): Promise<Response> {
+    try{
+      return res.status(200).json({
+        recipes: await this.recipeService.getAll()
+      })
+    }catch(err){
+      return res.status(500).json(err);
+    }
+  }
+
+  async getCreatedBy(req: Request, res: Response): Promise<Response>{
+    try{
+      return res.status(200).json({
+        recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id)
+      })
+    }catch(err){
+      console.log(err);
+      
+      return res.status(500).json(err);
+    }
+  }
+
+
 
   private generateTemplatePrompt(data: GenerateRecipeDto): string {
     return `Generate a cooking recipe according to the following parameters:
@@ -124,10 +156,6 @@ export class RecipeController {
           carbohydrates: 16.3,
           protein: 2.2,
           cholesterol: 2.1
-          // alcohol: 0
-          // fiber: 2.2,
-          // sugar: 0.4,
-          // salt: 0.2
         },
         ofPortion: {
           calories: 98,
@@ -135,10 +163,6 @@ export class RecipeController {
           carbohydrates: 16.5,
           protein: 2.3,
           cholesterol: 2.2
-          // alcohol: 0
-          // fiber: 2.3,
-          // sugar: 0.4,
-          // salt: 0.3
         }
       }
     };
