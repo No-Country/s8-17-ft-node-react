@@ -134,7 +134,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
             {/* PREPARATION */}
             <div className="sm:w-3/5 py-10 sm:pl-10">
               <h2 className="text-2xl font-bold font-title capitalize text-dark mb-5">Preparation:</h2>
-              <ol className="text-base font-normal font-title capitalize list-disc sm:pl-5 px-10">
+              <ol className="text-base font-normal font-title normal-case list-disc sm:pl-5 px-10 space-y-4 text-dark">
                 {recipe.steps.map((step, index) => (
                   <li key={index}>
                     {step}
