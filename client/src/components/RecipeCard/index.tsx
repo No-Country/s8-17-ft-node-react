@@ -1,6 +1,6 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import { getRecipes } from "@/utils/getRecipes";
+import { getRecipe } from "@/utils/recipes";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
 import { FaDownload, FaShareAlt } from "react-icons/fa";
@@ -8,55 +8,69 @@ import { FaDownload, FaShareAlt } from "react-icons/fa";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const [recipe, setRecipe] = useState<IRecipe | null>({
-    id: "adasd",
-    name: "Tortilla de Queso",
-    description: "Una rica y nutritiva tortilla de queso para el desayuno.",
-    ingredients: ["2 huevos", "50 g de harina", "100 ml de leche", "50 g de queso rallado"],
+    _id: "646f425437be53bd8204c4ff",
+    name: "Berry Spinach Salad",
+    description:
+      "This refreshing and nutritious berry spinach salad is the perfect combination of sweet and savory flavors. It's packed with antioxidants and vitamins!",
+    ingredients: [
+      "4 cups baby spinach leaves",
+      "1 cup mixed berries (strawberries, blueberries, raspberries)",
+      "1/4 cup crumbled feta cheese",
+      "1/4 cup sliced almonds",
+      "2 tablespoons balsamic vinegar",
+      "1 tablespoon extra-virgin olive oil",
+      "1 teaspoon honey",
+      "Salt and pepper, to taste"
+    ],
     steps: [
-      "Batir los huevos con la harina y la leche hasta que quede una masa homogenea.",
-      "Agregar el queso y mezclar.",
-      "Calentar una sartén con un poco de aceite y verter la mezcla.",
-      "Cocinar a fuego medio-bajo hasta que la tortilla esté dorada.",
-      "Servir caliente."
+      "In a large bowl, combine the baby spinach leaves, mixed berries, crumbled feta cheese, and sliced almonds.",
+      "In a small bowl, whisk together the balsamic vinegar, olive oil, honey, salt, and pepper.",
+      "Drizzle the dressing over the salad and toss gently to coat the ingredients.",
+      "Serve immediately and enjoy!"
     ],
     time: {
       preparation: 10,
-      cooking: 10,
-      rest: 0,
-      total: 20
+      cooking: 0,
+      total: 10
     },
     portions: 2,
-    alerts: [],
-    diet: [],
-    difficulty: "fácil",
-    category: ["desayuno"],
-    image: "imagenId",
+    categories: [],
+    diets: [
+      {
+        _id: "646f425437be53bd8204c4df",
+        name: "Vegetarian",
+        description:
+          "No ingredients may contain meat or meat by-products, such as bones or gelatin.",
+        id: "db13fac6-af92-479c-92d7-58949132eb38",
+        __v: 0
+      }
+    ],
+    difficulty: "easy",
     nutritionalValue: {
       of100g: {
-        calories: 250,
-        fat: 12,
-        carbohydrates: 15,
-        protein: 12,
-        sugar: 5,
-        fiber: 1,
-        salt: 1
+        calories: 67,
+        fat: 4.2,
+        carbohydrates: 6.2,
+        protein: 1.8,
+        cholesterol: 4.6
       },
       ofPortion: {
-        calories: 125,
-        fat: 6,
-        carbohydrates: 7.5,
-        protein: 6,
-        sugar: 2.5,
-        fiber: 0.5,
-        salt: 0.5
+        calories: 134,
+        fat: 8.4,
+        carbohydrates: 12.4,
+        protein: 3.6,
+        cholesterol: 9.2
       }
-    }
+    },
+    createdBy: "646f425437be53bd8204c4ef",
+    id: "f821cd0f-8ea1-4fbd-9c2b-a2101ffa683c",
+    image: "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg",
+    __v: 0
   });
-  const { user, isAuthenticated, isLoading } = useAuth();
   // TODO: traer la receta con fetch
   useEffect(() => {
     const fetchData = async () => {
-      const recipe = await getRecipes({ recipeId, user });
+      const recipe = await getRecipe({ recipeId });
       if (recipe === null) setRecipe(null);
       setRecipe(recipe as IRecipe);
     };
