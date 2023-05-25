@@ -18,8 +18,8 @@ export class RecipeService {
   public async getByUserId(id: string): Promise<Partial<Recipe>[]> {
     const user: User = await this.userRepository.findOne({ id });
     if (!user) throw new Error("User not found.");
-
     const userRecipes: Recipe[] = await this.recipeRepository.findAllByRef(user.favRecipes);
+
     return userRecipes;
   }
 

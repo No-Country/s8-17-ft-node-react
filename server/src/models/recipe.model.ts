@@ -31,6 +31,7 @@ interface NutritionalValue {
   };
 }
 
+
 export class Recipe {
   @prop({
     required: true,
@@ -103,11 +104,13 @@ export class Recipe {
   })
   nutritionalValue?: NutritionalValue;
 
+
   @prop({
     ref: () => 'User',
     required: false
   })
   createdBy?: Ref<User | any>;
+
 }
 
 const RecipeModel = getModelForClass(Recipe);

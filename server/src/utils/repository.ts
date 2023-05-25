@@ -6,10 +6,12 @@ class Repository<T> {
   constructor(model: ReturnModelType<new () => T>) {
     this.model = model;
   }
+
   public async findById(id: string): Promise<DocumentType<T & { _id: ObjectId }> | null> {
     return this.model.findOne({
       id,
     });
+
   }
 
   public async findOne(filter: Partial<T>): Promise<DocumentType<T> | null> {

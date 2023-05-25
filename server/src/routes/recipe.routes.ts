@@ -13,4 +13,5 @@ recipeRoutes.get("/favorite", checkJWT, recipeController.getFavoriteByUser.bind(
 recipeRoutes.get("/create", checkJWT, recipeController.getCreatedBy.bind(recipeController));
 
 
+
 export default recipeRoutes;
