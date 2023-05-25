@@ -4,7 +4,6 @@ import axios from "axios";
 // const baseUrl = "http://localhost:3000";
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
-
 export const registerUser = async (newUser: UserRegister): Promise<any> => {
   const response = await axios.post(`${baseUrl}/api/auth/register`, {
     name: newUser.name,
@@ -47,7 +46,6 @@ export const getProfile = async (token: null | string): Promise<any> => {
   const profile = response.data;
 
   return profile;
-
 };
 
 export const createRecipe = async (data: Recipes): Promise<any> => {
@@ -57,22 +55,22 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
     user = JSON.parse(loggedUserJSON);
   }
 
-  const response = await axios.post(
-    `${baseUrl}/api/recipe/generate`,
-    {
-      ingredients: data.ingredient,
-      diets: data.diets,
-      categories: data.categories,
-      difficulty: data.difficulty
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${user?.token}`
-      }
-    }
-  );
+  // const response = await axios.post(
+  //   `${baseUrl}/api/recipe/generate`,
+  //   {
+  //     ingredients: data.ingredient,
+  //     diets: data.diets,
+  //     categories: data.categories,
+  //     difficulty: data.difficulty
+  //   },
+  //   {
+  //     headers: {
+  //       Authorization: `Bearer ${user?.token}`
+  //     }
+  //   }
+  // );
 
-  return response;
+  // return response;
 };
 
 export const getRecipeById = async ({
@@ -80,14 +78,14 @@ export const getRecipeById = async ({
   recipeId
 }: {
   token: null | string;
-  recipeId: string
+  recipeId: string;
 }): Promise<IRecipe> => {
   // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
   const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  })
+  });
   if (response.status === 401) {
     throw new Error("Not authorized");
   }
@@ -95,7 +93,7 @@ export const getRecipeById = async ({
   const foundRecipe = response.data;
 
   return foundRecipe;
-}
+};
 
 export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
   // http://localhost:3001/api/recipe/create
@@ -103,12 +101,12 @@ export const getAllRecipesFromUser = async ({ token }: { token: string }): Promi
     headers: {
       Authorization: `Bearer ${token}`
     }
-  })
+  });
   if (response.status === 401) {
     throw new Error("Not authorized");
   }
 
-  const allRecipesFromUser = response.data
+  const allRecipesFromUser = response.data;
 
-  return allRecipesFromUser
-}
+  return allRecipesFromUser;
+};
