@@ -123,7 +123,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
                 ))}
               </ul>
               {/* BUTTONS */}
-              <div className="flex flex-col md:flex-row justify-evenly items-center mt-10">
+              <div className="flex flex-col md:flex-row justify-evenly items-center mt-10 sm:mb-5">
                 <button className="flex items-center hover:bg-dark py-2 px-4 rounded-xl border-2 border-slate-300 w-fit">
                   <p className="capitalize font-bold text-primary-500">glossary</p>
                 </button>
