@@ -13,10 +13,7 @@ import { RecipeInterface } from "../utils/types";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
-  constructor(
-    private recipeService: RecipeService,
-    private userService: UserService
-    ) {
+  constructor(private recipeService: RecipeService, private userService: UserService) {
     this.openAIService = OpenAIService;
   }
 
@@ -28,20 +25,21 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
-      const user : User = await this.userService.findById(res.locals.jwtPayload.id);
-      if(!user) return res.status(404).json({
-        message: "User not found"
-      })
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
       const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
-      const recipe : RecipeDto = await this.openAIService.createRecipe(prompt);
+      const recipe: RecipeDto = await this.openAIService.createRecipe(prompt);
       const recipesaved = await this.recipeService.saveRecipe(recipe, user.id);
       console.log(recipesaved);
-      
+
       // const defaultResponse: RecipeDto = this.defaultResponse();
       return res.status(200).json({
-        recipe:recipesaved
+        recipe: recipesaved
       });
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       return res.status(500).json({
         message: error.message
@@ -49,22 +47,51 @@ export class RecipeController {
     }
   }
 
-  async save(req: Request, res: Response): Promise<Response> {
+  async addFavorite(req: Request, res: Response): Promise<Response> {
     try {
-      // const saveRecipeDto = plainToClass(SaveRecipeDto, req.body.recipe);
-      // const errors = await validate(saveRecipeDto);
-      // console.log(saveRecipeDto);
-
-      // if (errors.length > 0) {
-      //   return res.status(400).json(errors.map(err => err.constraints));
-      // }
-
-      await this.recipeService.save(req.body.id, req.body.recipe);
-      return res.status(200).json({ message: "The recipe has been saved successfully!" });
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
+      const recipe: Recipe = await this.recipeService.getById(req.params.id);
+      if (!recipe)
+        return res.status(404).json({
+          message: "Recipe not found"
+        });
+      await this.userService.addFavoriteRecipe(user, recipe);
+      return res.status(200).json({
+        message: "Recipe added to favorites"
+      });
     } catch (error: any) {
+      console.log(error);
+
       if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
+    }
+  }
+
+  async deleteFavorite(req: Request, res: Response): Promise<Response> {
+    try {
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
+      const recipe: Recipe = await this.recipeService.getById(req.params.id);
+      if (!recipe)
+        return res.status(404).json({
+          message: "Recipe not found"
+        });
+      await this.userService.deleteFavoriteRecipe(user, recipe);
+      return res.status(200).json({
+        message: "Recipe removed to favorites"
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        message: error.message
+      });
     }
   }
 
@@ -113,10 +140,7 @@ export class RecipeController {
     }
   }
 
-
   private defaultResponse(): RecipeDto {
     return this.recipeService.getAll()[0];
   }
 }
-
-
