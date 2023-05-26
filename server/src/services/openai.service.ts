@@ -2,6 +2,8 @@ import { Configuration, OpenAIApi } from "openai";
 import dotenv from "dotenv";
 import { GenerateRecipeDto } from "../dto/recipe/generateRecipe.dto";
 import { User } from "../models/user.model";
+import axios from "axios";
+import { RecipeDto } from "src/dto/recipe/recipe.dto";
 dotenv.config();
 
 export class OpenAIServiceIntance {
@@ -26,8 +28,15 @@ export class OpenAIServiceIntance {
     });
 
     const recipeObject = response.data.choices[0].message.content;
-
-    return JSON.parse(recipeObject);
+    const recipe : RecipeDto = JSON.parse(recipeObject)
+    try{
+      const images : string[] = await this.getImageUrlFromPexels(recipe.name);
+      recipe.images = images
+    }catch(err){
+      console.log('failed to get image url');
+      console.log(err);
+    }
+    return recipe;
   }
 
   private readonly SystemMessage: any = {
@@ -85,9 +94,21 @@ Generate a cooking recipe that helps improve your nutrition and enables you to l
     `;
   }
 
-  async generateImage(recipe: GenerateRecipeDto) {
-    // const response: any = await this.openai.generate(recipe);
-    // return response.data.image;
+  async getImageUrlFromPexels(searchTerm: string): Promise<string[]> {
+    const response = await axios.get("https://api.pexels.com/v1/search", {
+      headers: {
+        Authorization: process.env.PEXELS_KEY_TOKEN
+      },
+      params: {
+        query: searchTerm,
+        per_page: 4
+      }
+    });
+
+    const images : string[] = response.data.photos.map(image =>
+      image.src.large
+    );
+    return images;
   }
 }
 

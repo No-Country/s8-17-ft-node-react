@@ -1,5 +1,5 @@
 import { ReturnModelType, DocumentType, Ref } from "@typegoose/typegoose";
-import { ObjectId } from "mongoose";
+import { FilterQuery, ObjectId } from "mongoose";
 
 class Repository<T> {
   
@@ -14,17 +14,18 @@ class Repository<T> {
     if (populate && populate.length > 0) {
       for (const ref of populate) {
         query = query.populate(ref);
+        query = await query.exec();
       }
     }
-    const result = await query.exec();
-    return result;
+    
+    return query;
   }
 
   public async findOne(filter: Partial<T>): Promise<DocumentType<T> | null> {
     return this.model.findOne(filter);
   }
 
-  public async findAll(props:{
+  public async findAll(props?:{
     fields?: string[] ,
     skip?: number,
     limit?: number
@@ -89,6 +90,25 @@ class Repository<T> {
   public async save(filter: Partial<T>): Promise<DocumentType<T> | null> {
     return this.model.findOneAndUpdate(filter, { $set: filter }, { upsert: true });
   }
+
+  public async findOrCreateMany(filters: Partial<T>[]): Promise<DocumentType<T>[]> {
+    const queries = filters.map(async (filter) => {
+      let result = await this.model.findOne(filter);
+      if (!result) {
+        result = await this.model.create(filter);
+      }
+      return result;
+    });
+  
+    const items = await Promise.all(queries);
+    return items.filter(Boolean) as DocumentType<T>[];
+  }
+  
+  
+  
+  
+  
+  
 }
 
 export default Repository;

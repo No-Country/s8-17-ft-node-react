@@ -5,9 +5,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
 import { Recipe } from "../models/recipe.model";
-import { SaveRecipeDto } from "../dto/recipe/saveRecipe.dto";
 import { RecipeDto } from "../dto/recipe/recipe.dto";
-import { Difficulty } from "../utils/types";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";
 
@@ -33,7 +31,8 @@ export class RecipeController {
         message: "User not found"
       })
       const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
-      const recipe = await this.openAIService.createRecipe(prompt);
+      const recipe : RecipeDto = await this.openAIService.createRecipe(prompt);
+      const recipesaved : Recipe = await this.recipeService.saveRecipe(recipe, user.id)
       // const defaultResponse: RecipeDto = this.defaultResponse();
       return res.status(200).json({
         recipe

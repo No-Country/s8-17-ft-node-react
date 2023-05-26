@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsString, IsEnum, IsArray, ValidateNested, IsNumber } from "class-validator";
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsArray,
+  ValidateNested,
+  IsNumber,
+  IsOptional
+} from "class-validator";
 import { Difficulty } from "../../utils/types";
 import { Ref } from "@typegoose/typegoose";
 import { Diet } from "../../models/diet.model";
@@ -50,6 +58,9 @@ export class RecipeDto {
   })
   name: string;
 
+  @IsOptional()
+  images?: string[];
+
   @IsString()
   @IsNotEmpty({
     message: "Description is required"
@@ -78,14 +89,12 @@ export class RecipeDto {
   @IsArray()
   diets: string[] | {}[];
 
-  @IsString()
-  image?: string;
 
   @IsNotEmpty({
     message: "Categories is required"
   })
   @IsArray()
-  categories: string[] |  {}[];
+  categories: string[] | {}[];
 
   @IsEnum(Difficulty)
   difficulty: Difficulty;
