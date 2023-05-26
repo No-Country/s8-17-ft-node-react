@@ -2,24 +2,48 @@ import { ReturnModelType, DocumentType, Ref } from "@typegoose/typegoose";
 import { ObjectId } from "mongoose";
 
 class Repository<T> {
+  
   public model: ReturnModelType<new () => T>;
   constructor(model: ReturnModelType<new () => T>) {
     this.model = model;
   }
-
-  public async findById(id: string): Promise<DocumentType<T & { _id: ObjectId }> | null> {
-    return this.model.findOne({
+  public async findById(id: string, populate?: any[]): Promise<DocumentType<T> | null> {
+    let query : any = await this.model.findOne({
       id
     });
+    if (populate && populate.length > 0) {
+      for (const ref of populate) {
+        query = query.populate(ref);
+      }
+    }
+    const result = await query.exec();
+    return result;
   }
 
   public async findOne(filter: Partial<T>): Promise<DocumentType<T> | null> {
     return this.model.findOne(filter);
   }
 
-  public async findAll(filter?: Partial<T>, fields?: any): Promise<DocumentType<T>[]> {
-    return this.model.find(filter, fields);
+  public async findAll(props:{
+    fields?: string[] ,
+    skip?: number,
+    limit?: number
+    filter?: Partial<T>,
+    sort?: Partial<T>
+    populate?: any[] 
+
+  }): Promise<DocumentType<T>[]> {
+    let query : any = this.model.find(props.filter, props.fields);
+    // Aquí se aplica populate() para cargar las referencias
+    if (props.populate && props.populate.length > 0) {
+      for (const ref of props.populate) {
+        query = query.populate(ref);
+      }
+    }
+    const result = await query.exec();
+    return result;
   }
+  
 
   public async findAllByRef(filter?: Ref<T>[], fields?: any): Promise<DocumentType<T>[] | null> {
     return await this.model.find({ _id: { $in: filter } }, fields);

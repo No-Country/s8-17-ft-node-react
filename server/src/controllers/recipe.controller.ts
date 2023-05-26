@@ -8,10 +8,15 @@ import { Recipe } from "../models/recipe.model";
 import { SaveRecipeDto } from "../dto/recipe/saveRecipe.dto";
 import { RecipeDto } from "../dto/recipe/recipe.dto";
 import { Difficulty } from "../utils/types";
+import { User } from "../models/user.model";
+import { UserService } from "../services/user.service";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
-  constructor(private recipeService: RecipeService) {
+  constructor(
+    private recipeService: RecipeService,
+    private userService: UserService
+    ) {
     this.openAIService = OpenAIService;
   }
 
@@ -23,15 +28,21 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
-
-      // const prompt: string = this.generateTemplatePrompt(generateRecipeDto);
-      // const recipe : RecipeIterface = await this.openAIService.createRecipe(prompt);
-      const defaultResponse: RecipeDto = this.defaultResponse();
+      const user : User = await this.userService.findById(res.locals.jwtPayload.id);
+      if(!user) return res.status(404).json({
+        message: "User not found"
+      })
+      const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
+      const recipe = await this.openAIService.createRecipe(prompt);
+      // const defaultResponse: RecipeDto = this.defaultResponse();
       return res.status(200).json({
-        recipe: defaultResponse
+        recipe
       });
-    } catch (error) {
-      return res.status(500).json(error);
+    } catch (error:any) {
+      console.log(error);
+      return res.status(500).json({
+        message: error.message
+      });
     }
   }
 
@@ -100,48 +111,11 @@ export class RecipeController {
       });
     }
   }
-  private generateTemplatePrompt(data: GenerateRecipeDto): string {
-    return `Generate a cooking recipe according to the following parameters:
-    - Ingredients: ${data.ingredients}
-    - Diets: ${data.diets}
-    - Categories: ${data.categories} 
-    - Difficulty: ${data.difficulty}
 
-    Output format:
-    {
-      name: string,
-      description: string,
-      ingredients: string[],
-      steps: string[],
-      time: {
-        preparation: string,
-        cooking: string,
-        total: string
-      },
-      portions: number,
-      categories: string[],
-      diets: string[],
-      difficulty: ${data.difficulty},
-      nutritionalValue: {
-        of100g: {
-          calories: number,
-          fat: number,
-          carbohydrates: number,
-          protein: number,
-          cholesterol: number
-        },
-        ofPortion: {
-          calories: number,
-          fat: number,
-          carbohydrates: number,
-          protein: number,
-          cholesterol: number
-        }
-      }
-    }`;
-  }
 
   private defaultResponse(): RecipeDto {
     return this.recipeService.getAll()[0];
   }
 }
+
+
