@@ -8,9 +8,6 @@ import {
   IsOptional
 } from "class-validator";
 import { Difficulty } from "../../utils/types";
-import { Ref } from "@typegoose/typegoose";
-import { Diet } from "../../models/diet.model";
-import { Category } from "../../models/category.model";
 import { Type } from "class-transformer";
 
 export class TimeDto {
@@ -24,7 +21,7 @@ export class TimeDto {
   total: number;
 }
 
-export class Values {
+export class ValuesDto {
   @IsNumber()
   calories: number;
 
@@ -41,14 +38,16 @@ export class Values {
   cholesterol: number;
 }
 
-export class NutritionalValueDto {
+export class NutritionalValuesDto {
   @IsNotEmpty()
   @ValidateNested({ each: true })
-  @Type(() => Values)
-  of100g: Values;
+  @Type(() => ValuesDto)
+  of100g: ValuesDto;
 
   @IsNotEmpty()
-  ofPortion: Values;
+  @ValidateNested({ each: true })
+  @Type(() => ValuesDto)
+  ofPortion: ValuesDto;
 }
 
 export class RecipeDto {
@@ -67,29 +66,28 @@ export class RecipeDto {
   })
   description: string;
 
-  @IsArray({
-    message: "Steps is required"
-  })
+  @IsArray()
   @IsNotEmpty({
     message: "Steps is required"
   })
   @ValidateNested({ each: true })
   steps: string[];
 
+  @IsArray()
   @IsNotEmpty({
     message: "Ingredients is required"
   })
-  @IsArray()
   @IsString({ each: true })
   ingredients: string[];
 
+  @IsArray()
   @IsNotEmpty({
     message: "Diets is required"
   })
+  diets: string[];
+
+
   @IsArray()
-  diets: string[] | {}[];
-
-
   @IsNotEmpty({
     message: "Categories is required"
   })
@@ -106,16 +104,16 @@ export class RecipeDto {
   @Type(() => TimeDto)
   time: TimeDto;
 
+  @IsNumber()
   @IsNotEmpty({
     message: "Portions is required"
   })
-  @IsNumber()
   portions: number;
 
   @IsNotEmpty({
-    message: "Nutritional value is required"
+    message: "Nutritional values is required"
   })
   @ValidateNested()
-  @Type(() => NutritionalValueDto)
-  nutritionalValue: NutritionalValueDto;
+  @Type(() => NutritionalValuesDto)
+  nutritionalValues: NutritionalValuesDto;
 }

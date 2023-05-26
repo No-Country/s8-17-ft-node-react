@@ -6,7 +6,7 @@ import { Diet } from "./diet.model";
 import { User } from "./user.model";
 import { Difficulty } from "../utils/types";
 
-interface NutritionalValue {
+interface NutritionalValues {
   of100g: {
     calories: number;
     fat: number;
@@ -30,7 +30,6 @@ interface NutritionalValue {
     // salt: number;
   };
 }
-
 
 export class Recipe {
   @prop({
@@ -75,7 +74,7 @@ export class Recipe {
     cooking: number;
     total: number;
   };
-  
+
   @prop({
     required: true
   })
@@ -103,15 +102,13 @@ export class Recipe {
   @prop({
     required: false
   })
-  nutritionalValue?: NutritionalValue;
-
+  nutritionalValues?: NutritionalValues;
 
   @prop({
-    ref: () => 'User',
+    ref: () => "User",
     required: false
   })
   createdBy?: Ref<User | any>;
-
 
   constructor(partial: Partial<Recipe>) {
     Object.assign(this, partial);

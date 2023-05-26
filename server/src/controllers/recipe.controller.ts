@@ -9,6 +9,8 @@ import { RecipeDto } from "../dto/recipe/recipe.dto";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";
 
+import { RecipeInterface } from "../utils/types";
+
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
   constructor(
@@ -64,11 +66,12 @@ export class RecipeController {
     }
   }
 
-  async getFavoriteByUser(req: Request, res: Response): Promise<Response> {
+  async getFavoriteByUser(_req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Partial<Recipe>[] = await this.recipeService.getByUserId(
+      const userRecipes: Partial<Recipe>[] = await this.recipeService.getFavoriteByUser(
         res.locals.jwtPayload.id
       );
+
       return res.status(200).json(userRecipes);
     } catch (error: any) {
       if (error.message === "User not found.")
@@ -77,25 +80,23 @@ export class RecipeController {
     }
   }
 
-  async getAll(req: Request, res: Response): Promise<Response> {
+  async getAll(_req: Request, res: Response): Promise<Response> {
     try {
       return res.status(200).json({
         recipes: await this.recipeService.getAll()
       });
-    } catch (err) {
-      return res.status(500).json(err);
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
-  async getCreatedBy(req: Request, res: Response): Promise<Response> {
+  async getCreatedBy(_req: Request, res: Response): Promise<Response> {
     try {
       return res.status(200).json({
         recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id)
       });
-    } catch (err) {
-      console.log(err);
-
-      return res.status(500).json(err);
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
@@ -103,11 +104,10 @@ export class RecipeController {
     try {
       const recipe = await this.recipeService.getById(req.params.id);
       if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+
       return res.status(200).json(recipe);
-    } catch (err: any) {
-      return res.status(500).json({
-        message: err.message
-      });
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 

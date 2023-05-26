@@ -19,6 +19,7 @@ export class RecipeService {
     await this.recipeRepository.create(recipe);
   }
 
+
   public async saveRecipe(recipeDto: RecipeDto, userId: string): Promise<Recipe> {
     const dietFilters = recipeDto.diets.map(name => ({ name: name }));
     const categoryFilters = recipeDto.categories.map(name => ({ name: name }));
@@ -40,11 +41,13 @@ export class RecipeService {
   }
   
 
-  public async getByUserId(id: string): Promise<Partial<Recipe>[]> {
+
+  public async getFavoriteByUser(id: string): Promise<Partial<Recipe>[]> {
+
     const user: User = await this.userRepository.findOne({ id });
     if (!user) throw new Error("User not found.");
-    const userRecipes: Recipe[] = await this.recipeRepository.findAllByRef(user.favRecipes);
 
+    const userRecipes: Recipe[] = await this.recipeRepository.findAllByRef(user.favRecipes);
     return userRecipes;
   }
 
@@ -65,12 +68,14 @@ export class RecipeService {
       { path: "categories", select: "name" },
       { path: "createdBy", select: "name" }
     ]);
+
     return recipe;
   }
 
   public async getCreatedBy(createdBy: string): Promise<Recipe[]> {
     const user: User = await this.userRepository.findById(createdBy);
     if (!user) throw new Error("User not found.");
+
     return await this.recipeRepository.findAll({
       filter: {
         createdBy: user.id
