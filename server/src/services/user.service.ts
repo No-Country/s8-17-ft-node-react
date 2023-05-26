@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
+import { error } from "console";
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);
@@ -28,6 +29,16 @@ export class UserService {
     return {
       user,
       token: this.generateToken(user)
+    };
+  }
+
+  public async update(user: Partial<User>, body: any) {
+    const existUser = await this.userRepository.findById(user.id);
+    if (!existUser) throw new Error("User not exists!");
+    const updatedUser = await this.userRepository.update(user, { ...body, password: body.password? await bcrypt.hash(body.password, 10) : existUser.password });
+
+    return {
+      user: updatedUser
     };
   }
 
@@ -73,6 +84,13 @@ export class UserService {
   public async findOne(body: Partial<User>) {
     const user = await this.userRepository.findOne(body);
     user ? delete user.password : null;
+
+    return user;
+  }
+
+  public async findById(user: Partial<User>) {
+    const existUser = await this.userRepository.findById(user.id);
+    existUser ? delete user.password : null;
 
     return user;
   }

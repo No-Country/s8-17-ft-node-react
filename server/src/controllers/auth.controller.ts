@@ -30,6 +30,18 @@ export class AuthController {
     }
   }
 
+  async update(req: Request, res: Response): Promise<Response> {
+    try {
+      const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
+      const user = await this.userService.update(partialUser, req.body);
+      return res.status(200).json({ message: "User updated!"});
+    } catch (error) {
+      console.log("update error: ", error);
+      return res.status(500).json(error);
+    }
+
+  }
+
   async auth(req: Request, res: Response): Promise<Response> {
     try {
       const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
