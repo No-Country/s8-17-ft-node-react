@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
+import { Recipe } from "src/models/recipe.model";
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);
@@ -79,8 +80,25 @@ export class UserService {
 
   public async findById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({ id: id });
-    user? delete user.password : null;
+    user ? delete user.password : null;
     return user;
+  }
+
+  public async addFavoriteRecipe(user: User, recipe: Recipe): Promise<User> {
+    return this.userRepository.update(
+      {
+        id: user.id
+      },
+      { $addToSet: { favRecipes: recipe } }
+    );
+  }
+  public async deleteFavoriteRecipe(user: User, recipe: Recipe): Promise<User> {
+    return this.userRepository.update(
+      {
+        id: user.id
+      },
+      { $pullAll: { favRecipes: [recipe] } },
+    );
   }
 
   private generateToken(user: User) {

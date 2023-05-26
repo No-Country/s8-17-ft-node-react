@@ -12,9 +12,15 @@ class Repository<T> {
       id
     });
     if (populate && populate.length > 0) {
-      for (const ref of populate) {
-        query = query.populate(ref);
-        query = await query.exec();
+      try{
+        
+        for (const ref of populate) {
+          query = query.populate(ref);
+          query = await query.exec();
+        }
+      }catch(err){
+        console.log('not found' );
+        
       }
     }
     
@@ -63,11 +69,11 @@ class Repository<T> {
   }
 
   public async update(
-    id: Partial<T>,
+    partial: Partial<T>,
     data: any,
     options?: boolean
   ): Promise<DocumentType<T> | null> {
-    return this.model.findOneAndUpdate(id, data, { upsert: options });
+    return this.model.findOneAndUpdate(partial, data, { upsert: options });
     // return this.model.findOneAndUpdate({ id }, { $set: data }, { upsert: options ?? false });
   }
 
