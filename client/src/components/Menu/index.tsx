@@ -9,7 +9,7 @@ type props = {
 };
 
 export default function Menu({ href }: props) {
-  console.log(href);
+  // console.log(href);
   return (
     <section className="w-[234px] h-[250px] flex flex-col items-center justify-center gap-8 border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px]">
       <Link href="/" className="w-[70%]">
@@ -41,9 +41,9 @@ export default function Menu({ href }: props) {
         </button>
       </Link>
 
-      <Link href={"/favourites"} className="w-[70%]">
+      <Link href={"/recipesfav"} className="w-[70%]">
         <button className="flex items-center">
-          {href === "favourites" ? (
+          {href === "recipesfav" ? (
             <Image
               src="/menu/StarSelected.png"
               alt="home"
@@ -59,13 +59,13 @@ export default function Menu({ href }: props) {
               height="20"
               className="pointer-events-none"
             />
-          )}{" "}
+          )}
           <h1
             className={`text-[26px] ${
-              href === "/favourites" ? "text-[#FF0087]" : "text-[#ABABAB]"
+              href === "recipesfav" ? "text-[#FF0087]" : "text-[#ABABAB]"
             } font-[500] leading-[39px] ml-3`}
           >
-            Favourites
+            Favorites
           </h1>
         </button>
       </Link>
@@ -88,7 +88,7 @@ export default function Menu({ href }: props) {
               height="20"
               className="pointer-events-none"
             />
-          )}{" "}
+          )}
           <h1
             className={`text-[26px] ${
               href === "generator" ? "text-[#FF0087]" : "text-[#ABABAB]"
