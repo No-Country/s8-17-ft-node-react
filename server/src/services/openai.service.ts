@@ -14,8 +14,6 @@ export class OpenAIServiceIntance {
   }
 
   async createRecipe(prompt: string) {
-    // falta tipar el response pero me da paja
-
     const response: any = await this.openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
@@ -47,7 +45,7 @@ export class OpenAIServiceIntance {
 
   public generateTemplatePrompt(data: GenerateRecipeDto, user: User): string {
     const alerts = [data.alerts, user.alerts].toString();
-    const favorite = [user.ingredientsFav, data.favorites].toString();
+    const favorite = [user.favIngredients, data.favorites].toString();
 
     return `
 Generate a cooking recipe that helps improve your nutrition and enables you to learn simple cooking techniques. Consider the following parameters:
@@ -74,7 +72,7 @@ Generate a cooking recipe that helps improve your nutrition and enables you to l
         "categories": string[] ${data.categories},
         "diets": string[] ${data.diets},
         "difficulty": "${data.difficulty}",
-        "nutritionalValue": {
+        "nutritionalValues": {
           "of100g": {
             "calories": number,
             "fat": number,
@@ -100,7 +98,7 @@ Generate a cooking recipe that helps improve your nutrition and enables you to l
         Authorization: process.env.PEXELS_KEY_TOKEN
       },
       params: {
-        query: searchTerm,
+        query: `food:${searchTerm}`,
         per_page: 4
       }
     });

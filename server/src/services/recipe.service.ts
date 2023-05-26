@@ -19,31 +19,25 @@ export class RecipeService {
     await this.recipeRepository.create(recipe);
   }
 
-
   public async saveRecipe(recipeDto: RecipeDto, userId: string): Promise<Recipe> {
-    const dietFilters = recipeDto.diets.map(name => ({ name: name }));
-    const categoryFilters = recipeDto.categories.map(name => ({ name: name }));
-  
-    const [diets, categories, createdBy] = await Promise.all([
-      this.dietRepository.findOrCreateMany(dietFilters),
-      this.categoryRepository.findOrCreateMany(categoryFilters),
-      this.userRepository.findById(userId)
-    ]);
-  
+    const dietFilters = await recipeDto.diets.map(name => ({ name: name }));
+    const categoryFilters = await recipeDto.categories.map(name => ({ name: name }));
+
+    const diets = await this.dietRepository.findOrCreateMany(dietFilters);
+    const categories = await this.categoryRepository.findOrCreateMany(categoryFilters);
+    const createdBy = await this.userRepository.findById(userId);
+
     const recipe = new Recipe({
       ...recipeDto,
       diets,
       categories,
       createdBy
     });
-  
-    return await this.recipeRepository.save(recipe);
+    
+    return recipe;
   }
-  
-
 
   public async getFavoriteByUser(id: string): Promise<Partial<Recipe>[]> {
-
     const user: User = await this.userRepository.findOne({ id });
     if (!user) throw new Error("User not found.");
 

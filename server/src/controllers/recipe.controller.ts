@@ -34,10 +34,12 @@ export class RecipeController {
       })
       const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
       const recipe : RecipeDto = await this.openAIService.createRecipe(prompt);
-      const recipesaved : Recipe = await this.recipeService.saveRecipe(recipe, user.id)
+      const recipesaved = await this.recipeService.saveRecipe(recipe, user.id);
+      console.log(recipesaved);
+      
       // const defaultResponse: RecipeDto = this.defaultResponse();
       return res.status(200).json({
-        recipe
+        recipe:recipesaved
       });
     } catch (error:any) {
       console.log(error);
