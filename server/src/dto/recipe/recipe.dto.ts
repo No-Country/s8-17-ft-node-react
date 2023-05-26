@@ -1,4 +1,12 @@
-import { IsNotEmpty, IsString, IsEnum, IsArray, ValidateNested, IsNumber } from "class-validator";
+import {
+  IsNotEmpty,
+  IsString,
+  IsEnum,
+  IsArray,
+  ValidateNested,
+  IsNumber,
+  IsOptional
+} from "class-validator";
 import { Difficulty } from "../../utils/types";
 import { Type } from "class-transformer";
 
@@ -49,6 +57,9 @@ export class RecipeDto {
   })
   name: string;
 
+  @IsOptional()
+  images?: string[];
+
   @IsString()
   @IsNotEmpty({
     message: "Description is required"
@@ -75,14 +86,13 @@ export class RecipeDto {
   })
   diets: string[];
 
-  @IsString()
-  image?: string;
 
   @IsArray()
   @IsNotEmpty({
     message: "Categories is required"
   })
-  categories: string[];
+  @IsArray()
+  categories: string[] | {}[];
 
   @IsEnum(Difficulty)
   difficulty: Difficulty;

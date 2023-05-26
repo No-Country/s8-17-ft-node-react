@@ -18,11 +18,10 @@ export class Category {
   public name!: string;
 
   @prop({
-    required: true
+    required: false
   })
-  @IsNotEmpty()
   @IsString()
-  public description!: string;
+  public description?: string;
 }
 
 const CategoryModel = getModelForClass(Category);

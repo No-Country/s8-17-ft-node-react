@@ -77,6 +77,12 @@ export class UserService {
     return user;
   }
 
+  public async findById(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({ id: id });
+    user? delete user.password : null;
+    return user;
+  }
+
   private generateToken(user: User) {
     return jwt.sign(
       {
