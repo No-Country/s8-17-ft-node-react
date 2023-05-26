@@ -1,7 +1,6 @@
 import { IRecipe, IRecipes, Recipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
-// const baseUrl = "http://localhost:3000";
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const registerUser = async (newUser: UserRegister): Promise<any> => {
@@ -95,9 +94,22 @@ export const getRecipeById = async ({
   return foundRecipe;
 };
 
-export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
-  // http://localhost:3001/api/recipe/create
-  const response = await axios.get(`${baseUrl}/api/recipe/create`, {
+// export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
+//   const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   });
+//   if (response.status === 401) {
+//     throw new Error("Not authorized");
+//   }
+
+//   const allRecipesFromUser = response.data;
+
+//   return allRecipesFromUser;
+// };
+export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipe[]> => {
+  const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -106,7 +118,7 @@ export const getAllRecipesFromUser = async ({ token }: { token: string }): Promi
     throw new Error("Not authorized");
   }
 
-  const allRecipesFromUser = response.data;
+  const allRecipesFromUser: IRecipe[] = response.data;
 
   return allRecipesFromUser;
 };
