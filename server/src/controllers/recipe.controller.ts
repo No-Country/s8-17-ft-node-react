@@ -5,11 +5,15 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
 import { Recipe } from "../models/recipe.model";
-import { SaveRecipeDto } from "../dto/recipe/saveRecipe.dto";
+import { RecipeDto } from "../dto/recipe/recipe.dto";
+import { User } from "../models/user.model";
+import { UserService } from "../services/user.service";
+
+import { RecipeInterface } from "../utils/types";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService, private userService: UserService) {
     this.openAIService = OpenAIService;
   }
 
@@ -21,38 +25,82 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
+      const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
+      const recipe: RecipeDto = await this.openAIService.createRecipe(prompt);
+      const recipesaved = await this.recipeService.saveRecipe(recipe, user.id);
+      console.log(recipesaved);
 
-      // const prompt: string = this.generateTemplatePrompt(generateRecipeDto);
-      // const recipe : RecipeIterface = await this.openAIService.createRecipe(prompt);
-      const defaultResponse = this.defaultResponse();
-      return res.status(200).json(defaultResponse);
-    } catch (error) {
-      return res.status(500).json(error);
+      // const defaultResponse: RecipeDto = this.defaultResponse();
+      return res.status(200).json({
+        recipe: recipesaved
+      });
+    } catch (error: any) {
+      console.log(error);
+      return res.status(500).json({
+        message: error.message
+      });
     }
   }
 
-  async save(req: Request, res: Response): Promise<Response> {
+  async addFavorite(req: Request, res: Response): Promise<Response> {
     try {
-      // const saveRecipeDto = plainToClass(SaveRecipeDto, req.body.recipe);
-      // const errors = await validate(saveRecipeDto);
-      // console.log(saveRecipeDto);
-
-      // if (errors.length > 0) {
-      //   return res.status(400).json(errors.map(err => err.constraints));
-      // }
-
-      await this.recipeService.save(req.body.id, req.body.recipe);
-      return res.status(200).json({ message: "The recipe has been saved successfully!" });
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
+      const recipe: Recipe = await this.recipeService.getById(req.params.id);
+      if (!recipe)
+        return res.status(404).json({
+          message: "Recipe not found"
+        });
+      await this.userService.addFavoriteRecipe(user, recipe);
+      return res.status(200).json({
+        message: "Recipe added to favorites"
+      });
     } catch (error: any) {
+      console.log(error);
+
       if (error.message === "User not found.")
         return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
     }
   }
 
-  async getFavoriteByUser(req: Request, res: Response): Promise<Response> {
+  async deleteFavorite(req: Request, res: Response): Promise<Response> {
     try {
-      const userRecipes: Partial<Recipe>[] = await this.recipeService.getByUserId(res.locals.jwtPayload.id);
+      const user: User = await this.userService.findById(res.locals.jwtPayload.id);
+      if (!user)
+        return res.status(404).json({
+          message: "User not found"
+        });
+      const recipe: Recipe = await this.recipeService.getById(req.params.id);
+      if (!recipe)
+        return res.status(404).json({
+          message: "Recipe not found"
+        });
+      await this.userService.deleteFavoriteRecipe(user, recipe);
+      return res.status(200).json({
+        message: "Recipe removed to favorites"
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        message: error.message
+      });
+    }
+  }
+
+  async getFavoriteByUser(_req: Request, res: Response): Promise<Response> {
+    try {
+      const userRecipes: Partial<Recipe>[] = await this.recipeService.getFavoriteByUser(
+        res.locals.jwtPayload.id
+      );
+
       return res.status(200).json(userRecipes);
     } catch (error: any) {
       if (error.message === "User not found.")
@@ -61,110 +109,38 @@ export class RecipeController {
     }
   }
 
-  async getAll(req: Request, res: Response): Promise<Response> {
-    try{
+  async getAll(_req: Request, res: Response): Promise<Response> {
+    try {
       return res.status(200).json({
         recipes: await this.recipeService.getAll()
-      })
-    }catch(err){
-      return res.status(500).json(err);
+      });
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
-  async getCreatedBy(req: Request, res: Response): Promise<Response>{
-    try{
+  async getCreatedBy(_req: Request, res: Response): Promise<Response> {
+    try {
       return res.status(200).json({
         recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id)
-      })
-    }catch(err){
-      console.log(err);
-      
-      return res.status(500).json(err);
+      });
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
+  async getById(req: Request, res: Response): Promise<Response> {
+    try {
+      const recipe = await this.recipeService.getById(req.params.id);
+      if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
-
-  private generateTemplatePrompt(data: GenerateRecipeDto): string {
-    return `Generate a cooking recipe according to the following parameters:
-    - Ingredients: ${data.ingredients}
-    - Diets: ${data.diets}
-    - Categories: ${data.categories} 
-    - Difficulty: ${data.difficulty}
-
-    Output format:
-    {
-      name: string,
-      description: string,
-      ingredients: string[],
-      steps: string[],
-      time: {
-        preparation: string,
-        cooking: string,
-        total: string
-      },
-      portions: number,
-      categories: string[],
-      diets: string[],
-      difficulty: ${data.difficulty},
-      nutritionalValue: {
-        of100g: {
-          calories: number,
-          fat: number,
-          carbohydrates: number,
-          protein: number,
-          cholesterol: number
-        },
-        ofPortion: {
-          calories: number,
-          fat: number,
-          carbohydrates: number,
-          protein: number,
-          cholesterol: number
-        }
-      }
-    }`;
+      return res.status(200).json(recipe);
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
+    }
   }
 
-  private defaultResponse(): any {
-    // falta la propiedad image que se podría obtener con un llamado aparte a la api de openAI
-    return {
-      name: "Crispy Keto Potato Breakfast",
-      description:
-        "This easy ketogenic breakfast is a great way to jumpstart your day. With its crispy potatoes and rich flavors, it’s sure to leave you feeling satisfied!",
-      ingredients: ["1 large potato", "2 tablespoons olive oil", "Salt and pepper, to taste"],
-      steps: [
-        "Preheat oven to 400°F (200°C).",
-        "Cut the potato into thin slices.",
-        "Place the slices on a baking sheet lined with parchment paper.",
-        "Brush both sides of each slice with olive oil and sprinkle with salt and pepper.",
-        "Bake for 15 to 20 minutes, until the potato slices are crispy and golden brown."
-      ],
-      time: {
-        preparation: "10 minutes",
-        cooking: "20 minutes",
-        total: "30 minutes"
-      },
-      portions: 2,
-      categories: ["Breakfast"],
-      diets: ["Ketogenic"],
-      difficulty: "Easy",
-      nutritionalValue: {
-        of100g: {
-          calories: 97,
-          fat: 4.3,
-          carbohydrates: 16.3,
-          protein: 2.2,
-          cholesterol: 2.1
-        },
-        ofPortion: {
-          calories: 98,
-          fat: 4.4,
-          carbohydrates: 16.5,
-          protein: 2.3,
-          cholesterol: 2.2
-        }
-      }
-    };
+  private defaultResponse(): RecipeDto {
+    return this.recipeService.getAll()[0];
   }
 }

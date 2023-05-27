@@ -6,8 +6,9 @@ export class DietService {
 
   public async getAll(): Promise<Array<Diet>> {
     const dietsFromDb = await this.dietRepository.findAll(
-      {},
-      { id: 1, name: 1, description: 1, _id: 0 }
+      {
+        fields:['id', 'name', 'description']
+      },
     );
 
     return dietsFromDb;

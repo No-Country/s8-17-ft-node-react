@@ -65,6 +65,9 @@ export class AuthController {
     try {
       const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
       const user = await this.userService.findOne(partialUser);
+      if (!user) return res.status(401).json({
+        message:"No such user"
+      })
       return res.status(200).json(user);
     } catch (error) {
       console.log("auth error: ", error);

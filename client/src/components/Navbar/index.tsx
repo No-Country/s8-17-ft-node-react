@@ -6,21 +6,23 @@ import Cookies from "js-cookie";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { HiLogout } from "react-icons/hi";
 
 export default function Navbar() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
-  // console.log(user);
-  // console.log(isAuthenticated);
-  // console.log(isLoading);
-
   const handleLogOut = () => {
     // window.localStorage.removeItem("loggedUser");
     Cookies.remove(USER_TOKEN, { sameSite: "Lax" });
     router.refresh();
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+  }, []);
 
   return (
     <header className="w-full h-[97px] flex justify-between items-center px-8">

@@ -15,20 +15,34 @@ export interface UserProfile extends UserRegister {
   id?: string;
 }
 
+export interface IRecipes {
+  recipes: IRecipe[];
+}
+
 export interface IRecipe {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   ingredients: string[];
   steps: string[];
   time: Time;
   portions: number;
-  alerts: any[];
-  diet: any[];
+  categories: Category[];
+  diets: Category[];
   difficulty: string;
-  category: string[];
-  image: string;
   nutritionalValue: NutritionalValue;
+  createdBy: string;
+  id: string;
+  image: string;
+  __v: number;
+}
+
+export interface Category {
+  _id: string;
+  name: string;
+  description: string;
+  id: string;
+  __v: number;
 }
 
 export interface NutritionalValue {
@@ -41,21 +55,20 @@ export interface Of100G {
   fat: number;
   carbohydrates: number;
   protein: number;
-  sugar: number;
-  fiber: number;
-  salt: number;
+  cholesterol: number;
 }
 
 export interface Time {
   preparation: number;
   cooking: number;
-  rest: number;
   total: number;
 }
 
 export interface Recipes {
-  ingredient: [];
-  diets: [];
-  categories: [];
-  difficulty: any;
+  ingredients: string[];
+  AllergicIngredients: string[];
+  diet: string;
+  type: string;
+  flavor: string;
+  difficulty: string;
 }
