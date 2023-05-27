@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Menu, RecipeFavorite } from "@/components";
+import { Menu, ShowRecipe } from "@/components";
 import { IRecipe } from "@/types";
 import Cookies from "js-cookie";
 import { useMutation } from "@tanstack/react-query";
@@ -34,7 +34,7 @@ const RecipesFav = () => {
       </div>
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
         {favoriteRecipes?.map(recipe => (
-          <RecipeFavorite key={recipe.id} recipe={recipe} favoriteRecipes={favoriteRecipes} />
+          <ShowRecipe key={recipe.id} recipe={recipe} />
         ))}
       </div>
     </main>

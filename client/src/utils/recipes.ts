@@ -14,4 +14,4 @@ export const getRecipe = async ({
   return recipe;
 };
 
-export const getAllRecipe = async () => { }
+// export const getAllRecipe = async () => { }

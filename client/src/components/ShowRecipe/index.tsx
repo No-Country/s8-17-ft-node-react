@@ -5,12 +5,11 @@ import { FC, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { IRecipe } from "@/types";
 
-interface RecipeFavoriteProps {
+interface ShowRecipeProps {
   recipe: IRecipe;
-  favoriteRecipes: IRecipe[];
 }
 
-const RecipeFavorite: FC<RecipeFavoriteProps> = ({ recipe, favoriteRecipes }) => {
+const ShowRecipe: FC<ShowRecipeProps> = ({ recipe }) => {
   const [isIconActive, setIsIconActive] = useState(true);
 
   const toggleIconActive = () => {
@@ -40,4 +39,4 @@ const RecipeFavorite: FC<RecipeFavoriteProps> = ({ recipe, favoriteRecipes }) =>
   );
 };
 
-export default RecipeFavorite;
+export default ShowRecipe;
