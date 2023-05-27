@@ -12,7 +12,7 @@ export default function Menu({ href }: props) {
   // console.log(href);
   return (
     <section className="w-[234px] h-[250px] flex flex-col items-center justify-center gap-8 border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px]">
-      <Link href="/" className="w-[70%]">
+      <Link href={"/dashboard"} className="w-[70%]">
         <button className="flex items-center">
           {href === "home" ? (
             <Image

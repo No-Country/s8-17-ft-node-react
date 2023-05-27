@@ -94,20 +94,20 @@ export const getRecipeById = async ({
   return foundRecipe;
 };
 
-// export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
-//   const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   });
-//   if (response.status === 401) {
-//     throw new Error("Not authorized");
-//   }
 
-//   const allRecipesFromUser = response.data;
+//Función para traer todas las recetas que existen en la bd
 
-//   return allRecipesFromUser;
-// };
+export const getAllRecipes = async (): Promise<IRecipe[]> => {
+  const response = await axios.get(`${baseUrl}/api/recipe`);
+
+  const allRecipes: IRecipe[] = response.data?.recipes;
+
+  return allRecipes;
+};
+
+
+// Función para traer todas las recetas del usuario en sesión
+
 export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipe[]> => {
   const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
     headers: {
@@ -122,3 +122,5 @@ export const getAllRecipesFromUser = async ({ token }: { token: string }): Promi
 
   return allRecipesFromUser;
 };
+
+
