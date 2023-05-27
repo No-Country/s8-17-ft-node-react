@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FC, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { IRecipe } from "@/types";
+import { useRecipes } from "@/hooks/useRecipes";
 
 interface ShowRecipeProps {
   recipe: IRecipe;
@@ -11,9 +12,18 @@ interface ShowRecipeProps {
 
 const ShowRecipe: FC<ShowRecipeProps> = ({ recipe }) => {
   const [isIconActive, setIsIconActive] = useState(true);
+  const { addFavoriteMutation, deleteFavoriteMutation } = useRecipes();
 
   const toggleIconActive = () => {
     setIsIconActive(prevState => !prevState);
+
+    if (isIconActive) {
+      // Si el icono estaba activo, se elimina la receta de favoritos
+      deleteFavoriteMutation.mutate(recipe.id);
+    } else {
+      // Si el icono no estaba activo, se agrega la receta a favoritos
+      addFavoriteMutation.mutate(recipe.id);
+    }
   };
 
   return (

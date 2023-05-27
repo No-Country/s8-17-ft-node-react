@@ -1,27 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Menu, ShowRecipe } from "@/components";
-import { IRecipe } from "@/types";
-import { getAllRecipes } from "@/backend";
+import { useRecipes } from "@/hooks/useRecipes";
+import Image from "next/image";
 
-const Dashboard = () => {
-  const [allRecipes, setAllRecipes] = useState<IRecipe[]>([]);
-
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const recipes = await getAllRecipes();
-        setAllRecipes(recipes);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchRecipes();
-  }, []);
-
-  console.log(allRecipes);
+const Dashboard: React.FC = () => {
+  const { getAllRecipesQuery } = useRecipes();
+  const allRecipes = getAllRecipesQuery.data;
 
   return (
     <main className="w-full h-full flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
@@ -29,9 +15,17 @@ const Dashboard = () => {
         <Menu href={"dashboard"} />
       </div>
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
-        {allRecipes?.map(recipe => (
-          <ShowRecipe key={recipe.id} recipe={recipe} />
-        ))}
+        {getAllRecipesQuery.isLoading ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
+          </div>
+        ) : (
+          allRecipes?.map(recipe => (
+            <div key={recipe.id} className="relative">
+              <ShowRecipe recipe={recipe} />
+            </div>
+          ))
+        )}
       </div>
     </main>
   );
