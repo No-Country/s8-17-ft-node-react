@@ -127,7 +127,7 @@ export function useRecipes() {
     (recipeId: string) => addFavoriteRecipe(recipeId, token),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("favoriteRecipes");
+        queryClient.invalidateQueries(["favoriteRecipes"]);
       }
     }
   );
@@ -137,7 +137,7 @@ export function useRecipes() {
     (recipeId: string) => deleteFavoriteRecipe(recipeId, token),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries("favoriteRecipes");
+        queryClient.invalidateQueries(["favoriteRecipes"]);
       }
     }
   );
