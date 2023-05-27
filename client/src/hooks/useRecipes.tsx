@@ -9,43 +9,6 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 // Obtener el token de sesión del usuario
 const token = checkSession();
 
-// Función para crear una receta
-// export const createRecipe = async (data: IRecipe): Promise<void> => {
-//   const token = checkSession();
-
-//   try {
-//     const response = await axios.post(`${baseUrl}/api/recipe`, data, {
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       }
-//     });
-
-//     if (response.status === 200) {
-//       console.log("Recipe created successfully");
-//     } else {
-//       console.error("Failed to create recipe");
-//     }
-//   } catch (error) {
-//     console.error("Error occurred while creating recipe:", error);
-//   }
-// };
-
-// Función para obtener una receta por su ID
-// export const getRecipeById = async (recipeId: string): Promise<IRecipe> => {
-//   const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   });
-//   if (response.status === 401) {
-//     throw new Error("Not authorized");
-//   }
-
-//   const foundRecipe = response.data;
-
-//   return foundRecipe;
-// };
-
 //Función para traer todas las recetas que existen en la bd
 
 export const getAllRecipes = async (): Promise<IRecipe[]> => {

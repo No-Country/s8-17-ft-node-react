@@ -72,5 +72,27 @@ export const createRecipe = async (data: Recipes): Promise<any> => {
   // return response;
 };
 
+export const getRecipeById = async ({
+  token,
+  recipeId
+}: {
+  token: null | string;
+  recipeId: string;
+}): Promise<IRecipe> => {
+  // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
+  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const foundRecipe = response.data;
+
+  return foundRecipe;
+};
+
 
 
