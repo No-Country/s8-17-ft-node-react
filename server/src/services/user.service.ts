@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import { error } from "console";
+import { UserUpdateDto } from "src/dto/user/userUpdate.dto";
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);
@@ -32,14 +33,27 @@ export class UserService {
     };
   }
 
-  public async update(user: Partial<User>, body: any) {
+  public async updateUser(user: UserUpdateDto) {
     const existUser = await this.userRepository.findById(user.id);
     if (!existUser) throw new Error("User not exists!");
-    const updatedUser = await this.userRepository.update(user, { ...body, password: body.password? await bcrypt.hash(body.password, 10) : existUser.password });
+    if (!(await bcrypt.compare(user.password, existUser.password))) throw new Error("Invalid password.");
+    const updatedUser = await this.userRepository.update({ id: user.id }, { ...user, password: existUser.password });
 
     return {
       user: updatedUser
     };
+  }
+
+  public async updatePassword(user: UserUpdateDto) {
+    const existUser = await this.userRepository.findById(user.id);
+    if (!existUser) throw new Error("User not exists!");
+    if (!(await bcrypt.compare(user.password, existUser.password))) throw new Error("Invalid password.");
+    const passwordHash = await bcrypt.hash(user.newPassword, 10);
+    const updatedUser = await this.userRepository.update({ id: user.id }, { password: passwordHash });
+
+    return {
+      user: updatedUser
+    }
   }
 
   public async loginGoogle(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
