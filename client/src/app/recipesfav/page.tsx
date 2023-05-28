@@ -4,6 +4,9 @@ import React from "react";
 import { Menu, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
+import { BiHomeAlt } from "react-icons/bi";
+import { BsStar } from "react-icons/bs";
+import { TbSoup } from "react-icons/tb";
 
 const RecipesFav = () => {
   const {
@@ -11,11 +14,16 @@ const RecipesFav = () => {
     getAllFavoriteRecipesQuery
   } = useRecipes();
 
+  const options = [
+    { id: 1, url: "/dashboard", text: "Home", icon: <BiHomeAlt /> },
+    { id: 2, url: "/recipesfav", text: "Favorites", icon: <BsStar /> },
+    { id: 3, url: "/generator", text: "Create", icon: <TbSoup /> }
+  ];
+
   return (
     <main className="w-full h-full flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
-      <div>
-        <Menu href={"Favorite"} />
-      </div>
+      <div></div>
+      <Menu options={options} />
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
         {getAllFavoriteRecipesQuery.isLoading ? (
           <div className="absolute inset-0 flex items-center justify-center">
