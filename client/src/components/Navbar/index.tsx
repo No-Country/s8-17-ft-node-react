@@ -131,7 +131,7 @@ function Navbar() {
   ];
 
   return (
-    <nav className="flex items-center justify-between flex-wrap md:pl-12 py-7">
+    <nav className="w-full flex flex-wrap items-center justify-between py-7 md:pl-20 md:pr-32">
       <div className="flex items-center flex-shrink-0 text-white md:mr-6 lg:mr-72">
         <Link href="/">
           <Image
@@ -143,92 +143,94 @@ function Navbar() {
           />
         </Link>
       </div>
-      {!isLoading && isAuthenticated ? (
-        <div className="flex flex-wrap items-center">
-          <Link href={"/profile"}>
-            <button className="text-white text-lg rounded-3xl bg-normal p-4 font-semibold outline-none uppercase mr-2">
-              {firstLetter}
-            </button>
-          </Link>
-          <Link href={"/about"}>
-            <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-4 rounded-3xl border border-primary-500 font-semibold">
-              About Us
-            </button>
-          </Link>
-          <button
-            onClick={toggleMenu}
-            type="button"
-            className="inline-flex items-center p-2 ml-1 text-primary-500 hover:bg-gray-100 outline-none text-2xl"
-          >
-            <svg
-              className="fill-primary-500 h-7 w-7"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-          <div className="fixed top-24 right-4 z-50">
-            <div
-              className={`bg-white ${
-                isMenuOpen
-                  ? "transition-transform duration-1000 transform -translate-x-0"
-                  : "transition-trasnform duration-1000 transform translate-x-full"
-              }`}
-            >
-              {isMenuOpen && <Menu options={options} />}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <>
-          <div className="flex lg:hidden">
+      <div>
+        {!isLoading && isAuthenticated ? (
+          <div className="flex flex-wrap items-center">
+            <Link href={"/profile"}>
+              <button className="text-white text-lg rounded-3xl bg-normal p-4 font-semibold outline-none uppercase mr-2">
+                {firstLetter}
+              </button>
+            </Link>
+            <Link href={"/about"}>
+              <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-4 rounded-3xl border border-primary-500 font-semibold">
+                About Us
+              </button>
+            </Link>
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
+              onClick={toggleMenu}
+              type="button"
+              className="inline-flex items-center p-2 ml-1 text-primary-500 hover:bg-gray-100 outline-none text-2xl"
             >
               <svg
-                className={`fill-primary-500 h-7 w-7 ${isOpen ? "hidden" : "block"}`}
+                className="fill-primary-500 h-7 w-7"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
               </svg>
-              <svg
-                className={`fill-primary-500 h-7 w-7 ${isOpen ? "block" : "hidden"}`}
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
-              </svg>
             </button>
-          </div>
-          <div
-            className={`w-full block flex-grow md:flex md:items-center md:w-auto ${
-              isOpen ? "block" : "hidden"
-            }`}
-          >
-            <div className="w-full text-lg items-center font-semibold justify-center md:flex md:gap-6  ">
-              {links.map(link => (
-                <Link href={link.url} key={link.id}>
-                  <p className="text-primary-500 block mt-4 items-center lg:inline-block lg:mt-0 text-white-200 mr-4 opacity-70 hover:opacity-100 duration-300 ">
-                    {link.text}
-                  </p>
-                </Link>
-              ))}
-              {buttons.map(button => (
-                <Link href={button.url} key={button.id}>
-                  <button
-                    className={`w-40 block mt-4 items-center lg:inline-block lg:mt-0 mr-4 py-2 px-4 border border-primary-500 ${button.bgColor} ${button.textColor} rounded-3xl`}
-                  >
-                    {button.text}
-                  </button>
-                </Link>
-              ))}
+            <div className="fixed top-24 right-4 z-50">
+              <div
+                className={`bg-white ${
+                  isMenuOpen
+                    ? "transition-transform duration-1000 transform -translate-x-0"
+                    : "transition-trasnform duration-1000 transform translate-x-full"
+                }`}
+              >
+                {isMenuOpen && <Menu options={options} />}
+              </div>
             </div>
           </div>
-        </>
-      )}
+        ) : (
+          <>
+            <div className="flex lg:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
+              >
+                <svg
+                  className={`fill-primary-500 h-7 w-7 ${isOpen ? "hidden" : "block"}`}
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                </svg>
+                <svg
+                  className={`fill-primary-500 h-7 w-7 ${isOpen ? "block" : "hidden"}`}
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
+                </svg>
+              </button>
+            </div>
+            <div
+              className={`w-full block flex-grow md:flex md:items-center md:w-auto ${
+                isOpen ? "block" : "hidden"
+              }`}
+            >
+              <div className="w-full text-lg items-center font-semibold justify-center md:flex md:gap-6  ">
+                {links.map(link => (
+                  <Link href={link.url} key={link.id}>
+                    <p className="block mt-4 md:inline-block md:mt-0 items-center opacity-70 hover:opacity-100 duration-300 text-primary-500">
+                      {link.text}
+                    </p>
+                  </Link>
+                ))}
+                {buttons.map(button => (
+                  <Link href={button.url} key={button.id}>
+                    <button
+                      className={`w-40 block mt-4 items-center lg:inline-block lg:mt-0 py-2 px-4 border border-primary-500 ${button.bgColor} ${button.textColor} rounded-3xl`}
+                    >
+                      {button.text}
+                    </button>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </nav>
   );
 }
