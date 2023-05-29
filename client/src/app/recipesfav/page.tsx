@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
@@ -14,16 +14,43 @@ const RecipesFav = () => {
     getAllFavoriteRecipesQuery
   } = useRecipes();
 
+  useEffect(() => {
+    getAllFavoriteRecipesQuery.refetch();
+  }, [getAllFavoriteRecipesQuery]);
+
+  // Data para el menú lateral
   const options = [
-    { id: 1, url: "/dashboard", text: "Home", icon: <BiHomeAlt /> },
-    { id: 2, url: "/recipesfav", text: "Favorites", icon: <BsStar /> },
-    { id: 3, url: "/generator", text: "Create", icon: <TbSoup /> }
+    {
+      id: 1,
+      url: "/dashboard",
+      text: "Home",
+      icon: <BiHomeAlt />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 2,
+      url: "/recipesfav",
+      text: "Favorites",
+      icon: <BsStar />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 3,
+      url: "/generator",
+      text: "Create",
+      icon: <TbSoup />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    }
   ];
 
   return (
     <main className="w-full h-full flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
-      <div></div>
-      <Menu options={options} />
+      <div className="w-full px-4 lg:w-auto">
+        <Menu options={options} />
+      </div>
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
         {getAllFavoriteRecipesQuery.isLoading ? (
           <div className="absolute inset-0 flex items-center justify-center">
