@@ -14,3 +14,4 @@ export interface RecipeInterface {
   categories: Ref<Category>[];
   diets: Ref<Diet>[];
 }
+

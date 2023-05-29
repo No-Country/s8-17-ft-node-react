@@ -9,6 +9,8 @@ const authController = new AuthController(new UserService());
 
 authRoutes.post("/register", authController.register.bind(authController));
 authRoutes.post("/login", authController.login.bind(authController));
+authRoutes.post("/update/user", checkJWT, authController.updateUser.bind(authController));
+authRoutes.post("/update/password", checkJWT, authController.updatePassword.bind(authController));
 authRoutes.get("/profile", checkJWT, authController.auth.bind(authController));
 authRoutes.get("/google", passportConfig.authenticate("google", { scope: ["profile", "email"] }));
 authRoutes.get(

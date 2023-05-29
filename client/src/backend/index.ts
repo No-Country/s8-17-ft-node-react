@@ -1,7 +1,6 @@
 import { IRecipe, IRecipes, Recipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
-// const baseUrl = "http://localhost:3000";
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const registerUser = async (newUser: UserRegister): Promise<any> => {
@@ -93,20 +92,4 @@ export const getRecipeById = async ({
   const foundRecipe = response.data;
 
   return foundRecipe;
-};
-
-export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
-  // http://localhost:3001/api/recipe/create
-  const response = await axios.get(`${baseUrl}/api/recipe/create`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  if (response.status === 401) {
-    throw new Error("Not authorized");
-  }
-
-  const allRecipesFromUser = response.data;
-
-  return allRecipesFromUser;
 };
