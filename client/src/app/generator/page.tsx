@@ -68,7 +68,9 @@ export default function Generator() {
     if (!generator.flavor) return alerts({ title: "Flavor is required", icon: "warning" });
     if (!generator.difficulty) return alerts({ title: "Difficulty is required", icon: "warning" });
     else {
-      alerts({ title: "Your Recipe was create succesfully", icon: "success" });
+      alerts({ title: "Your Recipe was create succesfully", icon: "success" }).then(() =>
+        router.push("/recipe/1")
+      );
     }
     // mutate(form);
   };
