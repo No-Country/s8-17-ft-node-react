@@ -21,7 +21,8 @@ export const getAllRecipes = async (): Promise<IRecipe[]> => {
 
 // Función para traer todas las recetas favoritas del usuario en sesión
 
-export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipe[]> => {
+export const getAllRecipesFromUser = async (): Promise<IRecipe[]> => {
+  const token = checkSession();
   const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -74,15 +75,59 @@ export const deleteFavoriteRecipe = async (recipeId: string, token: string): Pro
   }
 };
 
+// export function useRecipes() {
+//   const queryClient = useQueryClient();
+
+//   // Query para obtener todas las recetas
+//   const getAllRecipesQuery = useQuery<IRecipe[], Error>(["allRecipes"], getAllRecipes);
+
+//   // Query para obtener todas las recetas favoritas del usuario
+//   const getAllFavoriteRecipesQuery = useQuery<IRecipe[], Error>(
+//     ["favoriteRecipes"],
+//     getAllRecipesFromUser
+//   );
+
+//   // Mutation para añadir una receta a favoritos
+//   const addFavoriteMutation = useMutation(
+//     (recipeId: string) => addFavoriteRecipe(recipeId, checkSession()),
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries(["favoriteRecipes"]);
+//       }
+//     }
+//   );
+
+//   // Mutation para eliminar una receta de favoritos
+//   const deleteFavoriteMutation = useMutation(
+//     (recipeId: string) => deleteFavoriteRecipe(recipeId, checkSession()),
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries(["favoriteRecipes"]);
+//       }
+//     }
+//   );
+
+//   return {
+//     addFavoriteMutation,
+//     deleteFavoriteMutation,
+//     getAllRecipesQuery,
+//     getAllFavoriteRecipesQuery
+//   };
+// }
+
 export function useRecipes() {
   const queryClient = useQueryClient();
+
+  // Obtener el token de sesión del usuario
+  const token = checkSession();
 
   // Query para obtener todas las recetas
   const getAllRecipesQuery = useQuery<IRecipe[], Error>(["allRecipes"], getAllRecipes);
 
   // Query para obtener todas las recetas favoritas del usuario
-  const getAllFavoriteRecipesQuery = useQuery<IRecipe[], Error>(["favoriteRecipes"], () =>
-    getAllRecipesFromUser({ token })
+  const getAllFavoriteRecipesQuery = useQuery<IRecipe[], Error>(
+    ["favoriteRecipes"],
+    getAllRecipesFromUser
   );
 
   // Mutation para añadir una receta a favoritos

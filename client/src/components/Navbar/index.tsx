@@ -124,10 +124,38 @@ function Navbar() {
   ];
 
   const options = [
-    { id: 1, url: "/profile", text: "Profile", icon: <BiUser /> },
-    { id: 2, url: "/", text: "Logout", icon: <BsArrowUpSquare /> },
-    { id: 3, url: "/settings", text: "Settings", icon: <IoSettingsOutline /> },
-    { id: 4, url: "/help", text: "Help", icon: <BsPatchQuestion /> }
+    {
+      id: 1,
+      url: "/profile",
+      text: "Profile",
+      icon: <BiUser />,
+      activeColor: "primary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 2,
+      url: "/",
+      text: "Logout",
+      icon: <BsArrowUpSquare />,
+      activeColor: "primary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 3,
+      url: "/settings",
+      text: "Settings",
+      icon: <IoSettingsOutline />,
+      activeColor: "primary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 4,
+      url: "/help",
+      text: "Help",
+      icon: <BsPatchQuestion />,
+      activeColor: "primary-500",
+      inactiveColor: "light"
+    }
   ];
 
   return (
