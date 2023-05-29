@@ -13,8 +13,8 @@ module.exports = {
         hero: "url('/home/hero.png')"
       },
       fontFamily: {
-        title: ["var(--font-poppins)"],
-        text: ["var(--font-comissioner)"]
+        title: ["var(--font-poppins)", "sans-serif"],
+        text: ["var(--font-comissioner)", "sans-serif"]
       },
       colors: {
         primary: {
