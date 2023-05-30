@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { RecipeService } from "../services/recipe.service";
 import { GenerateRecipeDto } from "../dto/recipe/generateRecipe.dto";
+import { SearchRecipeDto } from "../dto/recipe/searchRecipe.dto";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import OpenAIService, { OpenAIServiceIntance } from "../services/openai.service";
@@ -9,7 +10,7 @@ import { RecipeDto } from "../dto/recipe/recipe.dto";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";
 
-import { RecipeInterface } from "../utils/types";
+// import { RecipeInterface } from "../utils/types";
 
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
@@ -138,6 +139,21 @@ export class RecipeController {
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
+  }
+
+  async search(req: Request, res: Response) : Promise<Response> {
+    try{
+      const searchRecipeDto = plainToClass(SearchRecipeDto, req.body);
+      const errors = await validate(searchRecipeDto);
+
+      if (errors.length > 0) {
+        return res.status(400).json(errors.map(err => err.constraints));
+      }
+        const Response : Recipe[] = await this.recipeService.search(searchRecipeDto) 
+    }catch(error:any) {
+      return res.status(500).json({ errorMessage: error.message });
+    }
+
   }
 
   private defaultResponse(): RecipeDto {

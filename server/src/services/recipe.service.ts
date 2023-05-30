@@ -4,6 +4,7 @@ import UserModel, { User } from "../models/user.model";
 import DietModel, { Diet } from "../models/diet.model";
 import CategoryModel, { Category } from "../models/category.model";
 import { RecipeDto } from "../dto/recipe/recipe.dto";
+import { SearchRecipeDto } from "../dto/recipe/searchRecipe.dto";
 
 export class RecipeService {
   private readonly recipeRepository: Repository<Recipe> = new Repository(RecipeModel);
@@ -64,6 +65,10 @@ export class RecipeService {
     ]);
 
     return recipe;
+  }
+
+  public async search(searchRecipe: SearchRecipeDto) : Promise<Recipe[]>{
+   return await this.recipeRepository.findAll();
   }
 
   public async getCreatedBy(createdBy: string): Promise<Recipe[]> {
