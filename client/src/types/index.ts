@@ -28,7 +28,7 @@ export interface IRecipe {
   time: Time;
   portions: number;
   categories: Category[];
-  diets: Category[];
+  images:string[];
   difficulty: string;
   nutritionalValue: NutritionalValue;
   createdBy: string;
