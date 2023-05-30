@@ -34,7 +34,6 @@ export interface IRecipe {
   nutritionalValue: NutritionalValue;
   createdBy: string;
   id: string;
-  image: string;
   __v: number;
 }
 
