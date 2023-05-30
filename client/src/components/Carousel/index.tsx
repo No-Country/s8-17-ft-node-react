@@ -46,7 +46,7 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
   const visibleData = data.slice(startIndex, endIndex);
 
   return (
-    <div className="relative w-full grid place-content-center px-6 py-8">
+    <div className="relative w-full h-full flex flex-col justify-center items-center px-6 py-8">
       <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-4 gap-2">
         {visibleData.map((item, index) => (
           <div key={index} className="w-full h-full px-2">
