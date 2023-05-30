@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { Menu, ShowRecipe } from "@/components";
+import React, { useEffect, useState } from "react";
+import { Menu, ShowRecipeFav } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { BiHomeAlt } from "react-icons/bi";
@@ -47,7 +47,7 @@ const RecipesFav = () => {
   ];
 
   return (
-    <main className="w-full h-full flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
+    <main className="w-full min-h-screen flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
       <div className="w-full px-4 lg:w-auto">
         <Menu options={options} />
       </div>
@@ -59,7 +59,7 @@ const RecipesFav = () => {
         ) : (
           favoriteRecipes?.map(recipe => (
             <div key={recipe.id} className="relative">
-              <ShowRecipe recipe={recipe} />
+              <ShowRecipeFav recipe={recipe} />
             </div>
           ))
         )}
