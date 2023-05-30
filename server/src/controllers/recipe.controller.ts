@@ -149,7 +149,10 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
-        const Response : Recipe[] = await this.recipeService.search(searchRecipeDto) 
+        const response : Recipe[] = await this.recipeService.search(searchRecipeDto) 
+        return res.status(200).json({
+          recipes: response
+        });
     }catch(error:any) {
       return res.status(500).json({ errorMessage: error.message });
     }
