@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from "react-icons/bs";
+import { TfiAngleLeft, TfiAngleRight } from "react-icons/tfi";
 import { useResponsiveBreakpoint } from "@/hooks/useResponsiveBreakpoint";
 
 type CarouselProps<T> = {
@@ -14,8 +14,9 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
   const [itemsPerView, setItemsPerView] = useState(1);
   const { breakpoint } = useResponsiveBreakpoint();
 
+  console.log(breakpoint);
+
   useEffect(() => {
-    console.log("effect");
     if (breakpoint === "sm") {
       setItemsPerView(1);
     } else if (breakpoint === "md") {
@@ -27,7 +28,7 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
     } else if (breakpoint === "2xl") {
       setItemsPerView(5);
     }
-  }, [breakpoint]);
+  }, [breakpoint, itemsPerView]);
 
   const handleNextSlide = (): void => {
     const nextSlide = currentSlide + 1;
@@ -47,31 +48,25 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center px-6 py-8">
-      <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-4 gap-2">
+      <div className="w-full h-full grid grid-flow-col px-8 py-4 gap-2">
         {visibleData.map((item, index) => (
-          <div key={index} className="w-full h-full px-2">
+          <div key={index} className="w-full h-full flex items-center justify-center">
             {renderCard(item)}
           </div>
         ))}
       </div>
-      <div className="flex flex-col md:flex-row justify-center md:justify-between items-center mt-2">
-        <div className="block">
-          <button
-            onClick={handlePrevSlide}
-            className="p-6 rounded-full hover:scale-90 text-slate-950 ease-in-out duration-200 absolute inset-y-0 left-0"
-          >
-            <BsFillArrowLeftCircleFill size={28} />
-          </button>
-        </div>
-        <div className="block">
-          <button
-            onClick={handleNextSlide}
-            className="p-6 rounded-full hover:scale-90 text-slate-950 ease-in-out duration-200 absolute inset-y-0 right-0"
-          >
-            <BsFillArrowRightCircleFill size={28} />
-          </button>
-        </div>
-      </div>
+      <button
+        onClick={handlePrevSlide}
+        className="px-2 text-primary-500 ease-in-out duration-200 absolute inset-y-0 left-2"
+      >
+        <TfiAngleLeft size={48} />
+      </button>
+      <button
+        onClick={handleNextSlide}
+        className="px-2 text-xl text-primary-500 ease-in-out duration-200 absolute inset-y-0 right-2"
+      >
+        <TfiAngleRight size={48} />
+      </button>
     </div>
   );
 };

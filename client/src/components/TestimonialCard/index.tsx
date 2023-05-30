@@ -8,30 +8,45 @@ type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    name: "Maximiliano",
+    name: "Lorem Ipsum",
     testimonial:
       "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías",
     image: "/home/img_home_testimonials_1.png"
   },
   {
-    name: "Maximiliano",
+    name: "Lorem Ipsum",
     testimonial:
       "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías",
     image: "/home/img_home_testimonials_2.png"
   },
   {
-    name: "Maximiliano",
-    testimonial: "ttext2text2text2text2text2ext2",
+    name: "Lorem Ipsum",
+    testimonial:
+      "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías",
     image: "/home/img_home_testimonials_3.png"
   },
   {
-    name: "Maximiliano",
-    testimonial: "text3text3text3text3text3text3",
+    name: "Lorem Ipsum",
+    testimonial:
+      "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías",
     image: "/home/img_home_testimonials_4.png"
   },
   {
-    name: "Maximiliano",
-    testimonial: "text4text4text4text4text4text4",
+    name: "Lorem Ipsum",
+    testimonial:
+      "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografíast",
+    image: "/home/img_home_testimonials_5.png"
+  },
+  {
+    name: "Lorem Ipsum",
+    testimonial:
+      "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías",
+    image: "/home/img_home_testimonials_4.png"
+  },
+  {
+    name: "Lorem Ipsum",
+    testimonial:
+      "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografíast",
     image: "/home/img_home_testimonials_5.png"
   }
 ];
