@@ -1,22 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Menu, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { BiHomeAlt } from "react-icons/bi";
-import { BsStar } from "react-icons/bs";
 import { TbSoup } from "react-icons/tb";
+import { BsStar } from "react-icons/bs";
 
-const RecipesFav = () => {
-  const {
-    getAllFavoriteRecipesQuery: { data: favoriteRecipes },
-    getAllFavoriteRecipesQuery
-  } = useRecipes();
-
-  useEffect(() => {
-    getAllFavoriteRecipesQuery.refetch();
-  }, [getAllFavoriteRecipesQuery]);
+const Dashboard: React.FC = () => {
+  const { getAllRecipesQuery } = useRecipes();
+  const allRecipes = getAllRecipesQuery.data;
 
   // Data para el menú lateral
   const options = [
@@ -52,12 +46,12 @@ const RecipesFav = () => {
         <Menu options={options} />
       </div>
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
-        {getAllFavoriteRecipesQuery.isLoading ? (
+        {getAllRecipesQuery.isLoading ? (
           <div className="absolute inset-0 flex items-center justify-center">
             <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
           </div>
         ) : (
-          favoriteRecipes?.map(recipe => (
+          allRecipes?.map(recipe => (
             <div key={recipe.id} className="relative">
               <ShowRecipe recipe={recipe} />
             </div>
@@ -68,4 +62,4 @@ const RecipesFav = () => {
   );
 };
 
-export default RecipesFav;
+export default Dashboard;

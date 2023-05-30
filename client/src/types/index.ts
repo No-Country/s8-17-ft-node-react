@@ -72,3 +72,4 @@ export interface Recipes {
   flavor: string;
   difficulty: string;
 }
+

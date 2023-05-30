@@ -93,32 +93,3 @@ export const getRecipeById = async ({
 
   return foundRecipe;
 };
-
-// export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipes> => {
-//   const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   });
-//   if (response.status === 401) {
-//     throw new Error("Not authorized");
-//   }
-
-//   const allRecipesFromUser = response.data;
-
-//   return allRecipesFromUser;
-// };
-export const getAllRecipesFromUser = async ({ token }: { token: string }): Promise<IRecipe[]> => {
-  const response = await axios.get(`${baseUrl}/api/recipe/favorite`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  if (response.status === 401) {
-    throw new Error("Not authorized");
-  }
-
-  const allRecipesFromUser: IRecipe[] = response.data;
-
-  return allRecipesFromUser;
-};
