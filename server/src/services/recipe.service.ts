@@ -101,7 +101,7 @@ export class RecipeService {
     }
     const props = {
       filter,
-      limit:perPage,
+      limit:perPage | 15,
       skip: perPage ? perPage * (page - 1) : undefined,
       populate: [
         { path: "diets", select: "name" },
