@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
-import { getRecipe } from "@/utils/recipes";
+import { getRecipe } from "@/hooks/useRecipes";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
-import { FaDownload, FaShareAlt } from "react-icons/fa";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import SliderImages from "../SliderImages";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaDownload, FaShareAlt } from "react-icons/fa";
+import { BsArrowLeftCircle } from "react-icons/bs";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
@@ -85,7 +86,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   return (
     <div className="min-w-sm mx-auto p-10 font-text">
       <button
-        className="text-primary-500 fixed bottom-2 right-2 z-40 sm:relative sm:top-20 sm:left-10 "
+        className="text-primary-500 fixed bottom-2 right-2 z-40 md:relative md:top-20 md:left-10 "
         onClick={() => router.back()}
       >
         <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
@@ -99,16 +100,20 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
       ) : (
         <>
           {/* --------- Top Part --------- */}
-          <div className="border-4 border-slate-300 rounded-md flex flex-col sm:flex-row sm:mx-32 justify-center items-center h-72">
+          <div className="border-4 border-slate-300 rounded-md flex flex-col md:flex-row md:mx-32 justify-center items-center h-72">
             {/* NAME OF THE RECIPE */}
-            <div className="sm:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
+            <div className="md:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
               <h1 className="text-xl md:text-3xl font-bold mb-2 font-title text-center capitalize">
                 {recipe.name}
               </h1>
             </div>
             {/* IMAGE OF THE RECIPE */}
-            <div className="sm:w-1/2 h-full w-full relative">
-              <Image src={recipe.images[0]} alt="recipe image" width={300} height={200} />
+            <div className="md:w-1/2 h-full w-full relative">
+              {recipe.images.length === 1 ? (
+                <Image src={recipe.images[0]} alt="recipe image" fill />
+              ) : (
+                <SliderImages images={recipe.images} />
+              )}
             </div>
           </div>
           {/* --------- Bottom Part --------- */}

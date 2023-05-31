@@ -73,3 +73,12 @@ export interface Recipes {
   difficulty: string;
 }
 
+export interface ISearch {
+  perPage:     number;
+  page:        number;
+  difficulty:  string;
+  name:        string;
+  ingredients: string[];
+  diets:       string[];
+  categories:  string[];
+}
