@@ -122,7 +122,7 @@ const About: FC = () => {
             </p>
             <p>
               At CookMeal, we focus on making the meal planning process easy and making the most of
-              the ingredients you have on hand. It doesn't matter if you are an experienced chef or
+              the ingredients you have on hand. It doesn&apos;t matter if you are an experienced chef or
               a cooking beginner, our app will guide you every step of the way, from selecting
               recipes to preparing delicious dishes.
             </p>
