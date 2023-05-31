@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { IRecipe } from "@/types";
+import { IRecipe, ISearch } from "@/types";
 import { checkSession } from "@/utils/checkSession";
 
 // URL base de la API desde la variable de entorno en el frontend .env.local
@@ -115,6 +115,8 @@ export const deleteFavoriteRecipe = async (recipeId: string, token: string): Pro
 //   };
 // }
 
+
+
 export function useRecipes() {
   const queryClient = useQueryClient();
 
@@ -157,3 +159,59 @@ export function useRecipes() {
     getAllFavoriteRecipesQuery
   };
 }
+// funcion para traer solo una recete por id
+export const getRecipeById = async ({
+  token,
+  recipeId
+}: {
+  token: null | string;
+  recipeId: string;
+}): Promise<IRecipe> => {
+  // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
+  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const foundRecipe = response.data;
+
+  return foundRecipe;
+};
+
+export const getRecipe = async ({ recipeId }: { recipeId: string }) => {
+  const token = checkSession();
+  const recipe = await getRecipeById({ token, recipeId });
+  if (!Object.values(recipe)) return null;
+  return recipe;
+};
+
+const recipesSearch = async ({
+  perPage,
+  page,
+  difficulty,
+  name,
+  ingredients,
+  diets,
+  categories
+}: ISearch): Promise<IRecipe[]> => {
+  const response = await axios.post(
+    `${baseUrl}/api/search`,
+    { perPage, page, difficulty, name, ingredients, diets, categories },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
+
+  const foundRecipes = response.data;
+
+  return foundRecipes;
+};
