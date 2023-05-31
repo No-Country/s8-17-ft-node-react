@@ -6,7 +6,9 @@ import DietModel from "../models/diet.model";
 import UserModel, { User } from "../models/user.model";
 import * as bcrypt from "bcrypt";
 import recipesToSeed from "./recipes.seeder";
+import subscriptionsToSeed from "./subscription.seeder";
 import RecipeModel, { Recipe } from "../models/recipe.model";
+import SubscriptionModel from "../models/subscription.model";
 
 export default async function seed(): Promise<void> {
   // limpiamos la base de datos
@@ -15,6 +17,7 @@ export default async function seed(): Promise<void> {
   // creamos los datos principales
   await DietModel.insertMany(dietsToSeed);
   await CategoryModel.insertMany(categoriesToSeed);
+  await SubscriptionModel.insertMany(subscriptionsToSeed);
 
   // creamos los usuarios
   const allUsers: User[] = await Promise.all(
@@ -59,6 +62,7 @@ const deleteAllDataBase = async (): Promise<void> => {
   await DietModel.deleteMany();
   await UserModel.deleteMany();
   await RecipeModel.deleteMany();
+  await SubscriptionModel.deleteMany();
 
   console.log("The database has been depopulated successfully!");
 };

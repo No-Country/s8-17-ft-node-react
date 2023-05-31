@@ -4,7 +4,7 @@ import recipeRoutes from "./recipe.routes";
 import categoryRoutes from "./category.routes";
 import dietRoutes from "./diet.routes";
 import seedRoutes from "./seed.routes";
-import userRoutes from "./user.routes";
+import subscriptionRoutes from "./subscription.routes";
 
 const rootRoutes = Router();
 
@@ -13,6 +13,6 @@ rootRoutes.use("/recipe", recipeRoutes);
 rootRoutes.use("/category", categoryRoutes);
 rootRoutes.use("/diet", dietRoutes);
 rootRoutes.use("/seed", seedRoutes);
-rootRoutes.use("/user", userRoutes);
+rootRoutes.use("/subscription", subscriptionRoutes);
 
 export default rootRoutes;

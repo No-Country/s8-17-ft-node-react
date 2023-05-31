@@ -4,32 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Category } from "./category.model";
 import { Diet } from "./diet.model";
 import { User } from "./user.model";
-import { Difficulty } from "../utils/types";
-
-interface NutritionalValues {
-  of100g: {
-    calories: number;
-    fat: number;
-    carbohydrates: number;
-    protein: number;
-    cholesterol: number;
-    // alcohol: number;
-    // fiber: number;
-    // sugar: number;
-    // salt: number;
-  };
-  ofPortion: {
-    calories: number;
-    fat: number;
-    carbohydrates: number;
-    protein: number;
-    cholesterol: number;
-    // alcohol: number;
-    // fiber: number;
-    // sugar: number;
-    // salt: number;
-  };
-}
+import { Difficulty, NutritionalValues } from "../utils/types";
 
 export class Recipe {
   @prop({

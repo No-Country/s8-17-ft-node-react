@@ -63,10 +63,6 @@ export class UserService {
     };
   }
 
-  public async subscribe() {
-    // Si la suscripción se paga correctamente y no hay errores, deberemos modificar los datos de ese usuario en relación a roles o tipo de suscripción que adquirió
-  }
-
   public async findByEmail(email: string) {
     const user = await this.userRepository.findOne({ email });
     user ? delete user.password : null;

@@ -8,9 +8,34 @@ export enum Difficulty {
   HARD = "hard"
 }
 
+export enum PaymentStatus {
+  CREATED = "created",
+  PENDING = "pending",
+  SUCCEEDED = "succeeded",
+  FAILED = "failed",
+  CANCELED = "canceled"
+}
+
 export interface RecipeInterface {
   ingredients: string[];
   difficulty: Difficulty;
   categories: Ref<Category>[];
   diets: Ref<Diet>[];
+}
+
+export interface NutritionalValues {
+  of100g: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+  };
+  ofPortion: {
+    calories: number;
+    fat: number;
+    carbohydrates: number;
+    protein: number;
+    cholesterol: number;
+  };
 }
