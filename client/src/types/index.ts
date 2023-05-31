@@ -29,7 +29,7 @@ export interface IRecipe {
   portions: number;
   diets: Category[];
   categories: Category[];
-  images:string[];
+  images: string[];
   difficulty: string;
   nutritionalValue: NutritionalValue;
   createdBy: string;
@@ -64,7 +64,7 @@ export interface Time {
   total: number;
 }
 
-export interface Recipes {
+export interface IRecipesForm {
   ingredients: string[];
   AllergicIngredients: string[];
   diet: string[];
@@ -74,11 +74,18 @@ export interface Recipes {
 }
 
 export interface ISearch {
-  perPage:     number;
-  page:        number;
-  difficulty:  string;
-  name:        string;
+  perPage: number;
+  page: number;
+  difficulty: string;
+  name: string;
   ingredients: string[];
-  diets:       string[];
-  categories:  string[];
+  diets: string[];
+  categories: string[];
+}
+
+export interface ISubscription {
+  name: string;
+  price: number;
+  description: string;
+  image: string;
 }
