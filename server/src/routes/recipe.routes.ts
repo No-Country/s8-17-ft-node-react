@@ -11,6 +11,7 @@ const recipeController = new RecipeController(
     );
 
 recipeRoutes.post("/generate", checkJWT, recipeController.generate.bind(recipeController));
+recipeRoutes.post("/search", checkJWT, recipeController.search.bind(recipeController));
 recipeRoutes.post("/add-favorite/:id", checkJWT, recipeController.addFavorite.bind(recipeController));
 recipeRoutes.delete("/delete-favorite/:id", checkJWT, recipeController.deleteFavorite.bind(recipeController));
 recipeRoutes.get("/", recipeController.getAll.bind(recipeController));

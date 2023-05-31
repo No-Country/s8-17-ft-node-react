@@ -35,20 +35,30 @@ class Repository<T> {
     fields?: string[] ,
     skip?: number,
     limit?: number
-    filter?: Partial<T>,
+    filter?: any,
     sort?: Partial<T>
     populate?: any[] 
 
   }): Promise<DocumentType<T>[]> {
-    let query : any = this.model.find(props.filter, props.fields);
-    // Aquí se aplica populate() para cargar las referencias
-    if (props.populate && props.populate.length > 0) {
-      for (const ref of props.populate) {
-        query = query.populate(ref);
-      }
-    }
-    const result = await query.exec();
-    return result;
+    let query : any = this.model.find(props.filter, props.fields)
+    .limit(props.limit)
+    .skip(props.skip)
+    .populate(props.populate)
+    .exec()
+
+    // // Aquí se aplica populate() para cargar las referencias
+    // if (props.populate?.length > 0) {
+    //   try{
+        
+    //     for (const ref of props.populate) {
+    //       query = query.populate(ref);
+    //       query = await query.exec();
+    //     }
+    //   }catch(err){
+    //     console.log(err );
+    //   }
+    // }
+    return query;
   }
   
 
