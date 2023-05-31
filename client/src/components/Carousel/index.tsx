@@ -9,7 +9,7 @@ type CarouselProps<T> = {
   renderCard: (item: T) => JSX.Element;
 };
 
-const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => {
+const Carousel = <T,>({ data, renderCard }: CarouselProps<T>) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(0);
   const { sm, md, lg, xl, xxl } = useResponsiveBreakpoint();
@@ -22,9 +22,9 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
     } else if (lg) {
       setItemsPerView(3);
     } else if (xl) {
-      setItemsPerView(4);
+      setItemsPerView(3);
     } else if (xxl) {
-      setItemsPerView(5);
+      setItemsPerView(4);
     }
   }, [sm, md, lg, xl, xxl]);
 
@@ -46,7 +46,7 @@ const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => 
 
   return (
     <div className="relative w-full h-full flex flex-col justify-center items-center px-6 py-8">
-      <div className="w-full h-full grid grid-flow-col px-8 py-4 gap-2">
+      <div className="w-full h-full grid grid-flow-col auto-cols-auto px-8 py-4 gap-2 transform ease-in-out duration-500">
         {visibleData.map((item, index) => (
           <div key={index} className="w-full h-full flex items-center justify-center">
             {renderCard(item)}

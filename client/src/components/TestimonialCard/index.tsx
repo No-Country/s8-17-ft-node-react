@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 type Testimonial = {
@@ -53,7 +55,7 @@ export const testimonials: Testimonial[] = [
 
 const TestimonialCard = ({ name, testimonial, image }: Testimonial) => {
   return (
-    <div className="w-full max-w-md h-full flex flex-col items-center justify-start">
+    <div className="max-w-sm flex flex-col items-center justify-start">
       <Image src={image} alt="image" width={155} height={206} />
       <h3 className="text-xl font-semibold">{name}</h3>
       <p className="text-center">{testimonial}</p>
