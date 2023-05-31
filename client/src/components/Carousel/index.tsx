@@ -11,24 +11,22 @@ type CarouselProps<T> = {
 
 const Carousel = <T extends unknown>({ data, renderCard }: CarouselProps<T>) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [itemsPerView, setItemsPerView] = useState(1);
-  const { breakpoint } = useResponsiveBreakpoint();
-
-  console.log(breakpoint);
+  const [itemsPerView, setItemsPerView] = useState(0);
+  const { sm, md, lg, xl, xxl } = useResponsiveBreakpoint();
 
   useEffect(() => {
-    if (breakpoint === "sm") {
+    if (sm) {
       setItemsPerView(1);
-    } else if (breakpoint === "md") {
+    } else if (md) {
       setItemsPerView(2);
-    } else if (breakpoint === "lg") {
+    } else if (lg) {
       setItemsPerView(3);
-    } else if (breakpoint === "xl") {
+    } else if (xl) {
       setItemsPerView(4);
-    } else if (breakpoint === "2xl") {
+    } else if (xxl) {
       setItemsPerView(5);
     }
-  }, [breakpoint, itemsPerView]);
+  }, [sm, md, lg, xl, xxl]);
 
   const handleNextSlide = (): void => {
     const nextSlide = currentSlide + 1;

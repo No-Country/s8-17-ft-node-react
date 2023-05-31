@@ -1,27 +1,15 @@
-import { useCallback } from "react";
-import { useMediaQuery } from "react-responsive";
+"use client";
 
-type TBreakpoint = "sm" | "md" | "lg" | "xl" | "2xl";
+import { useMediaQueries } from "@react-hook/media-query";
 
 export const useResponsiveBreakpoint = () => {
-  const isSM = useMediaQuery({ maxWidth: 768 });
-  const isMD = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
-  const isLG = useMediaQuery({ minWidth: 1024, maxWidth: 1280 });
-  const isXL = useMediaQuery({ minWidth: 1280, maxWidth: 1536 });
-  const is2XL = useMediaQuery({ minWidth: 1536 });
+  const { matches } = useMediaQueries({
+    sm: "only screen and (min-width: 0px) and (max-width: 400px)",
+    md: "only screen and (min-width: 401px) and (max-width: 768px)",
+    lg: "only screen and (min-width: 769px) and (max-width: 1024px)",
+    xl: "only screen and (min-width: 1025px) and (max-width: 1280px)",
+    xxl: "only screen and (min-width: 1281px)"
+  });
 
-  console.log("hook");
-
-  const getBreakpoint = useCallback((): TBreakpoint => {
-    if (isSM) return "sm";
-    if (isMD) return "md";
-    if (isLG) return "lg";
-    if (isXL) return "xl";
-    if (is2XL) return "2xl";
-    return "sm"; // Default value
-  }, [isSM, isMD, isLG, isXL, is2XL]);
-
-  return {
-    breakpoint: getBreakpoint()
-  };
+  return matches;
 };
