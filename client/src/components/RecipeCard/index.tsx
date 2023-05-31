@@ -110,7 +110,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
             {/* IMAGE OF THE RECIPE */}
             <div className="md:w-1/2 h-full w-full relative">
               {recipe.images.length === 1 ? (
-                <img src={recipe.images[0]} alt="recipe image" />
+                <Image src={recipe.images[0]} alt="recipe image" fill />
               ) : (
                 <SliderImages images={recipe.images} />
               )}
