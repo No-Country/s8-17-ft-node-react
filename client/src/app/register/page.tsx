@@ -1,6 +1,6 @@
 "use client";
 
-import { registerUser } from "@/backend";
+import { registerUser } from "@/backend/user";
 import { alerts } from "@/utils/alert";
 import { API_BASE_URL, USER_TOKEN } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";
@@ -162,8 +162,9 @@ export default function Register() {
         </form>
         <div className="flex items-center justify-around gap-5">
           <button
-          onClick={handleRegisterFacebook}
-          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+            onClick={handleRegisterFacebook}
+            className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+          >
             <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
           </button>
           <button

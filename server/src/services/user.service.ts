@@ -4,6 +4,9 @@ import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
+import { UserUpdateDto } from "src/dto/user/userUpdate.dto";
+import { Recipe } from "src/models/recipe.model";
+
 
 export class UserService {
   private userRepository: Repository<User> = new Repository(UserModel);
@@ -29,6 +32,29 @@ export class UserService {
       user,
       token: this.generateToken(user)
     };
+  }
+
+  public async updateUser(user: UserUpdateDto) {
+    const existUser = await this.userRepository.findById(user.id);
+    if (!existUser) throw new Error("User not exists!");
+    if (!(await bcrypt.compare(user.password, existUser.password))) throw new Error("Invalid password.");
+    const updatedUser = await this.userRepository.update({ id: user.id }, { ...user, password: existUser.password });
+
+    return {
+      user: updatedUser
+    };
+  }
+
+  public async updatePassword(user: UserUpdateDto) {
+    const existUser = await this.userRepository.findById(user.id);
+    if (!existUser) throw new Error("User not exists!");
+    if (!(await bcrypt.compare(user.password, existUser.password))) throw new Error("Invalid password.");
+    const passwordHash = await bcrypt.hash(user.newPassword, 10);
+    const updatedUser = await this.userRepository.update({ id: user.id }, { password: passwordHash });
+
+    return {
+      user: updatedUser
+    }
   }
 
   public async loginGoogle(user: GoogleAuthDto): Promise<{ user: User; token: string }> {
@@ -75,6 +101,29 @@ export class UserService {
     user ? delete user.password : null;
 
     return user;
+  }
+
+  public async findById(id: string): Promise<User> {
+    const user = await this.userRepository.findOne({ id: id });
+    user ? delete user.password : null;
+    return user;
+  }
+
+  public async addFavoriteRecipe(user: User, recipe: Recipe): Promise<User> {
+    return this.userRepository.update(
+      {
+        id: user.id
+      },
+      { $addToSet: { favRecipes: recipe } }
+    );
+  }
+  public async deleteFavoriteRecipe(user: User, recipe: Recipe): Promise<User> {
+    return this.userRepository.update(
+      {
+        id: user.id
+      },
+      { $pullAll: { favRecipes: [recipe] } },
+    );
   }
 
   private generateToken(user: User) {

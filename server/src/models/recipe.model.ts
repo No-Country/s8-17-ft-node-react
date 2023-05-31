@@ -70,9 +70,9 @@ export class Recipe {
 
   @prop({
     required: false,
-    default: () => "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"
+    default: () => ["https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"]
   })
-  image?: string;
+  images?: string[];
 
   @prop({
     required: false
@@ -84,6 +84,11 @@ export class Recipe {
     required: false
   })
   createdBy?: Ref<User | any>;
+
+  constructor(partial: Partial<Recipe>) {
+    Object.assign(this, partial);
+  }
+
 }
 
 const RecipeModel = getModelForClass(Recipe);

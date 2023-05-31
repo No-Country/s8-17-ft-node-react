@@ -6,13 +6,16 @@ export class GenerateRecipeDto {
   @IsString({ each: true })
   ingredients: string[];
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsArray()
   alerts: string[];
 
-  // @IsOptional()
-  // @IsString()
-  // sabor?: string;
+  @IsOptional()
+  @IsString()
+  flavour?: string;
+
+  @IsOptional()
+  favorites?: string[];
 
   @IsNotEmpty()
   @IsString({ each: true })
