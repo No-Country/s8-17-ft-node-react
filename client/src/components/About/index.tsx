@@ -20,7 +20,7 @@ const team = [
       "UX/UI Designer, listener and constantly learner. Improve the user experience with intuitive and attractive designs. Creativity allows you innovative solutions. Listen to ideas and learn from them. Always looking for up-to-date knowledge and trends.",
     image: Caro,
     behance: "https://www.behance.net/caarolinadesigner",
-    github: "https://github.com/carolina-uidesigner"
+    linkedin: "https://www.linkedin.com/in/caarolina-blog/"
   },
   {
     id: 2,
