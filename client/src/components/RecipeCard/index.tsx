@@ -68,7 +68,8 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
     },
     createdBy: "646f425437be53bd8204c4ef",
     id: "f821cd0f-8ea1-4fbd-9c2b-a2101ffa683c",
-    image: "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg",
+    images: ["https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"],
+
     __v: 0
   });
   useEffect(() => {
@@ -107,7 +108,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
             </div>
             {/* IMAGE OF THE RECIPE */}
             <div className="sm:w-1/2 h-full w-full relative">
-              <Image src="/RecipeImage.png" alt="recipe image" fill />
+              <Image src={recipe.images[0]} alt="recipe image" width={300} height={200} />
             </div>
           </div>
           {/* --------- Bottom Part --------- */}

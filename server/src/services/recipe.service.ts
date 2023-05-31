@@ -4,6 +4,7 @@ import UserModel, { User } from "../models/user.model";
 import DietModel, { Diet } from "../models/diet.model";
 import CategoryModel, { Category } from "../models/category.model";
 import { RecipeDto } from "../dto/recipe/recipe.dto";
+import { SearchRecipeDto } from "../dto/recipe/searchRecipe.dto";
 
 export class RecipeService {
   private readonly recipeRepository: Repository<Recipe> = new Repository(RecipeModel);
@@ -64,6 +65,54 @@ export class RecipeService {
     ]);
 
     return recipe;
+  }
+
+  public async search(searchRecipe: SearchRecipeDto) : Promise<Recipe[]>{
+    const { perPage, page, name, ingredients, diets, categories, difficulty } = searchRecipe;
+
+    const filter: any = {};
+  
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+  
+    if (ingredients?.length) {
+      const ingredientFilters = ingredients.map((ingredient) => ({
+        ingredients: { $regex: ingredient, $options: 'i' },
+      }));
+      filter.$or = ingredientFilters
+    }
+  
+    
+  if (diets?.length) {
+    const dietFilter = { $or: diets.map((diet) => ({ name: { $regex: diet, $options: 'i' } })) };
+    const dietIds = await this.dietRepository.findAll({ filter: dietFilter, fields: ['_id'] });
+    filter.diets = { $in: dietIds.map((diet: any) => diet._id) };
+  }
+
+  if (categories?.length) {
+    const categoryFilter = { $or: categories.map((category) => ({ name: { $regex: category, $options: 'i' } })) };
+    const categoryIds = await this.categoryRepository.findAll({ filter: categoryFilter, fields: ['_id'] });
+    filter.categories = { $in: categoryIds.map((category: any) => category._id) };
+  }
+  
+    if (difficulty) {
+      filter.difficulty = difficulty;
+    }
+    const props = {
+      filter,
+      limit:perPage | 15,
+      skip: perPage ? perPage * (page - 1) : undefined,
+      populate: [
+        { path: "diets", select: "name" },
+        { path: "categories", select: "name" },
+        { path: "createdBy", select: "name" }
+      ]
+    };
+  
+    // Puedes agregar otros campos como 'fields' o 'sort' según tus necesidades
+  
+    return await this.recipeRepository.findAll(props);
   }
 
   public async getCreatedBy(createdBy: string): Promise<Recipe[]> {

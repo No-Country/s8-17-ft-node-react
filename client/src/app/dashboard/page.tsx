@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Menu, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
@@ -8,7 +7,7 @@ import { BiHomeAlt } from "react-icons/bi";
 import { TbSoup } from "react-icons/tb";
 import { BsStar } from "react-icons/bs";
 
-const Dashboard: React.FC = () => {
+const Dashboard: React.FC<{}> = () => {
   const { getAllRecipesQuery } = useRecipes();
   const allRecipes = getAllRecipesQuery.data;
 
@@ -41,7 +40,7 @@ const Dashboard: React.FC = () => {
   ];
 
   return (
-    <main className="w-full h-full flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
+    <main className="w-full min-h-screen flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
       <div className="w-full px-4 lg:w-auto">
         <Menu options={options} />
       </div>
