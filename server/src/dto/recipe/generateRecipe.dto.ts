@@ -6,7 +6,7 @@ export class GenerateRecipeDto {
   @IsString({ each: true })
   ingredients: string[];
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsArray()
   alerts: string[];
 

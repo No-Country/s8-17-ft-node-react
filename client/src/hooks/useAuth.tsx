@@ -1,4 +1,4 @@
-import { getProfile } from "@/backend";
+import { getProfile } from "@/backend/user";
 import { UserProfile } from "@/types";
 import { checkSession } from "@/utils/checkSession";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

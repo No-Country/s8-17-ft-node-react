@@ -141,22 +141,21 @@ export class RecipeController {
     }
   }
 
-  async search(req: Request, res: Response) : Promise<Response> {
-    try{
+  async search(req: Request, res: Response): Promise<Response> {
+    try {
       const searchRecipeDto = plainToClass(SearchRecipeDto, req.body);
       const errors = await validate(searchRecipeDto);
 
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
-        const response : Recipe[] = await this.recipeService.search(searchRecipeDto) 
-        return res.status(200).json({
-          recipes: response
-        });
-    }catch(error:any) {
+      const response: Recipe[] = await this.recipeService.search(searchRecipeDto);
+      return res.status(200).json({
+        recipes: response
+      });
+    } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
-
   }
 
   private defaultResponse(): RecipeDto {
