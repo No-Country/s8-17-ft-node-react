@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { createRecipe } from "@/backend";
 import { useRouter } from "next/navigation";
 import { IoSearchOutline } from "react-icons/io5";
+import { BsCheckCircleFill } from "react-icons/bs";
 import Image from "next/image";
 import Menu from "@/components/Menu";
 import Swal from "sweetalert2";
@@ -29,8 +30,8 @@ export default function Generator() {
   const [generator, setGenerator] = useState<Recipes>({
     ingredients: [],
     AllergicIngredients: [],
-    diet: "",
-    type: "",
+    diet: [],
+    categories: "",
     flavor: "",
     difficulty: ""
   });
@@ -60,13 +61,14 @@ export default function Generator() {
     e.preventDefault();
     if (generator.ingredients.length === 0)
       return alerts({ title: "Ingredients is required", icon: "warning" });
-    if (!generator.type) return alerts({ title: "Type is required", icon: "warning" });
+    if (!generator.categories) return alerts({ title: "categories is required", icon: "warning" });
     if (!generator.diet) return alerts({ title: "Diet is required", icon: "warning" });
     if (!generator.flavor) return alerts({ title: "Flavor is required", icon: "warning" });
     if (!generator.difficulty) return alerts({ title: "Difficulty is required", icon: "warning" });
     else {
       alerts({ title: "Your Recipe was create succesfully", icon: "success" }).then(() =>
-        router.push("/recipe/1")
+        // router.push("/recipe/1")
+        console.log(generator)
       );
     }
     // mutate(form);
@@ -111,8 +113,21 @@ export default function Generator() {
     }
   };
 
+  const handleChangeDiets = (e: any) => {
+    setGenerator({
+      ...generator,
+      diet: [...generator.diet, e.target.value]
+    });
+  };
+
+  const handleChangeCategories = (e: any) => {
+    setGenerator({
+      ...generator,
+      categories: [...generator.categories, e.target.value]
+    });
+  };
+
   const handleCheck = (e: any) => {
-    console.log(e);
     setGenerator({
       ...generator,
       [e.target.name]: e.target.value
@@ -131,11 +146,11 @@ export default function Generator() {
 
   return (
     <div className="w-screen h-[170vh] flex justify-evenly">
-      <div className="mt-8">
+      <div className="w-[234px] mt-8">
         <Menu href={"generator"} />
       </div>
 
-      <section className="w-[70%] h-full flex flex-col justify-evenly">
+      <section className="w-[70%] h-full flex flex-col justify-evenly ml-10">
         <h1 className="text-3xl">Generate recipe</h1>
         <div className="w-[50%] h-[54px] flex items-center bg-white py-4 px-5 rounded-md shadow-md">
           <input
@@ -147,7 +162,7 @@ export default function Generator() {
           <IoSearchOutline className="w-7 h-7 text-light" />
         </div>
         <h1 className="text-3xl">Ingredients</h1>
-        <div className="w-[80%] grid grid-cols-6 items-center">
+        <div className="w-[80%] grid grid-cols-6 items-center max-[1330px]:grid-cols-4 max-[1330px]:gap-y-5 max-lg:grid-cols-3">
           {generator.ingredients?.map((e, i) => (
             <div
               key={i}
@@ -167,11 +182,20 @@ export default function Generator() {
             </div>
           ))}
           {showInput.ingredient && (
-            <form onSubmit={e => handleSubmitIngredient("ingredient", generator, e)}>
+            <form
+              className="relative w-[140px] h-[47px]"
+              // onSubmit={e => handleSubmitIngredient("ingredient", generator, e)}
+            >
               <input
                 type="text"
-                className="relative w-[119px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] border border-primary-500 px-3 text-primary-500 underline"
+                className="relative w-[140px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] border border-primary-500 px-3 text-primary-500 underline"
                 onChange={e => handleChangeInput(setIngredient, e.target.value)}
+              />
+              <BsCheckCircleFill
+                onClick={e => handleSubmitIngredient("ingredient", generator, e)}
+                className="absolute top-[25%] right-2"
+                size="1.5em"
+                color="#FF8811"
               />
             </form>
           )}
@@ -230,11 +254,11 @@ export default function Generator() {
                 name="diet"
                 className="hidden"
                 value={e}
-                onChange={handleCheck}
+                onChange={handleChangeDiets}
               />
               <label htmlFor={e} className="w-[90%] flex items-center cursor-pointer">
                 <div className="w-6 h-6 rounded-full border-2 border-primary-500 flex items-center justify-center">
-                  {generator.diet === e && (
+                  {generator.diet.includes(e) && (
                     <span className="w-3 h-3 rounded-full bg-orange-500"></span>
                   )}
                 </div>
@@ -254,14 +278,14 @@ export default function Generator() {
               <input
                 type="radio"
                 id={e}
-                name="type"
+                name="categories"
                 className="hidden"
                 value={e}
-                onChange={handleCheck}
+                onChange={handleChangeCategories}
               />
               <label htmlFor={e} className="w-[70%] flex items-center cursor-pointer">
                 <div className="w-6 h-6 rounded-full border-2 border-primary-500 flex items-center justify-center">
-                  {generator.type === e && (
+                  {generator.categories.includes(e) && (
                     <span className="w-3 h-3 rounded-full bg-orange-500"></span>
                   )}
                 </div>
