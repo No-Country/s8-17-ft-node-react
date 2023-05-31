@@ -139,7 +139,7 @@ const About: FC = () => {
             </p>
             <p>
               We are excited to share this culinary adventure with you. Join our community of
-              foodies, download CookMeal and discover how AI can inspire you to create amazing and
+              foodies, visit CookMeal and discover how AI can inspire you to create amazing and
               flavorful dishes. See you in the kitchen! 🍽️🔥
             </p>
           </section>
