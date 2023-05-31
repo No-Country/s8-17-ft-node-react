@@ -1,12 +1,13 @@
 "use client";
 import Image from "next/image";
-import { getRecipe } from "@/utils/recipes";
+import { getRecipe } from "@/hooks/useRecipes";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
-import { FaDownload, FaShareAlt } from "react-icons/fa";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import SliderImages from "../SliderImages";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FaDownload, FaShareAlt } from "react-icons/fa";
+import { BsArrowLeftCircle } from "react-icons/bs";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
@@ -68,7 +69,8 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
     },
     createdBy: "646f425437be53bd8204c4ef",
     id: "f821cd0f-8ea1-4fbd-9c2b-a2101ffa683c",
-    image: "https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg",
+    images: ["https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"],
+
     __v: 0
   });
   useEffect(() => {
@@ -84,7 +86,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   return (
     <div className="min-w-sm mx-auto p-10 font-text">
       <button
-        className="text-primary-500 fixed bottom-2 right-2 z-40 sm:relative sm:top-20 sm:left-10 "
+        className="text-primary-500 fixed bottom-2 right-2 z-40 md:relative md:top-20 md:left-10 "
         onClick={() => router.back()}
       >
         <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
@@ -98,16 +100,20 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
       ) : (
         <>
           {/* --------- Top Part --------- */}
-          <div className="border-4 border-slate-300 rounded-md flex flex-col sm:flex-row sm:mx-32 justify-center items-center h-72">
+          <div className="border-4 border-slate-300 rounded-md flex flex-col md:flex-row md:mx-32 justify-center items-center h-72">
             {/* NAME OF THE RECIPE */}
-            <div className="sm:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
+            <div className="md:w-1/2 h-1/2 sm:h-full flex justify-center items-center">
               <h1 className="text-xl md:text-3xl font-bold mb-2 font-title text-center capitalize">
                 {recipe.name}
               </h1>
             </div>
             {/* IMAGE OF THE RECIPE */}
-            <div className="sm:w-1/2 h-full w-full relative">
-              <Image src="/RecipeImage.png" alt="recipe image" fill />
+            <div className="md:w-1/2 h-full w-full relative">
+              {recipe.images.length === 1 ? (
+                <Image src={recipe.images[0]} alt="recipe image" fill />
+              ) : (
+                <SliderImages images={recipe.images} />
+              )}
             </div>
           </div>
           {/* --------- Bottom Part --------- */}
@@ -134,12 +140,12 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
             </div>
             {/* PREPARATION */}
             <div className="sm:w-3/5 py-10 sm:pl-10">
-              <h2 className="text-2xl font-bold font-title capitalize text-dark mb-5">Preparation:</h2>
+              <h2 className="text-2xl font-bold font-title capitalize text-dark mb-5">
+                Preparation:
+              </h2>
               <ol className="text-base font-normal font-title normal-case list-disc sm:pl-5 px-10 space-y-4 text-dark">
                 {recipe.steps.map((step, index) => (
-                  <li key={index}>
-                    {step}
-                  </li>
+                  <li key={index}>{step}</li>
                 ))}
               </ol>
             </div>

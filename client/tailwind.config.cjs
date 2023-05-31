@@ -13,8 +13,8 @@ module.exports = {
         hero: "url('/home/hero.png')"
       },
       fontFamily: {
-        title: ["var(--font-poppins)"],
-        text: ["var(--font-comissioner)"]
+        title: ["var(--font-poppins)", "sans-serif"],
+        text: ["var(--font-comissioner)", "sans-serif"]
       },
       colors: {
         primary: {
@@ -58,7 +58,10 @@ module.exports = {
         light: "#898989", // taupeGray
         white: "#FCFBFB",
         error: "#E63946"
-      }
+      },
+      boxShadow: {
+        'custom': '0px 0px 8px 1px rgba(0, 0, 0, 0.25)',
+      },
     }
   },
   plugins: []

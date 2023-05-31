@@ -77,7 +77,7 @@ const getAllDiets = async (diets: Array<string>) =>
     )
   );
 
-const getAllCategories = async (categories: Array<string>) =>
+const getAllCategories = async (categories: Array<string> | Array<Object>) =>
   await Promise.all(
     categories.map(
       async category =>
