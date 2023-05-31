@@ -24,37 +24,37 @@ const Footer = () => {
                   className="mx-auto"
                 />
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt architecto ullam
-                  exercitationem suscipit nisi.
+                  Discover CookMeal, the revolutionary app that will help you cook delicious meals
+                  in just a few clicks! 🍳📱
                 </p>
               </div>
               {/* ROADMAP */}
               <div className="flex flex-col">
                 <h4 className="font-bold text-lg">Roadmap</h4>
                 <Link href={"/"}>Home</Link>
-                <Link href={"#"}>Favorites</Link>
-                <Link href={"#"}>Generate Recipe</Link>
-                <Link href={"#"}>About Us</Link>
+                <Link href={"/recipesfav"}>Favorites</Link>
+                <Link href={"/generator"}>Generate Recipe</Link>
+                <Link href={"/about"}>About Us</Link>
               </div>
               {/* ABOUT */}
               <div className="flex flex-col">
-                <h4 className="font-bold text-lg">About</h4>
+                <h4 className="font-bold text-lg">About Us</h4>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus ea odit, rerum
-                  repellat.
+                  Welcome to Cook Meal! We are a passionate team of developers, chefs, and foodies
+                  who believe in the magic of technology to enhance our culinary experiences.
                 </p>
               </div>
               {/* CONTACT */}
               <div className="flex flex-col">
                 <h4 className="font-bold text-lg">Contact</h4>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur unde
-                  officia cu
+                  Thank you for your interest in contacting us! We are happy to help you with
+                  whatever you need.
                 </p>
               </div>
               {/* REDES SOCIALES */}
               <div className="self-center">
-                <span className="capitalize font-bold text-lg">follow us:</span>
+                <span className="capitalize font-bold text-lg">Follow Us:</span>
                 <div className="flex flex-row gap-2">
                   <Link href={"#!"}>
                     <FaYoutube size={"25px"} />

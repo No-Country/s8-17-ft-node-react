@@ -108,10 +108,41 @@ const About: FC = () => {
             project where we have to develop an application in group fulfilling different objectives
             proposed by the bootcamp to improve our skills as developers.
           </p>
-          <p className="font-semibold text-xl">
-            This application aims to be able to obtain recipes through AI, which makes use of the
-            tastes, resources that the user has.
-          </p>
+          <section className="font-semibold text-xl space-y-4">
+            <p>
+              Welcome to Cook Meal! We are a passionate team of developers, chefs, and foodies who
+              believe in the magic of technology to enhance our culinary experiences.
+            </p>
+
+            <p>
+              Our main goal is to make cooking more accessible, fun and creative for everyone. With
+              the help of Artificial Intelligence, we have created an application that provides you
+              with personalized recipes adapted to your preferences, helping you to explore new
+              flavors and discover delicious dishes.
+            </p>
+            <p>
+              At CookMeal, we focus on making the meal planning process easy and making the most of
+              the ingredients you have on hand. It doesn't matter if you are an experienced chef or
+              a cooking beginner, our app will guide you every step of the way, from selecting
+              recipes to preparing delicious dishes.
+            </p>
+            <p>
+              We are proud to offer you a wide variety of recipes, from healthy and balanced options
+              to indulgent and tempting. Plus, you can customize recommendations based on your
+              dietary preferences, making sure you find dishes that fit your lifestyle.
+            </p>
+            <p>
+              We believe in the power of technology to enrich our lives, but we also value the
+              importance of tradition and the human connection around food. CookMeal combines the
+              best of both worlds, giving you a modern culinary experience without losing the
+              personal touch and passion that comes through cooking.
+            </p>
+            <p>
+              We are excited to share this culinary adventure with you. Join our community of
+              foodies, download CookMeal and discover how AI can inspire you to create amazing and
+              flavorful dishes. See you in the kitchen! 🍽️🔥
+            </p>
+          </section>
         </div>
         <h1 className="my-6 text-2xl font-extrabold lg:text-4xl xl:text-5xl text-secondary-500">
           Our team
