@@ -209,7 +209,7 @@ const recipesToSeed: Array<RecipeDto> = [
       total: 10
     },
     portions: 2,
-    categories: [],
+    categories: ['Dinner'],
     diets: ["Vegetarian"],
     difficulty: Difficulty.EASY,
     nutritionalValues: {

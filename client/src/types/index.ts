@@ -27,13 +27,13 @@ export interface IRecipe {
   steps: string[];
   time: Time;
   portions: number;
-  categories: Category[];
   diets: Category[];
+  categories: Category[];
+  images:string[];
   difficulty: string;
   nutritionalValue: NutritionalValue;
   createdBy: string;
   id: string;
-  image: string;
   __v: number;
 }
 
@@ -71,4 +71,14 @@ export interface Recipes {
   categories: string[];
   flavor: string;
   difficulty: string;
+}
+
+export interface ISearch {
+  perPage:     number;
+  page:        number;
+  difficulty:  string;
+  name:        string;
+  ingredients: string[];
+  diets:       string[];
+  categories:  string[];
 }

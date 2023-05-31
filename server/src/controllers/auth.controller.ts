@@ -4,6 +4,7 @@ import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { UserLoginDto } from "../dto/user/userLogin.dto";
+import { UserUpdateDto } from "../dto/user/userUpdate.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import dotenv from "dotenv";
 import { User } from "../models/user.model";
@@ -30,10 +31,43 @@ export class AuthController {
     }
   }
 
+  async updateUser(req: Request, res: Response): Promise<Response> {
+    const userUpdateDto = plainToClass(UserUpdateDto, { id: res.locals.jwtPayload.id, ...req.body });
+    const errors = await validate(userUpdateDto);
+    if (errors.length > 0) {
+      return res.status(400).json(errors.map(err => err.constraints));
+    }
+    try {
+      const user = await this.userService.updateUser({ id: res.locals.jwtPayload.id, ...req.body });
+      return res.status(200).json({ message: "User updated!" });
+    } catch (error) {
+      console.log("update error: ", error);
+      return res.status(500).json(error);
+    }
+  }
+
+  async updatePassword(req: Request, res: Response): Promise<Response> {
+    const userUpdateDto = plainToClass(UserUpdateDto, { id: res.locals.jwtPayload.id, ...req.body });
+    const errors = await validate(userUpdateDto);
+    if (errors.length > 0) {
+      return res.status(400).json(errors.map(err => err.constraints));
+    }
+    try {
+      const user = await this.userService.updatePassword({ id: res.locals.jwtPayload.id, ...req.body });
+      return res.status(200).json({ message: "Password updated!" })
+    } catch (error) {
+      console.log("update password error: ", error);
+      return res.status(400).json(error);
+    }
+  }
+
   async auth(req: Request, res: Response): Promise<Response> {
     try {
       const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
       const user = await this.userService.findOne(partialUser);
+      if (!user) return res.status(401).json({
+        message:"No such user"
+      })
       return res.status(200).json(user);
     } catch (error) {
       console.log("auth error: ", error);

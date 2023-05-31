@@ -12,3 +12,6 @@ export { default as ErrorMessage } from "./ErrorMessage";
 export { default as ProfileUser } from "./Profile";
 export { default as LoadImageUser } from "./LoadImage";
 export { default as Menu } from "./Menu";
+export { default as ShowRecipe } from "./ShowRecipe";
+export { default as NavBarContent} from "./NavBarContent";
+export {default as ShowRecipeFav} from "./ShowRecipeFav"

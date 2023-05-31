@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { loginUser } from "@/backend";
+import { loginUser } from "@/backend/user";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { alerts } from "@/utils/alert";
@@ -48,7 +48,7 @@ export default function Login() {
       // window.localStorage.setItem("loggedUser", JSON.stringify(response.data));
       Cookies.set(USER_TOKEN, response, { sameSite: "Lax", expires: 1 });
       queryClient.invalidateQueries(["user", "authStatus"]);
-      router.push("/");
+      router.push("/dashboard");
     },
     onError: (error: any) => {
       alerts({
@@ -72,7 +72,7 @@ export default function Login() {
     e.preventDefault();
     window.location.href = `${baseUrl}/api/auth/facebook`;
   };
-  
+
   return (
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <Image src={CookMeal} alt="CookMeal" className="hidden md:block" />
@@ -122,13 +122,15 @@ export default function Login() {
         </form>
         <div className="flex items-center justify-around gap-5">
           <button
-          onClick={handleRegisterFacebook}
-          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+            onClick={handleRegisterFacebook}
+            className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+          >
             <Image src="/Facebook.png" width={30} height={30} alt="Facebook" />
           </button>
-          <button 
-          onClick={handleRegisterGoogle}
-          className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]">
+          <button
+            onClick={handleRegisterGoogle}
+            className="w-[50px] h-[50px] shadow-[0px_0px_6px_rgba(0,0,0,0.25)] p-[10px] rounded-[8px]"
+          >
             <Image src="/Google.png" width={30} height={30} alt="Google" />
           </button>
         </div>

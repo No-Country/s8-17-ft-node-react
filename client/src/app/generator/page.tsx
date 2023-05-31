@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 // import useForm from "@/hooks/useForm";
 import { Recipes } from "@/types";
-import { useMutation } from "@tanstack/react-query";
-import { createRecipe } from "@/backend";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createRecipe } from "@/backend/user";
 import { useRouter } from "next/navigation";
 import { IoSearchOutline } from "react-icons/io5";
 import { BsCheckCircleFill } from "react-icons/bs";
@@ -11,6 +11,10 @@ import Image from "next/image";
 import Menu from "@/components/Menu";
 import Swal from "sweetalert2";
 import { alerts } from "@/utils/alert";
+import { BiHomeAlt } from "react-icons/bi";
+import { BsStar } from "react-icons/bs";
+import { TbSoup } from "react-icons/tb";
+import { getDiets } from "@/backend/recipes";
 
 export default function Generator() {
   const router = useRouter();
@@ -20,6 +24,10 @@ export default function Generator() {
   //   categories: [],
   //   difficulty: ""
   // });
+
+  const { data } = useQuery(["diet"], getDiets);
+
+  console.log(data);
 
   const [ingredient, setIngredient] = useState("");
   const [listIngredients, setListIngredients] = useState([...ingredient]);
@@ -31,7 +39,7 @@ export default function Generator() {
     ingredients: [],
     AllergicIngredients: [],
     diet: [],
-    categories: "",
+    categories: [],
     flavor: "",
     difficulty: ""
   });
@@ -144,13 +152,41 @@ export default function Generator() {
 
   let dificultad = ["Easy", "Medium", "Hard"];
 
+  //!Rutas Dinamicas
+  // Data para el menú lateral
+  const options = [
+    {
+      id: 1,
+      url: "/dashboard",
+      text: "Home",
+      icon: <BiHomeAlt />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 2,
+      url: "/recipesfav",
+      text: "Favorites",
+      icon: <BsStar />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    },
+    {
+      id: 3,
+      url: "/generator",
+      text: "Create",
+      icon: <TbSoup />,
+      activeColor: "secondary-500",
+      inactiveColor: "light"
+    }
+  ];
+
   return (
     <div className="w-screen h-[170vh] flex justify-evenly">
-      <div className="w-[234px] mt-8">
-        <Menu href={"generator"} />
+      <div className="w-full px-4 lg:w-auto">
+        <Menu options={options} />
       </div>
-
-      <section className="w-[70%] h-full flex flex-col justify-evenly ml-10">
+      <section className="w-[70%] h-full flex flex-col justify-evenly">
         <h1 className="text-3xl">Generate recipe</h1>
         <div className="w-[50%] h-[54px] flex items-center bg-white py-4 px-5 rounded-md shadow-md">
           <input

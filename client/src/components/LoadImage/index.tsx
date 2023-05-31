@@ -45,8 +45,8 @@ const LoadImageUser = () => {
   };
 
   return (
-    <main className="w-full md:w-2/4 lg:w-2/4 py-4 px-12">
-      <section className="flex relative items-center justify-between gap-x-8">
+    <main className="w-full md:w-2/4 lg:w-2/4 py-4 px-12 sm:flex-col">
+      <section className="flex relative items-center justify-between gap-x-8 bg-slate-600">
         <input
           ref={inputFileRef}
           type="file"
