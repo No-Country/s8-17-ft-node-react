@@ -6,6 +6,6 @@ import { UserService } from "../services/user.service";
 const userRoutes = Router();
 const userController = new UserController(new UserService());
 
-userRoutes.post("/subscribe", checkJWT, userController.subscribe.bind(userController));
+userRoutes.post("/subscribe", userController.subscribe.bind(userController));
 
 export default userRoutes;

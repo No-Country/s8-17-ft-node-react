@@ -7,15 +7,16 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   async subscribe(req: Request, res: Response): Promise<Response> {
-    const { name, email, paymentMethod } = req.body;
+    const { email, paymentMethod } = req.body;
 
     try {
       // Create a customer
       const customer = await stripe.customers.create({
-        email,
-        name,
         payment_method: paymentMethod,
-        invoice_settings: { default_payment_method: paymentMethod }
+        email: email,
+        invoice_settings: {
+          default_payment_method: paymentMethod
+        }
       });
 
       // Create a product
@@ -48,13 +49,14 @@ export class UserController {
 
       // Send back the client secret
       return res.status(200).json({
-        message: "Subscription successful!",
         clientSecret: subscription.latest_invoice.payment_intent.client_secret,
+        status: subscription.latest_invoice.payment_intent.status,
         subscriptionId: subscription.id
       });
     } catch (error: any) {
       console.error(error);
-      return res.status(500).json({ errorMessage: error.message });
+      return res.status(500).json({ errorMessage: error.raw.message });
+
     }
   }
 }
