@@ -125,11 +125,12 @@ export default class StripeService {
       apiVersion: null
     });
   }
+
   public async createCustomer(user: User): Promise<Stripe.Customer> {
     try {
       const customer = await this.stripeClient.customers.create({
         email: user.email,
-        name: `${user.name}`,
+        name: user.name,
         metadata: { userId: user.id }
       });
 
@@ -147,19 +148,21 @@ export default class StripeService {
 
       return customer;
     } catch (error: any) {
-      throw new Error(`Error in customer create: ${error.message}`);
+      throw new Error(`Error in customer get: ${error.message}`);
     }
   }
 
   public async createCheckout(
-    user: User,
+    stripeCustomer: any,
     subscription: Subscription,
     successUrl: string,
     cancelUrl: string
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     try {
+      console.log(stripeCustomer);
+
       const session = await this.stripeClient.checkout.sessions.create({
-        // customer: user.stripeID,
+        customer: stripeCustomer.id,
         payment_method_types: ["card"],
         line_items: [
           {
@@ -174,7 +177,7 @@ export default class StripeService {
 
       return session;
     } catch (error: any) {
-      throw new Error(`Error in checkout creation: ${error.message}`);
+      throw new Error(`Error in checkout create: ${error.message}`);
     }
   }
 }

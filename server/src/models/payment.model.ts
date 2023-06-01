@@ -1,7 +1,8 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { IsDate, IsNotEmpty, IsNumber } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
 import { PaymentStatus } from "../utils/types";
+import { User } from "./user.model";
 
 export class Payment {
   @prop({
@@ -13,14 +14,12 @@ export class Payment {
 
   @prop({
     required: true,
-    unique: true,
-    default: uuidv4
+    ref: () => "User"
   })
-  public userId!: string;
+  userDb!: Ref<User | any>;
 
   @prop({
-    required: true,
-    unique: true
+    required: true
   })
   public stripeId!: string;
 
@@ -44,9 +43,9 @@ export class Payment {
   @IsNumber()
   public amount!: number;
 
-  constructor(partial: Partial<Payment>) {
-    Object.assign(this, partial);
-  }
+  // constructor(partial: Partial<Payment>) {
+  //   Object.assign(this, partial);
+  // }
 }
 
 const PaymentModel = getModelForClass(Payment);

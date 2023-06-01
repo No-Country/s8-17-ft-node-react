@@ -6,9 +6,10 @@ import DietModel from "../models/diet.model";
 import UserModel, { User } from "../models/user.model";
 import * as bcrypt from "bcrypt";
 import recipesToSeed from "./recipes.seeder";
-import subscriptionsToSeed from "./subscription.seeder";
+import subscriptionsToSeed from "./subscriptions.seeder";
 import RecipeModel, { Recipe } from "../models/recipe.model";
 import SubscriptionModel from "../models/subscription.model";
+import PaymentModel from "../models/payment.model";
 
 export default async function seed(): Promise<void> {
   // limpiamos la base de datos
@@ -63,6 +64,7 @@ const deleteAllDataBase = async (): Promise<void> => {
   await UserModel.deleteMany();
   await RecipeModel.deleteMany();
   await SubscriptionModel.deleteMany();
+  await PaymentModel.deleteMany();
 
   console.log("The database has been depopulated successfully!");
 };
