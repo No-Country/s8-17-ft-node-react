@@ -15,7 +15,7 @@ const Search: React.FC<{}> = () => {
   const [formData, setFormData] = useState<ISearch>({
     name: "",
     difficulty: "",
-    ingredients: [""],
+    ingredients: [],
     diets: [],
     categories: []
   });
@@ -51,12 +51,15 @@ const Search: React.FC<{}> = () => {
 
   return (
     <main className="w-full min-h-screen flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
-      <div className="w-full px-4 lg:w-auto">
-        <Menu options={options} />
+      <div className="flex flex-col">
+        <div className="w-full px-4 lg:w-auto">
+          <Menu options={options} />
+        </div>
+        <div className="w-full px-4 lg:w-auto">
+          <FilterCard setFormData={setFormData} formData={formData} />
+        </div>
       </div>
-      <div>
-        <FilterCard setFormData={setFormData} formData={formData} />
-      </div>
+
       <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
         {getSearchedRecipes.isLoading ? (
           <div className="absolute inset-0 flex items-center justify-center">

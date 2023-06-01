@@ -66,86 +66,116 @@ const FilterCard = ({
   };
 
   return (
-<section className="w-full lg:w-[250px] h-fit flex flex-col items-center lg:text-left px-6 py-11 gap-6 shadow-custom rounded-xl overflow-hidden">
-  <form onSubmit={handleSubmit}>
-    <label className="block">
-      Name:
-      <input className="mt-1 px-2 py-1 border border-gray-300 rounded" type="text" name="name" value={formData.name} onChange={handleChange} />
-    </label>
-    <br />
-    <label className="block">
-      Difficulty:
-      <select className="mt-1 px-2 py-1 border border-gray-300 rounded" name="difficulty" value={formData.difficulty} onChange={handleChange}>
-        <option value="">Select difficulty</option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </label>
-    <br />
-    <label className="block">
-      Ingredients:
-      <input className="mt-1 px-2 py-1 border border-gray-300 rounded" type="text" name="ingredients" onKeyDown={handleAddItem} />
-      <ul>
-        {formData.ingredients?.length ? (
-          formData.ingredients.map((item, index) => (
-            <li key={index} className="mt-1 flex items-center">
-              {item}
-              <button type="button" onClick={() => handleRemoveItem("ingredients", index)} className="ml-2 text-red-500">
-                X
-              </button>
-            </li>
-          ))
-        ) : (
-          <></>
-        )}
-      </ul>
-    </label>
-    <br />
-    <label className="block">
-      Diets:
-      <input className="mt-1 px-2 py-1 border border-gray-300 rounded" type="text" name="diets" onKeyDown={handleAddItem} />
-      <ul>
-        {formData.diets?.length ? (
-          formData.diets.map((item, index) => (
-            <li key={index} className="mt-1 flex items-center">
-              {item}
-              <button type="button" onClick={() => handleRemoveItem("diets", index)} className="ml-2 text-red-500">
-                X
-              </button>
-            </li>
-          ))
-        ) : (
-          <></>
-        )}
-      </ul>
-    </label>
-    <br />
-    <label className="block">
-      Categories:
-      <input className="mt-1 px-2 py-1 border border-gray-300 rounded" type="text" name="categories" onKeyDown={handleAddItem} />
-      <ul>
-        {formData.categories?.length ? (
-          formData.categories.map((item, index) => (
-            <li key={index} className="mt-1 flex items-center">
-              {item}
-              <button type="button" onClick={() => handleRemoveItem("categories", index)} className="ml-2 text-red-500">
-                X
-              </button>
-            </li>
-          ))
-        ) : (
-          <></>
-        )}
-      </ul>
-    </label>
-    <br />
-    {/* <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button> */}
-    <button type="button" onClick={handleReset} className="px-4 py-2 bg-gray-500 text-white rounded">
-      Reset
-    </button>
-  </form>
-</section>
+    <section className="w-full lg:w-[234px] h-fit flex flex-col items-center lg:text-left p-2 mt-4 gap-6 shadow-custom rounded-xl overflow-hidden text-sm font-bold text-slate-500 font-title">
+      <form onSubmit={handleSubmit}>
+        <label className="block">
+          Name:
+          <input
+            className="searchInput"
+            type="text"
+            name="name"
+            value={formData.name}
+            placeholder="example: tomato"
+            onChange={handleChange}
+          />
+        </label>
+        <br />
+        <label className="block">
+          Difficulty:
+          <select
+            className="searchInput"
+            name="difficulty"
+            value={formData.difficulty}
+            onChange={handleChange}
+          >
+            <option value="">Select difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+        <br />
+        <label className="block">
+          Ingredients:
+          <input className="searchInput" type="text" name="ingredients" onKeyDown={handleAddItem} />
+          <ul>
+            {formData.ingredients?.length ? (
+              formData.ingredients.map((item, index) => (
+                <li key={index} className="mt-1 flex items-center">
+                  {item}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveItem("ingredients", index)}
+                    className="ml-2 text-red-500"
+                  >
+                    X
+                  </button>
+                </li>
+              ))
+            ) : (
+              <></>
+            )}
+          </ul>
+        </label>
+        <br />
+        <label className="block">
+          Diets:
+          <input className="searchInput" type="text" name="diets" onKeyDown={handleAddItem} />
+          <ul>
+            {formData.diets?.length ? (
+              formData.diets.map((item, index) => (
+                <li key={index} className="mt-1 flex items-center">
+                  {item}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveItem("diets", index)}
+                    className="ml-2 text-red-500"
+                  >
+                    X
+                  </button>
+                </li>
+              ))
+            ) : (
+              <></>
+            )}
+          </ul>
+        </label>
+        <br />
+        <label className="block">
+          Categories:
+          <input className="searchInput" type="text" name="categories" onKeyDown={handleAddItem} />
+          <ul>
+            {formData.categories?.length ? (
+              formData.categories.map((item, index) => (
+                <li key={index} className="mt-1 flex items-center">
+                  {item}
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveItem("categories", index)}
+                    className="ml-2 text-red-500"
+                  >
+                    X
+                  </button>
+                </li>
+              ))
+            ) : (
+              <></>
+            )}
+          </ul>
+        </label>
+        <br />
+        <div className="flex justify-center">
+          {/* <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">Submit</button> */}
+          <button
+            type="button"
+            onClick={handleReset}
+            className="px-4 py-2 bg-gray-500 text-white rounded w-4/5 hover:bg-primary-500 transition-colors duration-300"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </section>
   );
 };
 
