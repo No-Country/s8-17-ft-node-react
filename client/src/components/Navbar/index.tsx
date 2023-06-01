@@ -89,8 +89,18 @@ const Navbar: React.FC = () => {
                 {firstLetter}
               </button>
             </Link>
+            <Link href={"/dashboard"}>
+              <button className="block w-40 mr-2 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
+                Dashboard
+              </button>
+            </Link>
+            <Link href={"/pricin3"}>
+              <button className="block w-40 mr-2 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
+                Prices
+              </button>
+            </Link>
             <Link href={"/about"}>
-              <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-4 rounded-3xl border border-primary-500 font-semibold">
+              <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
                 About Us
               </button>
             </Link>

@@ -18,7 +18,7 @@ const SliderImages: React.FC<SliderProps> = ({ images }) => {
 
   return (
     <div className="">
-      <Image src={images[currentImage]} alt="Slider Image"  fill />
+      <Image src={images[currentImage]} alt="Slider Image" fill />
 
       <button
         className="absolute top-1/2 left-2 transform -translate-y-1/2 text-white bg-black p-2 rounded-full"
