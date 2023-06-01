@@ -18,15 +18,12 @@ export const useAuth = (): {
     queryFn: checkSession,
     cacheTime: 0,
     staleTime: 0,
-    initialData: "",
-    onSettled: () => {
-      queryClient.invalidateQueries(["user"]);
-    }
+    initialData: ""
   });
 
   const { data: user, isLoading } = useQuery<UserProfile>({
     queryKey: ["user"],
-    queryFn: async () => await getProfile(token),
+    queryFn: () => getProfile(token),
     enabled: isAuthenticated,
     retry: false
   });
