@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
                 Dashboard
               </button>
             </Link>
-            <Link href={"/pricin3"}>
+            <Link href={"/pricing"}>
               <button className="block w-40 mr-2 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
                 Prices
               </button>
