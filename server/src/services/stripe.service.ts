@@ -126,7 +126,7 @@ export default class StripeService {
     });
   }
 
-  public async createCustomer(user: User): Promise<Stripe.Customer> {
+  public async createCustomer(user: User): Promise<Stripe.Response<Stripe.Customer>> {
     try {
       const customer = await this.stripeClient.customers.create({
         email: user.email,
@@ -153,16 +153,16 @@ export default class StripeService {
   }
 
   public async createCheckout(
-    stripeCustomer: any,
+    customer: Stripe.Customer | Stripe.DeletedCustomer,
     subscription: Subscription,
     successUrl: string,
     cancelUrl: string
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     try {
-      console.log(stripeCustomer);
+      console.log(customer);
 
       const session = await this.stripeClient.checkout.sessions.create({
-        customer: stripeCustomer.id,
+        customer: customer.id,
         payment_method_types: ["card"],
         line_items: [
           {

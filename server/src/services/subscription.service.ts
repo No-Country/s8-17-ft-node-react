@@ -20,15 +20,14 @@ export class SubscriptionService {
     subscription: Subscription
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     let payment: Payment;
-    let stripeCustomer: any;
+    let customer: Stripe.Customer | Stripe.DeletedCustomer;
     try {
       if (!user.stripeId) {
-        stripeCustomer = await this.stripeService.createCustomer(user);
-        await this.userRepository.update({ id: user.id }, { stripeId: stripeCustomer.id });
+        customer = await this.stripeService.createCustomer(user);
+        await this.userRepository.update({ id: user.id }, { stripeId: customer.id });
+      } else {
+        customer = await this.stripeService.getCustomer(user.stripeId);
       }
-
-      // console.log(user);
-      // console.log(subscription.stripeId);
 
       payment = await this.paymentRepository.create({
         userDb: user,
@@ -41,7 +40,7 @@ export class SubscriptionService {
       const URL_SUCCESS = `${process.env.SERVER_URL}/api/subscription/success/${payment.id}`;
       const URL_CANCELED = `${process.env.SERVER_URL}/api/subscription/canceled/${payment.id}`;
       const session = await this.stripeService.createCheckout(
-        stripeCustomer,
+        customer,
         subscription,
         URL_SUCCESS,
         URL_CANCELED
