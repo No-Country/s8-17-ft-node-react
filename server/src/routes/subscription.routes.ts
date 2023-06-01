@@ -17,7 +17,6 @@ subscriptionRoutes.get(
   subscriptionController.subscribe.bind(subscriptionController)
 );
 // subscriptionRoutes.get('/success/:paymentId', subscriptionController.success.bind(subscriptionController))
-// subscriptionRoutes.get('/canceled/:paymentId', subscriptionController.subscribe.bind(subscriptionController))
-// const URL_CANCELED = `${process.env.SERVER_URL}/api/subscription/canceled/${payment.id}`;
-// const URL_SUCCESS = `${process.env.SERVER_URL}/api/subscription/success/${payment.id}`;
+// subscriptionRoutes.get('/canceled/:paymentId', subscriptionController.canceled.bind(subscriptionController))
+
 export default subscriptionRoutes;

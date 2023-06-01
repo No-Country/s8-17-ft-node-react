@@ -2,13 +2,23 @@ import { Request, Response } from "express";
 import { UserService } from "../services/user.service";
 import { SubscriptionService } from "../services/subscription.service";
 import { User } from "../models/user.model";
+import { Subscription } from "../models/subscription.model";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 import { UserSubscriptionDto } from "../dto/user/userSubscription.dto";
-import { Subscription } from "../models/subscription.model";
 
 export class SubscriptionController {
   constructor(private userService: UserService, private subscriptionService: SubscriptionService) {}
+
+  async getAll(req: Request, res: Response): Promise<Response> {
+    try {
+      const subscriptions = await this.subscriptionService.getAll();
+      return res.status(200).json(subscriptions);
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({ errorMessage: error.message });
+    }
+  }
 
   async subscribe(req: Request, res: Response): Promise<Response> {
     const { subscriptionId } = req.params;
@@ -19,22 +29,15 @@ export class SubscriptionController {
       if (!user) return res.status(404).json({ errorMessage: "User not found" });
 
       const subscription: Subscription = await this.subscriptionService.getById(subscriptionId);
-      if (!subscription)
-        return res.status(404).json({
-          errorMessage: "Subscription not found"
-        });
+      if (!subscription) return res.status(404).json({ errorMessage: "Subscription not found" });
 
       const session = await this.subscriptionService.subscribe(user, subscription);
 
-      return res.status(200).json({
-        session
-      });
-    } catch (err: any) {
-      return res.status(500).json({
-        errorMessage: err.message
-      });
+      return res.status(200).json(session);
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
-    //// ---------------------------------
+
     // const userSubscriptionDto = plainToClass(UserSubscriptionDto, req.body);
     // const errors = await validate(userSubscriptionDto);
 
@@ -90,15 +93,5 @@ export class SubscriptionController {
     //   console.error(error);
     //   return res.status(500).json({ errorMessage: error.raw.message });
     // }
-  }
-
-  async getAll(req: Request, res: Response): Promise<Response> {
-    try {
-      const subscriptions = await this.subscriptionService.getAll();
-      return res.status(200).json(subscriptions);
-    } catch (error: any) {
-      console.error(error);
-      return res.status(500).json({ message: error.message });
-    }
   }
 }

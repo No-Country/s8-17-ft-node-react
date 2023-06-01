@@ -34,7 +34,7 @@ export class User {
   @prop({
     required: false
   })
-  public stripeID?: string;
+  public stripeId?: string;
 
   @prop({ ref: () => Recipe, required: false })
   public favRecipes?: Ref<Recipe>[];
