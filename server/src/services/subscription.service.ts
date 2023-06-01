@@ -34,7 +34,8 @@ export class SubscriptionService {
         stripeId: subscription.stripeId,
         amount: subscription.price,
         status: PaymentStatus.CREATED,
-        creationDate: new Date()
+        creationDate: new Date(),
+        role: subscription.role
       });
 
       const URL_SUCCESS = `${process.env.SERVER_URL}/api/subscription/success/${payment.id}`;
