@@ -2,6 +2,7 @@ import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { IsNotEmpty, IsString } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
 import { Recipe } from "./recipe.model";
+import { UserRoles } from "../utils/types";
 
 export class User {
   @prop({
@@ -48,6 +49,24 @@ export class User {
     required: false
   })
   public favIngredients?: string[];
+
+  @prop({
+    required: false,
+    enum: UserRoles,
+    default: UserRoles.FREE
+  })
+  public role?: UserRoles;
+
+  @prop({
+    required: false
+  })
+  //TODO: crear la interface
+  public subscription?: {
+    active?: boolean;
+    dateOfCreation: Date;
+    dateOfUpdate: Date;
+    dateOfExpiration: Date;
+  };
 }
 
 const UserModel = getModelForClass(User);

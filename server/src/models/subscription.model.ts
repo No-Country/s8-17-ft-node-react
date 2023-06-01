@@ -1,5 +1,6 @@
 import { getModelForClass, prop } from "@typegoose/typegoose";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { UserRoles } from "../utils/types";
 import { v4 as uuidv4 } from "uuid";
 
 export class Subscription {
@@ -41,6 +42,12 @@ export class Subscription {
   })
   @IsString()
   public image?: string;
+
+  @prop({
+    required: false,
+    enum: UserRoles
+  })
+  public role?: UserRoles;
 }
 
 const SubscriptionModel = getModelForClass(Subscription);
