@@ -65,9 +65,7 @@ class Repository<T> {
 
   public async create(data: Partial<T>): Promise<DocumentType<T>> {
     const model = new this.model(data) as DocumentType<T>;
-    console.log("acá llega: ", model);
     await model.save();
-    console.log("acá NO llega: ", model);
     return model;
   }
 

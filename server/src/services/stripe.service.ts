@@ -159,8 +159,6 @@ export default class StripeService {
     cancelUrl: string
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     try {
-      console.log(customer);
-
       const session = await this.stripeClient.checkout.sessions.create({
         customer: customer.id,
         payment_method_types: ["card"],
