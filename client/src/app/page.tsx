@@ -1,5 +1,5 @@
 "use client";
-import { Contact, Hero, HomeCards, HomeInfo, Menu, Testimonials } from "@/components";
+import { Contact, Hero, HomeCards, HomeInfo, Testimonials } from "@/components";
 
 export default function Home() {
   return (
