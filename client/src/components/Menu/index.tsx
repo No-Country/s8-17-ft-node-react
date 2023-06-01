@@ -126,22 +126,21 @@ const Menu = ({ options }: Props) => {
     return pathname === path;
   };
 
-  // console.log(options);
   return (
-    <section className="w-full lg:w-[234px] h-fit flex flex-col items-center lg:text-left px-6 py-11 gap-6 shadow-custom rounded-xl overflow-hidden">
+    <section className="w-[234px] h-[250px] flex flex-col items-center justify-center gap-6 border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px]">
       {options.map(option => (
         <Link
           href={option.url}
           key={option.id}
           passHref
-          className={`flex justify-start items-center ${
+          className={`w-[80%] ${
             isActive(option.url) ? "text-" + option.activeColor : "text-" + option.inactiveColor
           }`}
         >
           <h1
-            className={`lg:w-[200px] flex text-2xl font-medium ml-4 gap-2 rounded-md hover:shadow-custom ${
+            className={`w-[100%] flex items-center text-2xl py-1 px-3 font-medium rounded-md hover:shadow-custom ${
               isActive(option.url) ? "shadow-custom" : "shadow-transparent"
-            } lg:py-1 lg:px-3`}
+            }`}
           >
             {option.icon}
             {option.text}
