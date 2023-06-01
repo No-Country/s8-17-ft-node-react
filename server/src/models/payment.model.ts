@@ -1,9 +1,11 @@
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { IsDate, IsNotEmpty, IsNumber } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
-import { PaymentStatus } from "../utils/types";
+import { PaymentStatus, UserRoles } from "../utils/types";
+import { User } from "./user.model";
 
 export class Payment {
+  //TODO: no esta el id de la subscription, faltaria agregarlo
   @prop({
     required: true,
     unique: true,
@@ -13,14 +15,12 @@ export class Payment {
 
   @prop({
     required: true,
-    unique: true,
-    default: uuidv4
+    ref: () => "User"
   })
-  public userId!: string;
+  userDb!: Ref<User | any>;
 
   @prop({
-    required: true,
-    unique: true
+    required: true
   })
   public stripeId!: string;
 
@@ -43,6 +43,12 @@ export class Payment {
   @IsNotEmpty()
   @IsNumber()
   public amount!: number;
+
+  @prop({
+    required: false,
+    enum: UserRoles
+  })
+  public role?: UserRoles;
 
   constructor(partial: Partial<Payment>) {
     Object.assign(this, partial);

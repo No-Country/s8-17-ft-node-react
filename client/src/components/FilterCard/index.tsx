@@ -66,7 +66,7 @@ const FilterCard = ({
   };
 
   return (
-    <section className="w-full lg:w-[234px] h-fit flex flex-col items-center lg:text-left p-2 mt-4 gap-6 shadow-custom rounded-xl overflow-hidden text-sm font-bold text-slate-500 font-title">
+    <section className="w-full lg:w-[234px] h-fit flex flex-col items-center lg:text-left p-2 mt-4 gap-6 rounded-xl overflow-hidden text-sm font-medium text-light border">
       <form onSubmit={handleSubmit}>
         <label className="block">
           Name:
@@ -129,7 +129,7 @@ const FilterCard = ({
                   <button
                     type="button"
                     onClick={() => handleRemoveItem("diets", index)}
-                    className="ml-2 text-red-500"
+                    className="ml-2 text-secondary-500"
                   >
                     X
                   </button>
@@ -169,7 +169,7 @@ const FilterCard = ({
           <button
             type="button"
             onClick={handleReset}
-            className="px-4 py-2 bg-gray-500 text-white rounded w-4/5 hover:bg-primary-500 transition-colors duration-300"
+            className="px-4 py-2 bg-light text-white rounded w-4/5 hover:bg-primary-500 transition-colors duration-300"
           >
             Reset
           </button>

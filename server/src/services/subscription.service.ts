@@ -7,7 +7,7 @@ import PaymentModel, { Payment } from "../models/payment.model";
 import { PaymentStatus } from "../utils/types";
 
 export class SubscriptionService {
-  private subscripcionRepository: Repository<Subscription> = new Repository(SubscriptionModel);
+  private subscriptionRepository: Repository<Subscription> = new Repository(SubscriptionModel);
   private userRepository: Repository<User> = new Repository(UserModel);
   private paymentRepository: Repository<Payment> = new Repository(PaymentModel);
   private stripeService: StripeService;
@@ -20,28 +20,33 @@ export class SubscriptionService {
     subscription: Subscription
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
     let payment: Payment;
+    let customer: Stripe.Customer | Stripe.DeletedCustomer;
     try {
-      if (!user.stripeID) {
-        const stripeCustomer = await this.stripeService.createCustomer(user);
-        await this.userRepository.update({ id: user.id }, { stripeID: stripeCustomer.id });
+      if (!user.stripeId) {
+        customer = await this.stripeService.createCustomer(user);
+        await this.userRepository.update({ id: user.id }, { stripeId: customer.id });
+      } else {
+        customer = await this.stripeService.getCustomer(user.stripeId);
       }
 
       payment = await this.paymentRepository.create({
-        userId: user.id,
+        userDb: user,
         stripeId: subscription.stripeId,
         amount: subscription.price,
         status: PaymentStatus.CREATED,
-        creationDate: new Date()
+        creationDate: new Date(),
+        role: subscription.role
       });
 
-      const URL_CANCELED = `${process.env.SERVER_URL}/api/subscription/canceled/${payment.id}`;
       const URL_SUCCESS = `${process.env.SERVER_URL}/api/subscription/success/${payment.id}`;
+      const URL_CANCELED = `${process.env.SERVER_URL}/api/subscription/canceled/${payment.id}`;
       const session = await this.stripeService.createCheckout(
-        user,
+        customer,
         subscription,
         URL_SUCCESS,
         URL_CANCELED
       );
+
       await this.paymentRepository.update({ id: payment.id }, { status: PaymentStatus.PENDING });
       return session;
     } catch (error: any) {
@@ -50,9 +55,9 @@ export class SubscriptionService {
   }
 
   public async getAll(): Promise<Subscription[]> {
-    return this.subscripcionRepository.findAll();
+    return this.subscriptionRepository.findAll();
   }
   public async getById(id: string): Promise<Subscription> {
-    return this.subscripcionRepository.findById(id);
+    return this.subscriptionRepository.findById(id);
   }
 }
