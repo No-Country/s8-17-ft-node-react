@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { loginUser } from "@/backend";
+import { loginUser } from "@/backend/user";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { alerts } from "@/utils/alert";

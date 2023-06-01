@@ -115,7 +115,35 @@ export const deleteFavoriteRecipe = async (recipeId: string, token: string): Pro
 //   };
 // }
 
+// funcion para traer solo una recete por id
+export const getRecipeById = async ({
+  recipeId
+}: {
+  recipeId: string;
+}): Promise<IRecipe | null> => {
+  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  if (response.status === 401) {
+    throw new Error("Not authorized");
+  }
 
+  const foundRecipe = response.data;
+  if (!Object.values(foundRecipe)) return null;
+  return foundRecipe;
+};
+
+// const recipeId = "your_recipe_id"; // Reemplaza "your_recipe_id" con el id de la receta que desees obtener
+export function useFindRecipeById(recipeId: string) {
+  const getRecipeByIdQuery = useQuery<IRecipe | null, Error>(["foundRecipe", recipeId], () =>
+    getRecipeById({ recipeId })
+  );
+  return {
+    getRecipeByIdQuery
+  };
+}
 
 export function useRecipes() {
   const queryClient = useQueryClient();
@@ -159,59 +187,3 @@ export function useRecipes() {
     getAllFavoriteRecipesQuery
   };
 }
-// funcion para traer solo una recete por id
-export const getRecipeById = async ({
-  token,
-  recipeId
-}: {
-  token: null | string;
-  recipeId: string;
-}): Promise<IRecipe> => {
-  // http://localhost:3001/api/recipe/id/57fc7126-3881-4ae8-a306-b47ce760ad7f
-  const response = await axios.get(`${baseUrl}/api/recipe/id/${recipeId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  if (response.status === 401) {
-    throw new Error("Not authorized");
-  }
-
-  const foundRecipe = response.data;
-
-  return foundRecipe;
-};
-
-export const getRecipe = async ({ recipeId }: { recipeId: string }) => {
-  const token = checkSession();
-  const recipe = await getRecipeById({ token, recipeId });
-  if (!Object.values(recipe)) return null;
-  return recipe;
-};
-
-const recipesSearch = async ({
-  perPage,
-  page,
-  difficulty,
-  name,
-  ingredients,
-  diets,
-  categories
-}: ISearch): Promise<IRecipe[]> => {
-  const response = await axios.post(
-    `${baseUrl}/api/search`,
-    { perPage, page, difficulty, name, ingredients, diets, categories },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-  if (response.status === 401) {
-    throw new Error("Not authorized");
-  }
-
-  const foundRecipes = response.data;
-
-  return foundRecipes;
-};

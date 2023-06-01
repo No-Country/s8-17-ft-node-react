@@ -1,6 +1,6 @@
 "use client";
 
-import { registerUser } from "@/backend";
+import { registerUser } from "@/backend/user";
 import { alerts } from "@/utils/alert";
 import { API_BASE_URL, USER_TOKEN } from "@/utils/constants";
 import { useMutation } from "@tanstack/react-query";

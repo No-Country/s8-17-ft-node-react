@@ -1,4 +1,4 @@
-import { IRecipe, IRecipes, Recipes, UserAuth, UserRegister } from "@/types";
+import { IRecipe, IRecipes, UserAuth, UserRegister } from "@/types";
 import axios from "axios";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
@@ -45,29 +45,4 @@ export const getProfile = async (token: null | string): Promise<any> => {
   const profile = response.data;
 
   return profile;
-};
-
-export const createRecipe = async (data: Recipes): Promise<any> => {
-  const loggedUserJSON = window.localStorage.getItem("loggedUser");
-  let user = null;
-  if (loggedUserJSON) {
-    user = JSON.parse(loggedUserJSON);
-  }
-
-  // const response = await axios.post(
-  //   `${baseUrl}/api/recipe/generate`,
-  //   {
-  //     ingredients: data.ingredient,
-  //     diets: data.diets,
-  //     categories: data.categories,
-  //     difficulty: data.difficulty
-  //   },
-  //   {
-  //     headers: {
-  //       Authorization: `Bearer ${user?.token}`
-  //     }
-  //   }
-  // );
-
-  // return response;
 };

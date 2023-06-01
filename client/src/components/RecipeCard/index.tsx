@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { getRecipe } from "@/hooks/useRecipes";
+import { useFindRecipeById } from "@/hooks/useRecipes";
 import { IRecipe } from "@/types";
 import { useEffect, useState } from "react";
 import SliderImages from "../SliderImages";
@@ -12,93 +12,25 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
 
-  const [recipe, setRecipe] = useState<IRecipe | null>({
-    _id: "646f425437be53bd8204c4ff",
-    name: "Berry Spinach Salad",
-    description:
-      "This refreshing and nutritious berry spinach salad is the perfect combination of sweet and savory flavors. It's packed with antioxidants and vitamins!",
-    ingredients: [
-      "4 cups baby spinach leaves",
-      "1 cup mixed berries (strawberries, blueberries, raspberries)",
-      "1/4 cup crumbled feta cheese",
-      "1/4 cup sliced almonds",
-      "2 tablespoons balsamic vinegar",
-      "1 tablespoon extra-virgin olive oil",
-      "1 teaspoon honey",
-      "Salt and pepper, to taste"
-    ],
-    steps: [
-      "In a large bowl, combine the baby spinach leaves, mixed berries, crumbled feta cheese, and sliced almonds.",
-      "In a small bowl, whisk together the balsamic vinegar, olive oil, honey, salt, and pepper.",
-      "Drizzle the dressing over the salad and toss gently to coat the ingredients.",
-      "Serve immediately and enjoy!"
-    ],
-    time: {
-      preparation: 10,
-      cooking: 0,
-      total: 10
-    },
-    portions: 2,
-    categories: [],
-    diets: [
-      {
-        _id: "646f425437be53bd8204c4df",
-        name: "Vegetarian",
-        description:
-          "No ingredients may contain meat or meat by-products, such as bones or gelatin.",
-        id: "db13fac6-af92-479c-92d7-58949132eb38",
-        __v: 0
-      }
-    ],
-    difficulty: "easy",
-    nutritionalValue: {
-      of100g: {
-        calories: 67,
-        fat: 4.2,
-        carbohydrates: 6.2,
-        protein: 1.8,
-        cholesterol: 4.6
-      },
-      ofPortion: {
-        calories: 134,
-        fat: 8.4,
-        carbohydrates: 12.4,
-        protein: 3.6,
-        cholesterol: 9.2
-      }
-    },
-    createdBy: "646f425437be53bd8204c4ef",
-    id: "f821cd0f-8ea1-4fbd-9c2b-a2101ffa683c",
-    images: ["https://res.cloudinary.com/dux8fwhxn/image/upload/v1684989615/cld-sample-4.jpg"],
-
-    __v: 0
-  });
-  useEffect(() => {
-    const fetchData = async () => {
-      const recipe = await getRecipe({ recipeId });
-      if (recipe === null) setRecipe(null);
-      setRecipe(recipe as IRecipe);
-    };
-
-    fetchData();
-  }, [recipeId]);
-
+  const { getRecipeByIdQuery } = useFindRecipeById(recipeId);
+  // const [recipe, setRecipe] = useState<IRecipe | null>(null);
+  const recipe = getRecipeByIdQuery.data!;
   return (
     <div className="min-w-sm mx-auto p-10 font-text">
-      <button
-        className="text-primary-500 fixed bottom-2 right-2 z-40 md:relative md:top-20 md:left-10 "
-        onClick={() => router.back()}
-      >
-        <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
-      </button>
-      {recipe === null ? (
+      {getRecipeByIdQuery.error || recipe === null || recipe === undefined ? (
         <div>
           <div className="py-4">
-            <h1 className="text-2xl font-bold mb-2 font-title text-center">Recipe not found</h1>
+            <h1 className="text-2xl font-bold mb-2 font-title text-center text-secondary-500 animate-pulse">Loading...</h1>
           </div>
         </div>
       ) : (
         <>
+          <button
+            className="text-primary-500 fixed bottom-2 right-2 z-40 md:relative md:top-20 md:left-10 "
+            onClick={() => router.back()}
+          >
+            <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
+          </button>
           {/* --------- Top Part --------- */}
           <div className="border-4 border-slate-300 rounded-md flex flex-col md:flex-row md:mx-32 justify-center items-center h-72">
             {/* NAME OF THE RECIPE */}
