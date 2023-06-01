@@ -1,3 +1,4 @@
+import { UserRoles } from "../utils/types";
 import { User } from "../models/user.model";
 
 const usersToSeed: Array<Partial<User>> = [
@@ -6,17 +7,20 @@ const usersToSeed: Array<Partial<User>> = [
     email: "Test@example.com",
     password: "Pass1234",
     alerts: ["lactosa"],
-    favIngredients: ["tomato"]
+    favIngredients: ["tomato"],
+    role: UserRoles.MASTER_CHEF
   },
   {
     name: "Mary",
     email: "Test2@example.com",
-    password: "Pass1234"
+    password: "Pass1234",
+    role: UserRoles.SEMI_CHEF
   },
   {
     name: "William",
     email: "Test3@example.com",
-    password: "Pass1234"
+    password: "Pass1234",
+    role: UserRoles.FREE
   }
 ];
 

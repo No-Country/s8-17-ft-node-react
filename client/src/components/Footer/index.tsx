@@ -15,7 +15,7 @@ const Footer = () => {
             {/* Contenedor de LOGO - Roadmap - About - Contact - FollowUs */}
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-5">
               {/* LOGO + ESLOGAN */}
-              <div className="flex flex-col text-center">
+              <div className="flex flex-col text-center items-center justify-center">
                 <Image
                   src={"/CookMealLogo.png"}
                   alt={"Logo"}
@@ -29,11 +29,12 @@ const Footer = () => {
                 </p>
               </div>
               {/* ROADMAP */}
-              <div className="flex flex-col">
+              <div className="flex flex-col z-40">
                 <h4 className="font-bold text-lg">Roadmap</h4>
                 <Link href={"/"}>Home</Link>
                 <Link href={"/recipesfav"}>Favorites</Link>
                 <Link href={"/generator"}>Generate Recipe</Link>
+                <Link href={"/search"}>Search Recipe</Link>
                 <Link href={"/about"}>About Us</Link>
               </div>
               {/* ABOUT */}
@@ -53,9 +54,9 @@ const Footer = () => {
                 </p>
               </div>
               {/* REDES SOCIALES */}
-              <div className="self-center">
+              <div className="self-center z-40">
                 <span className="capitalize font-bold text-lg">Follow Us:</span>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 cursor-pointer">
                   <Link href={"#!"}>
                     <FaYoutube size={"25px"} />
                   </Link>
