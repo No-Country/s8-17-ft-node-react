@@ -19,7 +19,7 @@ recipeRoutes.delete(
   checkJWT,
   recipeController.deleteFavorite.bind(recipeController)
 );
-recipeRoutes.get("/", checkJWT, recipeController.getAll.bind(recipeController));
+recipeRoutes.get("/", recipeController.getAll.bind(recipeController));
 recipeRoutes.get("/favorite", checkJWT, recipeController.getFavoriteByUser.bind(recipeController));
 recipeRoutes.get("/createdBy", checkJWT, recipeController.getCreatedBy.bind(recipeController));
 recipeRoutes.get("/id/:id", recipeController.getById.bind(recipeController));
