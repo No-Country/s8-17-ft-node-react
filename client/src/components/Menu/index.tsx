@@ -126,7 +126,7 @@ const Menu = ({ options }: Props) => {
     return pathname === path;
   };
 
-  console.log(options);
+  // console.log(options);
   return (
     <section className="w-full lg:w-[234px] h-fit flex flex-col items-center lg:text-left px-6 py-11 gap-6 shadow-custom rounded-xl overflow-hidden">
       {options.map(option => (
