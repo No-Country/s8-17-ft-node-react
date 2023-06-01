@@ -4,18 +4,17 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Menu, NavBarContent } from "@/components";
 import { BiUser } from "react-icons/bi";
 import { BsArrowUpSquare, BsPatchQuestion } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useAuth } from "@/hooks/useAuth";
 import Cookies from "js-cookie";
 import { USER_TOKEN } from "@/utils/constants";
-
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
+import { Menu, NavBarContent } from "@/components";
 
-function Navbar() {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -27,14 +26,13 @@ function Navbar() {
     router.push("/");
   };
 
-  const name = user?.name;
-  const firstLetter = name?.substring(0, 1);
+  const firstLetter = user?.name?.charAt(0);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const options = [
+  const optionsList = [
     {
       id: 1,
       url: "/profile",
@@ -49,7 +47,8 @@ function Navbar() {
       text: "Logout",
       icon: <BsArrowUpSquare />,
       activeColor: "primary-500",
-      inactiveColor: "light"
+      inactiveColor: "light",
+      onClick: handleLogOut
     },
     {
       id: 3,
@@ -71,10 +70,10 @@ function Navbar() {
 
   return (
     <nav className="w-full flex items-center justify-between py-3 px-4 md:pl-20 lg:pr-32">
-      <div className="flex items-center md:mr-6 lg:mr-72">
+      <div className="flex items-center md:mr-6">
         <Link href="/">
           <Image
-            className="w-full h-full mr-2"
+            className="w-full h-full md:w-auto lg:w-auto"
             src="/logo.png"
             alt="logo"
             width={237}
@@ -100,24 +99,20 @@ function Navbar() {
               type="button"
               className="inline-flex items-center p-2 ml-1 text-primary-500 hover:bg-gray-100 outline-none text-2xl"
             >
-              <svg
-                className="fill-primary-500 h-7 w-7"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-              </svg>
+              <GiHamburgerMenu />
             </button>
             <div className="fixed top-24 right-4 z-50">
-              <div
-                className={`bg-white ${
-                  isMenuOpen
-                    ? "transition-transform duration-1000 transform -translate-x-0"
-                    : "transition-trasnform duration-1000 transform translate-x-full"
-                }`}
-              >
-                {isMenuOpen && <Menu options={options} />}
-              </div>
+              {isMenuOpen && (
+                <div
+                  className={`bg-white ${
+                    isMenuOpen
+                      ? "transition-transform duration-1000 transform -translate-x-0"
+                      : "transition-trasnform duration-1000 transform translate-x-full"
+                  }`}
+                >
+                  <Menu options={optionsList} />
+                </div>
+              )}
             </div>
           </div>
         ) : (
@@ -135,6 +130,6 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
-export default Navbar;
+export default React.memo(Navbar);

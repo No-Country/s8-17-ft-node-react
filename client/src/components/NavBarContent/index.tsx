@@ -33,15 +33,13 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen }) => {
 
   return (
     <div
-      className={`w-full gap-5 lg:flex md:items-center md:w-auto font-medium ${
+      className={`w-full gap-5 lg:flex md:items-center md:w-auto font-semibold ${
         isOpen ? "block" : "hidden"
       }`}
     >
       {links.map(link => (
         <Link href={link.url} key={link.id}>
-          <p className="min-w-max mt-0 block md:inline-block items-center text-primary-500">
-            {link.text}
-          </p>
+          <p className="md:min-w-max text-primary-500">{link.text}</p>
         </Link>
       ))}
       {buttons.map(button => (
