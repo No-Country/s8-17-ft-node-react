@@ -15,7 +15,7 @@ const Search: React.FC<{}> = () => {
   const [formData, setFormData] = useState<ISearch>({
     name: "",
     difficulty: "",
-    ingredients: ["tomato"],
+    ingredients: [""],
     diets: [],
     categories: []
   });
