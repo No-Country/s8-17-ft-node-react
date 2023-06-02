@@ -42,7 +42,6 @@ const Menu = ({ options }: Props) => {
           }`}
         >
           <h1
-            onClick={handleLogOut}
             className={`w-[100%] flex items-center text-2xl py-1 px-3 font-medium rounded-md hover:shadow-custom ${
               isActive(option.url) ? "shadow-custom" : "shadow-transparent"
             }`}
