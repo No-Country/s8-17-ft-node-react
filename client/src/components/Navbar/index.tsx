@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
           >
             {isOpen ? <VscChromeClose /> : <GiHamburgerMenu />}
           </button>
-          <NavBarContent isOpen={isOpen} links={links} isAuthenticated />
+          <NavBarContent isOpen={isOpen} links={links} />
           {!isLoading && isAuthenticated ? (
             <div className="flex flex-wrap items-center">
               <button
