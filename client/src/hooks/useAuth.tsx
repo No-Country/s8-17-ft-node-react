@@ -21,16 +21,21 @@ export const useAuth = (): {
     initialData: ""
   });
 
-  const { data: user, isLoading } = useQuery<UserProfile>({
+  const { data: user, isLoading: userLoading } = useQuery<UserProfile>({
     queryKey: ["user"],
     queryFn: () => getProfile(token),
     enabled: isAuthenticated,
-    retry: false
+    retry: false,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["authStatus"]);
+    }
   });
+
+  const isLoading = isAuthenticated && userLoading;
 
   return {
     isAuthenticated,
     user,
-    isLoading: isLoading || !isAuthenticated
+    isLoading: isLoading
   };
 };
