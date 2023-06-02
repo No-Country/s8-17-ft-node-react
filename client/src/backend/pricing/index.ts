@@ -1,12 +1,19 @@
 import { ISubscription } from "@/types";
+import { checkSession } from "@/utils/checkSession";
 import axios from "axios";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
-export const getSubscriptions = async (data: ISubscription): Promise<any> => {
-  const response = await axios.get(`${baseUrl}api/subscription`);
+const token = checkSession();
 
-  console.log(response);
+console.log(token);
+
+export const getAllSubscriptions = async (): Promise<any> => {
+  const response = await axios.get(`${baseUrl}/api/subscription/`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
   return response;
 };

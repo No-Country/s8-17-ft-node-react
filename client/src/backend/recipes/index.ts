@@ -6,6 +6,7 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const getDiets = async (): Promise<any> => {
   const token = checkSession();
+
   const response = await axios.get(`${baseUrl}/api/diet`, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -34,6 +35,8 @@ export const createRecipe = async (data: IRecipesForm): Promise<any> => {
       }
     }
   );
+
+  console.log(response);
 
   return response;
 };

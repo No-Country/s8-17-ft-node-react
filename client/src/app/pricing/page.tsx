@@ -1,6 +1,13 @@
+"use client";
+import { getAllSubscriptions } from "@/backend/pricing";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 export default function Pricing() {
+  const { data } = useQuery(["prices"], getAllSubscriptions);
+
+  console.log(data);
+
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center">
       <section className="w-full h-[20vh] flex flex-col items-center justify-center">
@@ -28,7 +35,7 @@ export default function Pricing() {
           </div>
           <div className="h-[50%] flex">
             <h1 className="text-[100px] font-medium">$</h1>
-            <h1 className="text-[150px] h-[100%] m-0 font-medium">3</h1>
+            <h1 className="text-[150px] h-[100%] m-0 font-medium">2</h1>
           </div>
           <button className="w-[50%] h-[50px] p-3 rounded-[32px] mb-5 border-2 text-[#49A3FA]">
             Get started
@@ -36,7 +43,7 @@ export default function Pricing() {
         </div>
         <div className="w-[30%] h-[80%] flex flex-col items-center justify-between border border-1 rounded-[10px]">
           <div className="w-[100%] h-[20%] flex items-center justify-center bg-[#EF47A0] rounded-t-[10px]">
-            <h1 className="text 3xl text-[#FFF] font-bold text-[48px]">Chef</h1>
+            <h1 className="text 3xl text-[#FFF] font-bold text-[48px]">MasterChef</h1>
           </div>
           <div className="h-[50%] flex">
             <h1 className="text-[100px] font-medium">$</h1>
