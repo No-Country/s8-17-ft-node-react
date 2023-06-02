@@ -33,8 +33,8 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen }) => {
 
   return (
     <div
-      className={`w-full gap-5 lg:flex md:items-center md:w-auto font-semibold ${
-        isOpen ? "block" : "hidden"
+      className={`w-full max-h-0 absolute z-10 inset-x-0 p-4 rounded-b-2xl gap-5 lg:flex md:items-center md:w-auto lg:static font-semibold bg-white transition-all duration-300 lg:h-full lg:max-h-full lg:opacity-100 ${
+        isOpen ? "top-full max-h-96 opacity-100" : "-top-96 opacity-0 lg:opacity-100 lg:top-0"
       }`}
     >
       {links.map(link => (
