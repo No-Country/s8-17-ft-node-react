@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  onDemandEntries: {
+    maxInactiveAge: 8 * 1000
+  },
   images: {
     domains: ["res.cloudinary.com", "images.pexels.com"]
   }
