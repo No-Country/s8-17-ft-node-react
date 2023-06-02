@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { FieldError, useForm } from "react-hook-form";
 import { alerts } from "@/utils/alert";
 
-//Importación de Iconos
+// Importación de Iconos
 import { BiShow, BiLowVision } from "react-icons/bi";
 
 const ProfileUser = () => {

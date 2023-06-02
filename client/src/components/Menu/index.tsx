@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { USER_TOKEN } from "@/utils/constants";
 
 type MenuOption = {
   id: number;
@@ -9,7 +11,6 @@ type MenuOption = {
   icon: React.ReactNode;
   activeColor: string;
   inactiveColor: string;
-  onClick?: () => void;
 };
 
 type Props = {
@@ -18,9 +19,15 @@ type Props = {
 
 const Menu = ({ options }: Props) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const isActive = (path: string) => {
     return pathname === path;
+  };
+
+  const handleLogOut = () => {
+    Cookies.remove(USER_TOKEN, { sameSite: "Lax" });
+    router.push("/");
   };
 
   return (
@@ -35,7 +42,6 @@ const Menu = ({ options }: Props) => {
           }`}
         >
           <h1
-            onClick={option.onClick}
             className={`w-[100%] flex items-center text-2xl py-1 px-3 font-medium rounded-md hover:shadow-custom ${
               isActive(option.url) ? "shadow-custom" : "shadow-transparent"
             }`}
