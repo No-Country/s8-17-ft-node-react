@@ -16,6 +16,13 @@ export enum PaymentStatus {
   CANCELED = "canceled"
 }
 
+export enum UserRoles {
+  ADMIN = "admin",
+  FREE = "free",
+  SEMI_CHEF = "semi_chef",
+  MASTER_CHEF = "master_chef"
+}
+
 export interface RecipeInterface {
   ingredients: string[];
   difficulty: Difficulty;

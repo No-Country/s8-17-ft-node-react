@@ -86,6 +86,28 @@ const Navbar: React.FC = () => {
               {firstLetter}
             </button>
           </Link>
+          <Link href={"/dashboard"}>
+            <button className="block w-40 mr-2 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
+              Dashboard
+            </button>
+          </Link>
+          <Link href={"/pricing"}>
+            <button className="block w-40 mr-2 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
+              Prices
+            </button>
+          </Link>
+          <Link href={"/about"}>
+            <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-3 rounded-3xl border border-primary-500 font-semibold">
+              About Us
+            </button>
+          </Link>
+          <button
+            onClick={toggleMenu}
+            type="button"
+            className="inline-flex items-center p-2 ml-1 text-primary-500 hover:bg-gray-100 outline-none text-2xl"
+          >
+            <GiHamburgerMenu />
+          </button>
           <Link href={"/about"}>
             <button className="block w-40 items-center bg-primary-500 text-white hover:bg-white hover:text-primary-500 outline-none text-lg py-3 px-4 rounded-3xl border border-primary-500 font-semibold">
               About Us

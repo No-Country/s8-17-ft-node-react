@@ -12,7 +12,8 @@ export const alerts = ({
   confirmButtonText = "Ok",
   showCloseButton = true,
   confirmButtonAriaLabel = "Thumbs up, great!",
-  timer
+  timer,
+  width
 }: SweetAlertOptions) => {
   // TODO: fix colors.
   let color: string = colors.primary;
@@ -32,6 +33,7 @@ export const alerts = ({
   }
 
   return Swal.fire({
+    width: width,
     icon: icon,
     title: title,
     text: text,

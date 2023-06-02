@@ -17,29 +17,25 @@ export const getDiets = async (): Promise<any> => {
 
 export const createRecipe = async (data: IRecipesForm): Promise<any> => {
   const token = checkSession();
-  console.log(token);
-  try {
-    const response = await axios.post(
-      `${baseUrl}/api/recipe/generate`,
-      {
-        ingredients: data.ingredients,
-        allergic: data.AllergicIngredients,
-        flavor: data.flavor,
-        diets: data.diet,
-        categories: data.categories,
-        difficulty: data.difficulty
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
 
-    return response;
-  } catch (error) {
-    console.log("ERROR", error);
-  }
+  const response = await axios.post(
+    `${baseUrl}/api/recipe/generate`,
+    {
+      ingredients: data.ingredients,
+      allergic: data.AllergicIngredients,
+      flavor: data.flavor,
+      diets: data.diet,
+      categories: data.categories,
+      difficulty: data.difficulty
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  return response;
 };
 
 // export const getRecipeById = async ({

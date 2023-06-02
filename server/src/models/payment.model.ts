@@ -1,10 +1,11 @@
 import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
 import { IsDate, IsNotEmpty, IsNumber } from "class-validator";
 import { v4 as uuidv4 } from "uuid";
-import { PaymentStatus } from "../utils/types";
+import { PaymentStatus, UserRoles } from "../utils/types";
 import { User } from "./user.model";
 
 export class Payment {
+  //TODO: no esta el id de la subscription, faltaria agregarlo
   @prop({
     required: true,
     unique: true,
@@ -43,9 +44,15 @@ export class Payment {
   @IsNumber()
   public amount!: number;
 
-  // constructor(partial: Partial<Payment>) {
-  //   Object.assign(this, partial);
-  // }
+  @prop({
+    required: false,
+    enum: UserRoles
+  })
+  public role?: UserRoles;
+
+  constructor(partial: Partial<Payment>) {
+    Object.assign(this, partial);
+  }
 }
 
 const PaymentModel = getModelForClass(Payment);
