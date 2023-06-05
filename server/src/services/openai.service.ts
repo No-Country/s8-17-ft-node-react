@@ -26,12 +26,12 @@ export class OpenAIServiceIntance {
     });
 
     const recipeObject = response.data.choices[0].message.content;
-    const recipe : RecipeDto = JSON.parse(recipeObject)
-    try{
-      const images : string[] = await this.getImageUrlFromPexels(recipe.name);
-      recipe.images = images
-    }catch(err){
-      console.log('failed to get image url');
+    const recipe: RecipeDto = JSON.parse(recipeObject);
+    try {
+      const images: string[] = await this.getImageUrlFromPexels(recipe.name);
+      recipe.images = images;
+    } catch (err) {
+      console.log("failed to get image url");
       console.log(err);
     }
     return recipe;
@@ -48,16 +48,17 @@ export class OpenAIServiceIntance {
     const favorite = [user.favIngredients, data.favorites].toString();
 
     return `
-Generate a cooking recipe that helps improve your nutrition and enables you to learn simple cooking techniques. Consider the following parameters:
-    - Ingredients: ${data.ingredients}
-    - Diets: ${data.diets}
-    - Categories: ${data.categories}
-    - Difficulty: ${data.difficulty}
-    - Ingredients Favorites: ${favorite}
-    - Flavor: ${data.flavour ?? "all"}
+    Generate a cooking recipe that helps improve your nutrition and enables you to learn simple cooking techniques. Consider the following parameters:
+      - Ingredients: ${data.ingredients}
+      - Diets: ${data.diets}
+      - Categories: ${data.categories}
+      - Difficulty: ${data.difficulty}
+      - Favorite Ingredients: ${favorite}
+      - Flavor: ${data.flavour ?? "all"}
+
     Please make sure the recipe does not contain the following ingredients: ${alerts}
   
-      Output format:
+    Output format:
       {
         "name": string,
         "description": string,
@@ -103,9 +104,7 @@ Generate a cooking recipe that helps improve your nutrition and enables you to l
       }
     });
 
-    const images : string[] = response.data.photos.map(image =>
-      image.src.large
-    );
+    const images: string[] = response.data.photos.map(image => image.src.large);
     return images;
   }
 }

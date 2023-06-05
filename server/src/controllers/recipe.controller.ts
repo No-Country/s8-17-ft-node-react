@@ -10,8 +10,6 @@ import { RecipeDto } from "../dto/recipe/recipe.dto";
 import { User } from "../models/user.model";
 import { UserService } from "../services/user.service";
 
-// import { RecipeInterface } from "../utils/types";
-
 export class RecipeController {
   openAIService: OpenAIServiceIntance;
   constructor(private recipeService: RecipeService, private userService: UserService) {
@@ -34,17 +32,12 @@ export class RecipeController {
       const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
       const recipe: RecipeDto = await this.openAIService.createRecipe(prompt);
       const recipesaved = await this.recipeService.saveRecipe(recipe, user.id);
-      console.log(recipesaved);
 
-      // const defaultResponse: RecipeDto = this.defaultResponse();
       return res.status(200).json({
         recipe: recipesaved
       });
     } catch (error: any) {
-      console.log(error);
-      return res.status(500).json({
-        message: error.message
-      });
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -65,10 +58,6 @@ export class RecipeController {
         message: "Recipe added to favorites"
       });
     } catch (error: any) {
-      console.log(error);
-
-      if (error.message === "User not found.")
-        return res.status(400).json({ errorMessage: "Invalid User ID." });
       return res.status(500).json({ errorMessage: error.message });
     }
   }
@@ -90,9 +79,7 @@ export class RecipeController {
         message: "Recipe removed to favorites"
       });
     } catch (error: any) {
-      return res.status(500).json({
-        message: error.message
-      });
+      return res.status(500).json({ message: error.message });
     }
   }
 
@@ -156,9 +143,5 @@ export class RecipeController {
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
-  }
-
-  private defaultResponse(): RecipeDto {
-    return this.recipeService.getAll()[0];
   }
 }
