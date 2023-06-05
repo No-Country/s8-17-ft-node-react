@@ -1,5 +1,4 @@
 import { ReturnModelType, DocumentType, Ref } from "@typegoose/typegoose";
-import { FilterQuery, ObjectId } from "mongoose";
 
 class Repository<T> {
   public model: ReturnModelType<new () => T>;
@@ -7,20 +6,13 @@ class Repository<T> {
     this.model = model;
   }
 
-  public async findById(id: string, populate?: any[]): Promise<DocumentType<T> | null> {
-    let query: any = await this.model.findOne({
-      id
-    });
-    if (populate && populate.length > 0) {
-      try {
-        for (const ref of populate) {
-          query = query.populate(ref);
-          query = await query.exec();
-        }
-      } catch (err) {
-        console.log("not found");
-      }
-    }
+  public async findById(id: any, props?: { populate?: any[] }): Promise<DocumentType<T> | null> {
+    const query: any = await this.model
+      .findOne({
+        id
+      })
+      .populate(props?.populate)
+      .exec();
 
     return query;
   }
@@ -37,30 +29,26 @@ class Repository<T> {
     sort?: Partial<T>;
     populate?: any[];
   }): Promise<DocumentType<T>[]> {
-    let query: any = this.model
+    const query: any = await this.model
       .find(props?.filter, props?.fields)
       .limit(props?.limit)
       .skip(props?.skip)
       .populate(props?.populate)
       .exec();
 
-    // // Aquí se aplica populate() para cargar las referencias
-    // if (props.populate?.length > 0) {
-    //   try{
-
-    //     for (const ref of props.populate) {
-    //       query = query.populate(ref);
-    //       query = await query.exec();
-    //     }
-    //   }catch(err){
-    //     console.log(err );
-    //   }
-    // }
     return query;
   }
 
-  public async findAllByRef(filter?: Ref<T>[], fields?: any): Promise<DocumentType<T>[] | null> {
-    return await this.model.find({ _id: { $in: filter } }, fields);
+  public async findAllByRef(
+    filter?: Ref<T>[],
+    props?: { populate?: any[] }
+  ): Promise<DocumentType<T>[] | null> {
+    const query: any = await this.model
+      .find({ _id: { $in: filter } })
+      .populate(props?.populate)
+      .exec();
+
+    return query;
   }
 
   public async create(data: Partial<T>): Promise<DocumentType<T>> {
