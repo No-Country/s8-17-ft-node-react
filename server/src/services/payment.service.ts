@@ -18,11 +18,13 @@ export class PaymentService {
   }
 
   public async getById(id: string): Promise<Payment> {
-    return this.paymentRepository.findById(id, [
-      {
-        path: "userDb",
-        select: "id"
-      }
-    ]);
+    return this.paymentRepository.findById(id, {
+      populate: [
+        {
+          path: "userDb",
+          select: "id"
+        }
+      ]
+    });
   }
 }

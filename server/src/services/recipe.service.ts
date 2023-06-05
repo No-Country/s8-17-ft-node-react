@@ -115,9 +115,9 @@ export class RecipeService {
       limit: perPage | 15,
       skip: perPage ? perPage * (page - 1) : undefined,
       populate: [
-        { path: "diets", select: "name" },
-        { path: "categories", select: "name" },
-        { path: "createdBy", select: "name" }
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
       ]
     };
 
@@ -132,12 +132,12 @@ export class RecipeService {
 
     return await this.recipeRepository.findAll({
       filter: {
-        createdBy: user.id
+        createdBy: user
       },
       populate: [
-        { path: "diets", select: "name" },
-        { path: "categories", select: "name" },
-        { path: "createdBy", select: "name" }
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
       ]
     });
   }
