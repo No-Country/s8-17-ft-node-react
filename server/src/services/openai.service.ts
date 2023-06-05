@@ -54,7 +54,7 @@ export class OpenAIServiceIntance {
       - Categories: ${data.categories}
       - Difficulty: ${data.difficulty}
       - Favorite Ingredients: ${favorite}
-      - Flavor: ${data.flavour ?? "all"}
+      - Flavor: ${data.flavor ?? "all"}
 
     Please make sure the recipe does not contain the following ingredients: ${alerts}
   
