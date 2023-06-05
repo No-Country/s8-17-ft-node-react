@@ -110,10 +110,11 @@ export class RecipeService {
     if (difficulty) {
       filter.difficulty = difficulty;
     }
+
     const props = {
       filter,
-      limit: perPage | 15,
-      skip: perPage ? perPage * (page - 1) : undefined,
+      limit: perPage || 10,
+      skip: page ? perPage * (page - 1) : undefined,
       populate: [
         { path: "diets", select: "name id -_id" },
         { path: "categories", select: "name id -_id" },
