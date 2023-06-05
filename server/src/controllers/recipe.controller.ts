@@ -24,18 +24,15 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
+
       const user: User = await this.userService.findById(res.locals.jwtPayload.id);
-      if (!user)
-        return res.status(404).json({
-          message: "User not found"
-        });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
       const prompt: string = this.openAIService.generateTemplatePrompt(generateRecipeDto, user);
       const recipe: RecipeDto = await this.openAIService.createRecipe(prompt);
-      const recipesaved = await this.recipeService.saveRecipe(recipe, user.id);
+      const savedRecipe = await this.recipeService.saveRecipe(recipe, user.id);
 
-      return res.status(200).json({
-        recipe: recipesaved
-      });
+      return res.status(200).json({ recipe: savedRecipe });
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
@@ -44,19 +41,13 @@ export class RecipeController {
   async addFavorite(req: Request, res: Response): Promise<Response> {
     try {
       const user: User = await this.userService.findById(res.locals.jwtPayload.id);
-      if (!user)
-        return res.status(404).json({
-          message: "User not found"
-        });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
       const recipe: Recipe = await this.recipeService.getById(req.params.id);
-      if (!recipe)
-        return res.status(404).json({
-          message: "Recipe not found"
-        });
+      if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+
       await this.userService.addFavoriteRecipe(user, recipe);
-      return res.status(200).json({
-        message: "Recipe added to favorites"
-      });
+      return res.status(200).json({ message: "Recipe added to favorites" });
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
@@ -65,19 +56,13 @@ export class RecipeController {
   async deleteFavorite(req: Request, res: Response): Promise<Response> {
     try {
       const user: User = await this.userService.findById(res.locals.jwtPayload.id);
-      if (!user)
-        return res.status(404).json({
-          message: "User not found"
-        });
+      if (!user) return res.status(404).json({ message: "User not found" });
+
       const recipe: Recipe = await this.recipeService.getById(req.params.id);
-      if (!recipe)
-        return res.status(404).json({
-          message: "Recipe not found"
-        });
+      if (!recipe) return res.status(404).json({ message: "Recipe not found" });
+
       await this.userService.deleteFavoriteRecipe(user, recipe);
-      return res.status(200).json({
-        message: "Recipe removed to favorites"
-      });
+      return res.status(200).json({ message: "Recipe removed from favorites" });
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
@@ -99,9 +84,7 @@ export class RecipeController {
 
   async getAll(_req: Request, res: Response): Promise<Response> {
     try {
-      return res.status(200).json({
-        recipes: await this.recipeService.getAll()
-      });
+      return res.status(200).json({ recipes: await this.recipeService.getAll() });
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
@@ -109,9 +92,9 @@ export class RecipeController {
 
   async getCreatedBy(_req: Request, res: Response): Promise<Response> {
     try {
-      return res.status(200).json({
-        recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id)
-      });
+      return res
+        .status(200)
+        .json({ recipes: await this.recipeService.getCreatedBy(res.locals.jwtPayload.id) });
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
@@ -136,10 +119,9 @@ export class RecipeController {
       if (errors.length > 0) {
         return res.status(400).json(errors.map(err => err.constraints));
       }
+
       const response: Recipe[] = await this.recipeService.search(searchRecipeDto);
-      return res.status(200).json({
-        recipes: response
-      });
+      return res.status(200).json({ recipes: response });
     } catch (error: any) {
       return res.status(500).json({ errorMessage: error.message });
     }
