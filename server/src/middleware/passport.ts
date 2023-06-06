@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as FacebookStrategy } from "passport-facebook"
+import { Strategy as FacebookStrategy } from "passport-facebook";
 import session from "express-session";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import express from "express";
@@ -35,6 +35,7 @@ class PassportConfig {
             accessToken,
             refreshToken
           };
+
           done(null, user);
         }
       )
@@ -42,24 +43,27 @@ class PassportConfig {
 
     passport.use(
       "facebook",
-      new FacebookStrategy({
-        clientID: process.env.FACEBOOK_APP_ID,
-        clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: `${process.env.SERVER_URL}/api/auth/facebook/callback`
-      },
-      (accessToken, refreshToken, profile, done) => {
-        console.log("accessToken: ", accessToken, "refreshToken: ", refreshToken);
+      new FacebookStrategy(
+        {
+          clientID: process.env.FACEBOOK_APP_ID,
+          clientSecret: process.env.FACEBOOK_APP_SECRET,
+          callbackURL: `${process.env.SERVER_URL}/api/auth/facebook/callback`
+        },
+        (accessToken, refreshToken, profile, done) => {
+          console.log("accessToken: ", accessToken, "refreshToken: ", refreshToken);
 
-        const user: GoogleAuthDto = {
-          id: profile.id,
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          image: profile.photos[0].value,
-          accessToken,
-          refreshToken
-        };
-        done(null, user);
-      })
+          const user: GoogleAuthDto = {
+            id: profile.id,
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            image: profile.photos[0].value,
+            accessToken,
+            refreshToken
+          };
+
+          done(null, user);
+        }
+      )
     );
   }
 

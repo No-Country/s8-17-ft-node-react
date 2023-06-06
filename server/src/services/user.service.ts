@@ -34,30 +34,21 @@ export class UserService {
     };
   }
 
-  public async updateUser(user: UserUpdateDto) {
-    const existUser = await this.userRepository.findById(user.id);
-    if (!existUser) throw new Error("User not exists!");
-    if (!(await bcrypt.compare(user.password, existUser.password)))
-      throw new Error("Invalid password.");
-    const updatedUser = await this.userRepository.update(
-      { id: user.id },
-      { ...user, password: existUser.password }
-    );
+  public async updateUser(user: UserUpdateDto): Promise<{ user: User }> {
+    const existUser: User = await this.userRepository.findById(user.id);
+    if (!existUser) throw new Error("User not found!");
 
-    return {
-      user: updatedUser
-    };
-  }
+    let hashedPassword: string;
+    if (user.password && user.newPassword) {
+      if (!(await bcrypt.compare(user.password, existUser.password)))
+        throw new Error("Invalid password.");
 
-  public async updatePassword(user: UserUpdateDto) {
-    const existUser = await this.userRepository.findById(user.id);
-    if (!existUser) throw new Error("User not exists!");
-    if (!(await bcrypt.compare(user.password, existUser.password)))
-      throw new Error("Invalid password.");
-    const passwordHash = await bcrypt.hash(user.newPassword, 10);
-    const updatedUser = await this.userRepository.update(
+      hashedPassword = await bcrypt.hash(user.newPassword, 10);
+    }
+
+    const updatedUser: User = await this.userRepository.update(
       { id: user.id },
-      { password: passwordHash }
+      { ...user, password: hashedPassword || existUser.password }
     );
 
     return {
@@ -114,6 +105,7 @@ export class UserService {
   public async findById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({ id: id });
     user ? delete user.password : null;
+
     return user;
   }
 

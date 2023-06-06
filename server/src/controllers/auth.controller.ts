@@ -32,42 +32,31 @@ export class AuthController {
   }
 
   async updateUser(req: Request, res: Response): Promise<Response> {
-    const userUpdateDto = plainToClass(UserUpdateDto, { id: res.locals.jwtPayload.id, ...req.body });
+    if (!Object.keys(req.body).length)
+      return res.status(400).json({ message: "There is nothing to update." });
+
+    const userUpdateDto = plainToClass(UserUpdateDto, {
+      id: res.locals.jwtPayload.id,
+      ...req.body
+    });
     const errors = await validate(userUpdateDto);
     if (errors.length > 0) {
       return res.status(400).json(errors.map(err => err.constraints));
     }
     try {
-      const user = await this.userService.updateUser({ id: res.locals.jwtPayload.id, ...req.body });
+      await this.userService.updateUser({ id: res.locals.jwtPayload.id, ...req.body });
       return res.status(200).json({ message: "User updated!" });
-    } catch (error) {
-      console.log("update error: ", error);
-      return res.status(500).json(error);
+    } catch (error: any) {
+      return res.status(500).json({ errorMessage: error.message });
     }
   }
 
-  async updatePassword(req: Request, res: Response): Promise<Response> {
-    const userUpdateDto = plainToClass(UserUpdateDto, { id: res.locals.jwtPayload.id, ...req.body });
-    const errors = await validate(userUpdateDto);
-    if (errors.length > 0) {
-      return res.status(400).json(errors.map(err => err.constraints));
-    }
-    try {
-      const user = await this.userService.updatePassword({ id: res.locals.jwtPayload.id, ...req.body });
-      return res.status(200).json({ message: "Password updated!" })
-    } catch (error) {
-      console.log("update password error: ", error);
-      return res.status(400).json(error);
-    }
-  }
-
-  async auth(req: Request, res: Response): Promise<Response> {
+  async auth(_req: Request, res: Response): Promise<Response> {
     try {
       const partialUser: Partial<User> = { id: res.locals.jwtPayload.id };
       const user = await this.userService.findOne(partialUser);
-      if (!user) return res.status(401).json({
-        message:"No such user"
-      })
+      if (!user) return res.status(401).json({ message: "Unauthorized user" });
+
       return res.status(200).json(user);
     } catch (error) {
       console.log("auth error: ", error);
@@ -91,7 +80,7 @@ export class AuthController {
     }
   }
 
-  async google(req: Request, res: Response): Promise<Response> {
+  async google(_req: Request, res: Response): Promise<Response> {
     return res.status(200).json({ message: "Google auth" });
   }
 
@@ -112,7 +101,7 @@ export class AuthController {
     }
   }
 
-  async facebook(req: Request, res: Response): Promise<Response> {
+  async facebook(_req: Request, res: Response): Promise<Response> {
     return res.status(200).json({ message: "Facebook auth" });
   }
 
