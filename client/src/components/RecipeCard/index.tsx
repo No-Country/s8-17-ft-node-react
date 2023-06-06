@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import SliderImages from "../SliderImages";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaDownload, FaShareAlt } from "react-icons/fa";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import { IconDownload, IconShare } from "@/components/icons";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
@@ -20,17 +19,13 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
       {getRecipeByIdQuery.error || recipe === null || recipe === undefined ? (
         <div>
           <div className="py-4">
-            <h1 className="text-2xl font-bold mb-2 font-title text-center text-secondary-500 animate-pulse">Loading...</h1>
+            <h1 className="text-2xl font-bold mb-2 font-title text-center text-secondary-500 animate-pulse">
+              Loading...
+            </h1>
           </div>
         </div>
       ) : (
         <>
-          <button
-            className="text-primary-500 fixed bottom-2 right-2 z-40 md:relative md:top-20 md:left-10 "
-            onClick={() => router.back()}
-          >
-            <BsArrowLeftCircle className="bg-white font-bold text-5xl rounded-full" />
-          </button>
           {/* --------- Top Part --------- */}
           <div className="border-4 border-slate-300 rounded-md flex flex-col md:flex-row md:mx-32 justify-center items-center h-72">
             {/* NAME OF THE RECIPE */}

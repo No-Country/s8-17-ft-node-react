@@ -3,7 +3,7 @@
 import { LoadImageUser, ProfileUser, ProtectedRoute } from "@/components";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { BsArrowLeftCircle } from "react-icons/bs";
+import { IconArrowLeftCircle } from "@/components/icons";
 import Login from "../login/page";
 
 const PageProfile = () => {
@@ -17,7 +17,7 @@ const PageProfile = () => {
             className="absolute text-primary-500 top-4 left-4 mb-6"
             onClick={() => router.back()}
           >
-            <BsArrowLeftCircle className="font-bold text-5xl rounded-2xl" />
+            <IconArrowLeftCircle className="font-bold text-5xl rounded-2xl" />
           </button>
         </div>
         <LoadImageUser />

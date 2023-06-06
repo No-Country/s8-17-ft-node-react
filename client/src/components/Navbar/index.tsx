@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BiUser } from "react-icons/bi";
-import { BsArrowUpSquare, BsPatchQuestion } from "react-icons/bs";
-import { IoSettingsOutline } from "react-icons/io5";
+import {
+  IconUser,
+  IconPatchQuestion,
+  IconArrowUpSquare,
+  IconSettingsOutline,
+  IconHamburgerMenu,
+  IconCloseOutline
+} from "@/components/icons";
 import { useAuth } from "@/hooks/useAuth";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { VscChromeClose } from "react-icons/vsc";
 import { Menu, NavBarContent } from "@/components";
 import Logo from "public/logo.png";
 
@@ -24,7 +27,7 @@ const optionsList = [
     id: 1,
     url: "/profile",
     text: "Profile",
-    icon: <BiUser />,
+    icon: <IconUser />,
     activeColor: "primary-500",
     inactiveColor: "light"
   },
@@ -32,7 +35,7 @@ const optionsList = [
     id: 3,
     url: "/settings",
     text: "Settings",
-    icon: <IoSettingsOutline />,
+    icon: <IconSettingsOutline />,
     activeColor: "primary-500",
     inactiveColor: "light"
   },
@@ -40,7 +43,7 @@ const optionsList = [
     id: 4,
     url: "/help",
     text: "Help",
-    icon: <BsPatchQuestion />,
+    icon: <IconPatchQuestion />,
     activeColor: "primary-500",
     inactiveColor: "light"
   },
@@ -48,7 +51,7 @@ const optionsList = [
     id: 2,
     url: "/",
     text: "Logout",
-    icon: <BsArrowUpSquare />,
+    icon: <IconArrowUpSquare />,
     activeColor: "primary-500",
     inactiveColor: "light"
   }
@@ -75,7 +78,7 @@ const Navbar: React.FC = () => {
             className="text-primary-500 text-3xl lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <VscChromeClose /> : <GiHamburgerMenu />}
+            {isOpen ? <IconCloseOutline /> : <IconHamburgerMenu />}
           </button>
           <NavBarContent isOpen={isOpen} links={links} />
           {!isLoading && isAuthenticated ? (
@@ -85,7 +88,7 @@ const Navbar: React.FC = () => {
                 type="button"
                 className="inline-flex items-center p-2 ml-1 text-primary-500 hover:bg-gray-100 outline-none text-2xl"
               >
-                <BiUser />
+                <IconUser />
               </button>
               <div className="fixed top-24 right-4 z-50">
                 {isMenuOpen && (

@@ -4,9 +4,7 @@ import React, { useEffect } from "react";
 import { Menu, ProtectedRoute, ShowRecipeFav } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
-import { BiHomeAlt } from "react-icons/bi";
-import { BsStar } from "react-icons/bs";
-import { TbSoup } from "react-icons/tb";
+import { IconSoup, IconHomeAlt, IconStar } from "@/components/icons";
 import Login from "../login/page";
 
 const RecipesFav = () => {
@@ -25,7 +23,7 @@ const RecipesFav = () => {
       id: 1,
       url: "/dashboard",
       text: "Home",
-      icon: <BiHomeAlt />,
+      icon: <IconHomeAlt />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -33,7 +31,7 @@ const RecipesFav = () => {
       id: 2,
       url: "/recipesfav",
       text: "Favorites",
-      icon: <BsStar />,
+      icon: <IconStar />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -41,7 +39,7 @@ const RecipesFav = () => {
       id: 3,
       url: "/generator",
       text: "Create",
-      icon: <TbSoup />,
+      icon: <IconSoup />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     }
