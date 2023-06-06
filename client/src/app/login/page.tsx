@@ -12,7 +12,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ErrorMessage } from "@/components";
-import { ImSpinner8 } from "react-icons/im";
+import { IconSpinner } from "@/components/icons";
 
 const INITIAL_STATE = {
   email: "",
@@ -117,7 +117,7 @@ export default function Login() {
             className="w-full rounded-3xl mt-4 px-5 py-3 bg-primary-500 font-bold"
             disabled={isSubmitting}
           >
-            {isSubmitting ? <ImSpinner8 className="animate-spin" /> : "Continue"}
+            {isSubmitting ? <IconSpinner className="animate-spin" /> : "Continue"}
           </button>
         </form>
         <div className="flex items-center justify-around gap-5">

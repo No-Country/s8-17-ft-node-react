@@ -3,9 +3,7 @@
 import { Menu, ProtectedRoute, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
-import { BiHomeAlt } from "react-icons/bi";
-import { TbSoup } from "react-icons/tb";
-import { BsStar } from "react-icons/bs";
+import { IconHomeAlt, IconSoup, IconStar } from "@/components/icons";
 import Login from "../login/page";
 
 const Dashboard: React.FC<{}> = () => {
@@ -18,7 +16,7 @@ const Dashboard: React.FC<{}> = () => {
       id: 1,
       url: "/dashboard",
       text: "Home",
-      icon: <BiHomeAlt />,
+      icon: <IconHomeAlt />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -26,7 +24,7 @@ const Dashboard: React.FC<{}> = () => {
       id: 2,
       url: "/recipesfav",
       text: "Favorites",
-      icon: <BsStar />,
+      icon: <IconStar />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -34,7 +32,7 @@ const Dashboard: React.FC<{}> = () => {
       id: 3,
       url: "/generator",
       text: "Create",
-      icon: <TbSoup />,
+      icon: <IconSoup />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     }

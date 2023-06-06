@@ -5,7 +5,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { alerts } from "@/utils/alert";
 
 // Importación de Iconos
-import { BiShow, BiLowVision } from "react-icons/bi";
+import { IconShow, IconLowVision } from "@/components/icons";
 
 const ProfileUser = () => {
   const {
@@ -83,12 +83,12 @@ const ProfileUser = () => {
             />
             <span className="absolute right-4 top-3">
               {showPassword ? (
-                <BiLowVision
+                <IconLowVision
                   className="text-dark-500 cursor-pointer text-2xl"
                   onClick={togglePasswordVisibility}
                 />
               ) : (
-                <BiShow
+                <IconShow
                   className="text-dark-500 cursor-pointer text-2xl"
                   onClick={togglePasswordVisibility}
                 />
@@ -120,12 +120,12 @@ const ProfileUser = () => {
             />
             <span className="absolute right-4 top-3">
               {showConfirmPassword ? (
-                <BiLowVision
+                <IconLowVision
                   className="text-dark-500 cursor-pointer text-2xl"
                   onClick={toggleConfirmPasswordVisibility}
                 />
               ) : (
-                <BiShow
+                <IconShow
                   className="text-dark-500 cursor-pointer text-2xl"
                   onClick={toggleConfirmPasswordVisibility}
                 />
