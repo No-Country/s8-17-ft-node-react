@@ -21,8 +21,8 @@ export class RecipeService {
   }
 
   public async saveRecipe(recipeDto: RecipeDto, userId: string): Promise<Recipe> {
-    const dietFilters = await recipeDto.diets.map(name => ({ name: name }));
-    const categoryFilters = await recipeDto.categories.map(name => ({ name: name }));
+    const dietFilters = recipeDto.diets.map(name => ({ name: name }));
+    const categoryFilters = recipeDto.categories.map(name => ({ name: name }));
 
     const diets = await this.dietRepository.findOrCreateMany(dietFilters);
     const categories = await this.categoryRepository.findOrCreateMany(categoryFilters);
@@ -42,28 +42,35 @@ export class RecipeService {
     const user: User = await this.userRepository.findOne({ id });
     if (!user) throw new Error("User not found.");
 
-    const userRecipes: Recipe[] = await this.recipeRepository.findAllByRef(user.favRecipes);
+    const userRecipes: Recipe[] = await this.recipeRepository.findAllByRef(user.favRecipes, {
+      populate: [
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
+      ]
+    });
     return userRecipes;
   }
 
   public async getAll(): Promise<Recipe[]> {
     const recipes: Recipe[] = await this.recipeRepository.findAll({
       populate: [
-        { path: "diets", select: "name" },
-        { path: "categories", select: "name" },
-        { path: "createdBy", select: "name" }
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
       ]
     });
     return recipes;
   }
 
   public async getById(id: string): Promise<Recipe> {
-    const recipe: Recipe = await this.recipeRepository.findById(id, [
-      { path: "diets", select: "name" },
-      { path: "categories", select: "name" },
-      { path: "createdBy", select: "name" }
-    ]);
-
+    const recipe: Recipe = await this.recipeRepository.findById(id, {
+      populate: [
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
+      ]
+    });
     return recipe;
   }
 
@@ -103,14 +110,15 @@ export class RecipeService {
     if (difficulty) {
       filter.difficulty = difficulty;
     }
+
     const props = {
       filter,
-      limit: perPage | 15,
-      skip: perPage ? perPage * (page - 1) : undefined,
+      limit: perPage || 10,
+      skip: page ? perPage * (page - 1) : undefined,
       populate: [
-        { path: "diets", select: "name" },
-        { path: "categories", select: "name" },
-        { path: "createdBy", select: "name" }
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
       ]
     };
 
@@ -125,12 +133,12 @@ export class RecipeService {
 
     return await this.recipeRepository.findAll({
       filter: {
-        createdBy: user.id
+        createdBy: user
       },
       populate: [
-        { path: "diets", select: "name" },
-        { path: "categories", select: "name" },
-        { path: "createdBy", select: "name" }
+        { path: "diets", select: "name id -_id" },
+        { path: "categories", select: "name id -_id" },
+        { path: "createdBy", select: "name id -_id" }
       ]
     });
   }

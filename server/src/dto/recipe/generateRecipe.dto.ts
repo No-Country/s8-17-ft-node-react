@@ -12,7 +12,7 @@ export class GenerateRecipeDto {
 
   @IsOptional()
   @IsString()
-  flavour?: string;
+  flavor?: string;
 
   @IsOptional()
   favorites?: string[];
