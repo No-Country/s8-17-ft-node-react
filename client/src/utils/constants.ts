@@ -7,7 +7,7 @@ export const colors = {
   error: "#E63946",
   dark: "#1E1E1E",
   normal: "#514B46",
-  light: "#898989"
+  light: "#898989",
 } as const;
 
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
