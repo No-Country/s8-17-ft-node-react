@@ -8,6 +8,7 @@ export class NewsService {
     const newsFromDb = await this.newsRepository.findAll({
       fields: ["-_id", "-__v"]
     });
+
     return newsFromDb;
   }
 }
