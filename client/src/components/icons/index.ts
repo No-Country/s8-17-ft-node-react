@@ -18,6 +18,7 @@ export { default as IconStar } from "./Star";
 export { default as IconStarFill } from "./StarFill";
 export { default as IconSoup } from "./Soup";
 export { default as IconCheck } from "./Check";
+export { default as IconArrowLeftCircle } from "./ArrowLeftCircle";
 
 export { IconYoutube } from "./Socials";
 export { IconFacebook } from "./Socials";
