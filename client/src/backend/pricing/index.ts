@@ -6,8 +6,6 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 const token = checkSession();
 
-console.log(token);
-
 export const getAllSubscriptions = async (): Promise<any> => {
   const response = await axios.get(`${baseUrl}/api/subscription/`, {
     headers: {
@@ -18,10 +16,16 @@ export const getAllSubscriptions = async (): Promise<any> => {
   return response;
 };
 
-export const getCheckOut = async (data: ISubscription): Promise<any> => {
-  const response = await axios.get(`${baseUrl}api/subscription/:id`);
-
-  console.log(response);
+export const getCheckOut = async (subscriptionId: string): Promise<any> => {
+  const response = await axios
+    .get(`${baseUrl}/api/subscription/checkout/${subscriptionId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(data => {
+      window.location.href = data.data.url;
+    });
 
   return response;
 };

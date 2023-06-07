@@ -7,6 +7,7 @@ export const useAuth = (): {
   isAuthenticated: boolean;
   user: UserProfile | undefined;
   isLoading: boolean;
+  role: string;
 } => {
   const queryClient = useQueryClient();
   const token = checkSession();
@@ -31,9 +32,15 @@ export const useAuth = (): {
     }
   });
 
+  let role: string = "free";
+  if (user?.subscription?.active) {
+    role = user.role;
+  }
+
   const isLoading = isAuthenticated && userLoading;
 
   return {
+    role,
     isAuthenticated,
     user,
     isLoading: isLoading

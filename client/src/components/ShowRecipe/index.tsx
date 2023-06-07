@@ -40,12 +40,11 @@ const ShowRecipe: FC<ShowRecipeProps> = ({ recipe }) => {
     >
       <Link href={`/recipe/${recipe.id}`}>
         <div>
-          <Image
+          <img
             className="w-full"
             src={recipe.images[0]}
             alt={recipe.name}
-            width={270}
-            height={135}
+            style={{ width: "100%", height: "250px" }}
           />
           <h1 className="px-4 pt-4">
             <b>{recipe.name}</b>

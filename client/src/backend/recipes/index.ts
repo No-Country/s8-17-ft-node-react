@@ -36,9 +36,13 @@ export const createRecipe = async (data: IRecipesForm): Promise<any> => {
     }
   );
 
-  console.log(response);
-
   return response;
+};
+
+export const getRecipesBySearch = async (data: string) => {
+  const token = checkSession();
+
+  const response = await axios.post(`${baseUrl}/api/search`, {});
 };
 
 // export const getRecipeById = async ({

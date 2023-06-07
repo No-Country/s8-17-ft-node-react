@@ -14,6 +14,9 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const { getRecipeByIdQuery } = useFindRecipeById(recipeId);
   // const [recipe, setRecipe] = useState<IRecipe | null>(null);
   const recipe = getRecipeByIdQuery.data!;
+
+  console.log(recipe);
+
   return (
     <div className="min-w-sm mx-auto p-10 font-text">
       {getRecipeByIdQuery.error || recipe === null || recipe === undefined ? (

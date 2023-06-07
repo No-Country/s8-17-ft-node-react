@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import IconCalendarWeek from "../icons/Calendar";
 
 interface Link {
   id: number;
@@ -50,7 +51,7 @@ const buttons = [
 // TODO: Improve navbar styles (Carolina)
 
 const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen, links }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, role } = useAuth();
 
   return (
     <div
@@ -63,16 +64,24 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen, links }) => {
           {link.text}
         </Link>
       ))}
+
       <div className="flex gap-2 justify-center items-center">
         {!isLoading && isAuthenticated
           ? userButtons.map(button => (
-              <Link
-                href={button.url}
-                key={button.id}
-                className={`text-center lg:mt-0 py-2 px-4 border border-primary-500 rounded-3xl ${button.bgColor} ${button.textColor} w-40 items-center`}
-              >
-                {button.text}
-              </Link>
+              <>
+                {role === "master_chef" && (
+                  <Link href="/calendar">
+                    <IconCalendarWeek />
+                  </Link>
+                )}
+                <Link
+                  href={button.url}
+                  key={button.id}
+                  className={`text-center lg:mt-0 py-2 px-4 border border-primary-500 rounded-3xl ${button.bgColor} ${button.textColor} w-40 items-center`}
+                >
+                  {button.text}
+                </Link>
+              </>
             ))
           : buttons.map(button => (
               <Link
