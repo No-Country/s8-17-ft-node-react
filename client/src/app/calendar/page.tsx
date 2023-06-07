@@ -46,8 +46,11 @@ export default function Calendar({}: Props) {
             <Image src="/CookMealLogo.png" alt="" width="200" height="20" />
           </section>
           <section className="h-[90%] w-full grid grid-rows-7 border-4 border-primary-500 rounded-bl-lg border-r-0">
-            {days.map(e => (
-              <h2 className="flex items-center justify-center text-center  w-full border-2 border-primary-500 border-r-0  font-bold text-2xl">
+            {days.map((e, i) => (
+              <h2
+                key={i}
+                className="flex items-center justify-center text-center  w-full border-2 border-primary-500 border-r-0  font-bold text-2xl"
+              >
                 {e}
               </h2>
             ))}
@@ -56,15 +59,21 @@ export default function Calendar({}: Props) {
 
         <div className="h-full w-[60%]">
           <section className="h-[10%] w-full flex items-center justify-around border-4 border-primary-500 rounded-tr-lg border-b-0">
-            {hour.map(e => (
-              <h2 className="flex items-center justify-center text-center w-full h-full border-2 border-primary-500 font-bold text-2xl">
+            {hour.map((e, i) => (
+              <h2
+                key={i}
+                className="flex items-center justify-center text-center w-full h-full border-2 border-primary-500 font-bold text-2xl"
+              >
                 {e}
               </h2>
             ))}
           </section>
           <section className="h-[90%] w-full grid grid-rows-7 grid-cols-4 items-center justify-items-center border-4 border-primary-500 rounded-br-lg">
-            {food.map(e => (
-              <h2 className="flex items-center justify-center text-center w-full h-full border-2 border-primary-500">
+            {food.map((e, i) => (
+              <h2
+                key={i}
+                className="flex items-center justify-center text-center w-full h-full border-2 border-primary-500"
+              >
                 {e}
               </h2>
             ))}

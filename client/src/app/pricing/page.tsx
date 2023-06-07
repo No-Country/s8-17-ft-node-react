@@ -69,8 +69,11 @@ export default function Pricing() {
             The free plan
           </h3>
         </div>
-        {dataPayment?.map((e: any) => (
-          <div className="w-[30%] h-[80%] flex flex-col items-center justify-between border border-1 rounded-[10px] max-lg:h-[70%] max-md:h-[60%]  max-sm:w-[90%]">
+        {dataPayment?.map((e: any, i: number) => (
+          <div
+            key={i}
+            className="w-[30%] h-[80%] flex flex-col items-center justify-between border border-1 rounded-[10px] max-lg:h-[70%] max-md:h-[60%]  max-sm:w-[90%]"
+          >
             <div
               className={`w-[100%] h-[20%] flex items-center justify-center ${
                 e.name === "Semi Chef" ? "bg-[#49A3FA]" : "bg-[#EF47A0]"
