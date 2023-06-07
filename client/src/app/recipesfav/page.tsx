@@ -56,6 +56,13 @@ const RecipesFav = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
             </div>
+          ) : favoriteRecipes?.length === 0 ? (
+            <div className="w-[70rem] h-[70%] flex flex-col items-center justify-center">
+              <Image src="/emptyFavourites.png" alt="" width="200" height="400" />
+              <h1 className="text-3xl text-primary-500 font-bold">
+                Your favorite fridge is empty!
+              </h1>
+            </div>
           ) : (
             favoriteRecipes?.map(recipe => (
               <div key={recipe.id} className="relative">

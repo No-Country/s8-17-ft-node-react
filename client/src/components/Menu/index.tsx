@@ -30,8 +30,6 @@ const Menu = ({ options }: Props) => {
     router.push("/");
     window.location.reload();
   };
-
-  console.log(Cookies.get(USER_TOKEN));
   return (
     <section className="w-[234px] h-[250px] flex flex-col items-center justify-center gap-6 border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px]">
       {options.map(option => (

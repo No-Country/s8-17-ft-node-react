@@ -17,12 +17,15 @@ export const getAllSubscriptions = async (): Promise<any> => {
 };
 
 export const getCheckOut = async (subscriptionId: string): Promise<any> => {
-  const response = await axios.get(`${baseUrl}/api/subscription/checkout/${subscriptionId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  const response = await axios
+    .get(`${baseUrl}/api/subscription/checkout/${subscriptionId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(data => {
+      window.location.href = data.data.url;
+    });
 
-  console.log(response);
   return response;
 };

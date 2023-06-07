@@ -1,7 +1,8 @@
 "use client";
 import { getAllSubscriptions, getCheckOut } from "@/backend/pricing";
 import TablePlan from "@/components/TablePlan";
-import { useQuery } from "@tanstack/react-query";
+import { alerts } from "@/utils/alert";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 
 export default function Pricing() {
@@ -13,15 +14,27 @@ export default function Pricing() {
 
   const handlePlan = (e: any) => {
     const name = e.target.textContent.split(" ")[1];
-
     setPlan(name);
+    window.scroll({
+      top: 500,
+      behavior: "smooth"
+    });
   };
 
-  console.log(dataPayment);
+  const { mutate } = useMutation(["checkout"], getCheckOut, {
+    onError: (error: any) => {
+      if (error) {
+        alerts({
+          width: 500,
+          title: `${error.response.data.errorMessage}`,
+          icon: "error"
+        });
+      }
+    }
+  });
 
   const handlePayment = (e: any) => {
-    console.log(e.target.value);
-    // getCheckOut(e.target.value);
+    mutate(e.target.value);
   };
 
   return (

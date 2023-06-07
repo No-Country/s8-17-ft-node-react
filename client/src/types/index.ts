@@ -13,6 +13,10 @@ export interface UserProfile extends UserRegister {
   nationality: string;
   _id?: string;
   id?: string;
+  role: string;
+  subscription: {
+    active: string;
+  };
 }
 
 export interface IRecipes {
@@ -74,13 +78,13 @@ export interface IRecipesForm {
 }
 
 export interface ISearch {
-  perPage?:     number;
-  page?:        number;
-  difficulty?:  string;
-  name?:        string;
+  perPage?: number;
+  page?: number;
+  difficulty?: string;
+  name?: string;
   ingredients?: string[];
-  diets?:       string[];
-  categories?:  string[];
+  diets?: string[];
+  categories?: string[];
 }
 
 export interface ISubscription {
