@@ -64,7 +64,11 @@ export class SubscriptionController {
         dateOfExpiration: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth() + 1,
-          currentDate.getDate()
+          currentDate.getDate(),
+          currentDate.getHours(),
+          currentDate.getMinutes(),
+          currentDate.getSeconds(),
+          currentDate.getMilliseconds()
         )
       });
 
