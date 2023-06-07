@@ -24,7 +24,7 @@ const ContactForm = () => {
   return (
     <form className="w-full flex flex-col justify-center gap-2 my-4">
       <label className="font-medium text-base text-normal" htmlFor="name">
-        Nombre y Apellido
+        Full name
       </label>
       <input
         placeholder="John Doe"
@@ -42,7 +42,7 @@ const ContactForm = () => {
         {...register("email")}
       />
       <label className="font-medium text-base text-normal" htmlFor="message">
-        Mensaje
+        Message
       </label>
       <textarea
         placeholder="Write your message..."
@@ -53,7 +53,7 @@ const ContactForm = () => {
         type="submit"
         className="w-full self-end lg:w-max px-6 font-bold text-white bg-secondary-500 rounded-lg py-2"
       >
-        Enviar
+        Send
       </button>
     </form>
   );
