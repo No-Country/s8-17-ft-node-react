@@ -64,10 +64,13 @@ export class SubscriptionController {
         dateOfExpiration: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth() + 1,
-          currentDate.getDate()
+          currentDate.getDate(),
+          currentDate.getHours(),
+          currentDate.getMinutes(),
+          currentDate.getSeconds(),
+          currentDate.getMilliseconds()
         )
       });
-      console.log("role: ", payment);
 
       await this.userService.updateRole(payment.userDb.id, payment.role);
       await this.paymentService.updateStatusPayment(payment, PaymentStatus.SUCCEEDED);
@@ -83,6 +86,10 @@ export class SubscriptionController {
     try {
       const payment = await this.paymentService.getById(paymentId);
       if (!payment) return res.status(404).json({ errorMessage: "Payment not found" });
+      if (payment.status !== PaymentStatus.PENDING)
+        return res.status(404).json({
+          errorMessage: "Payment not valid"
+        });
 
       await this.paymentService.updateStatusPayment(payment, PaymentStatus.CANCELED);
       return res.redirect(process.env.CLIENT_URL);

@@ -4,9 +4,7 @@ import React, { useEffect } from "react";
 import { Menu, ProtectedRoute, ShowRecipeFav } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
-import { BiHomeAlt } from "react-icons/bi";
-import { BsStar } from "react-icons/bs";
-import { TbSoup } from "react-icons/tb";
+import { IconSoup, IconHomeAlt, IconStar } from "@/components/icons";
 import Login from "../login/page";
 
 const RecipesFav = () => {
@@ -25,7 +23,7 @@ const RecipesFav = () => {
       id: 1,
       url: "/dashboard",
       text: "Home",
-      icon: <BiHomeAlt />,
+      icon: <IconHomeAlt />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -33,7 +31,7 @@ const RecipesFav = () => {
       id: 2,
       url: "/recipesfav",
       text: "Favorites",
-      icon: <BsStar />,
+      icon: <IconStar />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -41,7 +39,7 @@ const RecipesFav = () => {
       id: 3,
       url: "/generator",
       text: "Create",
-      icon: <TbSoup />,
+      icon: <IconSoup />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     }
@@ -57,6 +55,13 @@ const RecipesFav = () => {
           {getAllFavoriteRecipesQuery.isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center">
               <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
+            </div>
+          ) : favoriteRecipes?.length === 0 ? (
+            <div className="w-[70rem] h-[70%] flex flex-col items-center justify-center">
+              <Image src="/emptyFavourites.png" alt="" width="200" height="400" />
+              <h1 className="text-3xl text-primary-500 font-bold">
+                Your favorite fridge is empty!
+              </h1>
             </div>
           ) : (
             favoriteRecipes?.map(recipe => (

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FC, useState } from "react";
-import { BsStar, BsStarFill } from "react-icons/bs";
+import { IconStar, IconStarFill } from "@/components/icons";
 import { IRecipe } from "@/types";
 import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
@@ -40,12 +40,11 @@ const ShowRecipe: FC<ShowRecipeProps> = ({ recipe }) => {
     >
       <Link href={`/recipe/${recipe.id}`}>
         <div>
-          <Image
+          <img
             className="w-full"
             src={recipe.images[0]}
             alt={recipe.name}
-            width={270}
-            height={135}
+            style={{ width: "100%", height: "250px" }}
           />
           <h1 className="px-4 pt-4">
             <b>{recipe.name}</b>
@@ -64,7 +63,7 @@ const ShowRecipe: FC<ShowRecipeProps> = ({ recipe }) => {
         className="text-2xl absolute top-4 right-4 text-primary-500 cursor-pointer"
         onClick={toggleFavorite}
       >
-        {isFavorite ? <BsStarFill /> : <BsStar />}
+        {isFavorite ? <IconStarFill /> : <IconStar />}
       </div>
       <Toaster position="top-center" />
     </section>

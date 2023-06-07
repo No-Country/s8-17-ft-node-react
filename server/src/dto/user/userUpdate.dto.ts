@@ -7,11 +7,11 @@ export class UserUpdateDto {
   })
   id: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString({
     message: "Invalid password"
   })
-  password: string;
+  password?: string;
 
   @IsOptional()
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TfiAngleLeft, TfiAngleRight } from "react-icons/tfi";
+import { IconAngleLeft, IconAngleRight } from "@/components/icons";
 import { useResponsiveBreakpoint } from "@/hooks/useResponsiveBreakpoint";
 
 type CarouselProps<T> = {
@@ -57,13 +57,13 @@ const Carousel = <T,>({ data, renderCard }: CarouselProps<T>) => {
         onClick={handlePrevSlide}
         className="px-2 text-primary-500 ease-in-out duration-200 absolute inset-y-0 left-2"
       >
-        <TfiAngleLeft size={48} />
+        <IconAngleLeft />
       </button>
       <button
         onClick={handleNextSlide}
         className="px-2 text-xl text-primary-500 ease-in-out duration-200 absolute inset-y-0 right-2"
       >
-        <TfiAngleRight size={48} />
+        <IconAngleRight />
       </button>
     </div>
   );

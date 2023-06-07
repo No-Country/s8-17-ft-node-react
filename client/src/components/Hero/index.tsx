@@ -12,7 +12,6 @@ const Hero = () => {
         <p className="font-title leading-snug text-white text-center font-semibold text-base shadow-2xl">
           Discover recipes from all over the world, created by the best chefs.
         </p>
-        <SearchBar />
       </div>
     </div>
   );

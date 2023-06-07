@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import Image from "next/image";
 
-import { AiFillBehanceCircle, AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { IconLinkedin, IconGithub, IconBehanceCircle } from "@/components/icons";
 
 import Caro from "public/about/caro.png";
 import Daniel from "public/about/dani.png";
@@ -122,9 +122,9 @@ const About: FC = () => {
             </p>
             <p>
               At CookMeal, we focus on making the meal planning process easy and making the most of
-              the ingredients you have on hand. It doesn&apos;t matter if you are an experienced chef or
-              a cooking beginner, our app will guide you every step of the way, from selecting
-              recipes to preparing delicious dishes.
+              the ingredients you have on hand. It doesn&apos;t matter if you are an experienced
+              chef or a cooking beginner, our app will guide you every step of the way, from
+              selecting recipes to preparing delicious dishes.
             </p>
             <p>
               We are proud to offer you a wide variety of recipes, from healthy and balanced options
@@ -167,15 +167,15 @@ const About: FC = () => {
                   <div className="flex justify-end items-center gap-2 my-2">
                     {user.github ? (
                       <a className="text-5xl" href={user.github}>
-                        <AiFillGithub className="transition-all hover:text-secondary-600" />
+                        <IconGithub className="transition-all hover:text-secondary-600" />
                       </a>
                     ) : (
                       <a className="text-5xl" href={user.behance}>
-                        <AiFillBehanceCircle className="transition-all hover:text-secondary-600" />
+                        <IconBehanceCircle className="transition-all hover:text-secondary-600" />
                       </a>
                     )}
                     <a className="text-5xl" href={user.linkedin}>
-                      <AiFillLinkedin className="transition-all hover:text-secondary-600" />
+                      <IconLinkedin className="transition-all hover:text-secondary-600" />
                     </a>
                   </div>
                 </div>

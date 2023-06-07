@@ -4,14 +4,10 @@ import React, { useState } from "react";
 import { IRecipesForm } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { IoSearchOutline } from "react-icons/io5";
-import { BsCheckCircleFill } from "react-icons/bs";
 import Image from "next/image";
 import Menu from "@/components/Menu";
 import { alerts } from "@/utils/alert";
-import { BiHomeAlt } from "react-icons/bi";
-import { BsStar } from "react-icons/bs";
-import { TbSoup } from "react-icons/tb";
+import { IconHomeAlt, IconSoup, IconStar, IconSearch, IconCheck } from "@/components/icons";
 import { createRecipe, getDiets } from "@/backend/recipes";
 import Login from "../login/page";
 import { ProtectedRoute } from "@/components";
@@ -146,7 +142,8 @@ export default function Generator() {
       }
     },
     onSuccess(data) {
-      if (data.status === 201) {
+      console.log(data);
+      if (data.status === 201 || data.status === 200) {
         alerts({ title: "Your Recipe was create succesfully", icon: "success" }).then(() => {
           router.push("/dashboard");
         });
@@ -180,7 +177,7 @@ export default function Generator() {
       id: 1,
       url: "/dashboard",
       text: "Home",
-      icon: <BiHomeAlt />,
+      icon: <IconHomeAlt />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -188,7 +185,7 @@ export default function Generator() {
       id: 2,
       url: "/recipesfav",
       text: "Favorites",
-      icon: <BsStar />,
+      icon: <IconStar />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     },
@@ -196,7 +193,7 @@ export default function Generator() {
       id: 3,
       url: "/generator",
       text: "Create",
-      icon: <TbSoup />,
+      icon: <IconSoup />,
       activeColor: "secondary-500",
       inactiveColor: "light"
     }
@@ -250,10 +247,9 @@ export default function Generator() {
             onChange={e => handleChangeInput(setIngredient, e.target.value)}
             value={ingredient}
           />
-          <BsCheckCircleFill
+          <IconCheck
             onClick={e => handleSubmitIngredient("ingredient", generator, e)}
             className=""
-            size="1.5em"
             color="#FF8811"
           />
         </form>
@@ -332,10 +328,9 @@ export default function Generator() {
                 className="relative w-[140px] h-[47px] flex items-center justify-center border shadow-[0px_0px_6px_rgba(0,0,0,0.25) rounded-[8px] border border-primary-500 px-3 text-primary-500 underline"
                 onChange={e => handleChangeInput(setAllergic, e.target.value)}
               />
-              <BsCheckCircleFill
+              <IconCheck
                 onClick={e => handleSubmitAllergic("allergic", allergic, e)}
                 className="absolute top-[25%] right-2"
-                size="1.5em"
                 color="#FF8811"
               />
             </form>

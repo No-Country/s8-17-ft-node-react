@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import {
+  IconYoutube,
+  IconFacebook,
+  IconInstagram,
+  IconLinkedin,
+  IconTwitter
+} from "@/components/icons";
 
 // TODO: responsive. fix layout
 
@@ -58,19 +64,19 @@ const Footer = () => {
                 <span className="capitalize font-bold text-lg">Follow Us:</span>
                 <div className="flex flex-row gap-2 cursor-pointer">
                   <Link href={"#!"}>
-                    <FaYoutube size={"25px"} />
+                    <IconYoutube />
                   </Link>
                   <Link href={"#!"}>
-                    <FaFacebook size={"25px"} />
+                    <IconFacebook />
                   </Link>
                   <Link href={"#!"}>
-                    <FaInstagram size={"25px"} />
+                    <IconInstagram />
                   </Link>
                   <Link href={"#!"}>
-                    <FaLinkedin size={"25px"} />
+                    <IconLinkedin />
                   </Link>
                   <Link href={"#!"}>
-                    <FaTwitter size={"25px"} />
+                    <IconTwitter />
                   </Link>
                 </div>
               </div>
