@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import morgan from "morgan";
 import rootRoutes from "./routes";
-import initializePassport from "./middleware/google.strategy";
+import initializePassport from "./middleware/passport";
 import UserModel from "./models/user.model";
 import seed from "./seeders";
 

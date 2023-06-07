@@ -16,11 +16,13 @@ export const getAllSubscriptions = async (): Promise<any> => {
   return response;
 };
 
-export const getCheckOut = async (id: string): Promise<any> => {
-  const response = await axios.get(`${baseUrl}/api/subscription/checkout/${id}`, {
+export const getCheckOut = async (subscriptionId: string): Promise<any> => {
+  const response = await axios.get(`${baseUrl}/api/subscription/checkout/${subscriptionId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+
+  console.log(response);
   return response;
 };

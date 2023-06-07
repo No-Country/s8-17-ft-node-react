@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { IoSearchOutline } from "react-icons/io5";
+import { IconSearch } from "@/components/icons";
 
 const SearchBar = () => {
   return (
@@ -12,7 +12,7 @@ const SearchBar = () => {
       />
       <Link href="/generator">
         <button>
-          <IoSearchOutline className="w-8 h-8 text-light" />
+          <IconSearch className="w-8 h-8 text-light" />
         </button>
       </Link>
     </div>

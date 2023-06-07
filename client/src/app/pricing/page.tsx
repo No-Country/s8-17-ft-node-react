@@ -17,8 +17,11 @@ export default function Pricing() {
     setPlan(name);
   };
 
+  console.log(dataPayment);
+
   const handlePayment = (e: any) => {
-    getCheckOut(e.target.value);
+    console.log(e.target.value);
+    // getCheckOut(e.target.value);
   };
 
   return (

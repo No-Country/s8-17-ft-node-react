@@ -1,6 +1,4 @@
 export default function TablePlan({ plan }: any) {
-  console.log(plan);
-
   return (
     <div className="w-[70%] flex items-start justify-around max-lg:w-[90%]">
       <div className="w-[100%] flex flex-col h-auto max-sm:hidden">
