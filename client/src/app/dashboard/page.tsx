@@ -1,15 +1,16 @@
 "use client";
 
-import { Menu, ProtectedRoute, ShowRecipe } from "@/components";
+import { Menu, ProtectedRoute, SearchBar, ShowRecipe } from "@/components";
 import { useRecipes } from "@/hooks/useRecipes";
-import Image from "next/image";
 import { IconHomeAlt, IconSoup, IconStar } from "@/components/icons";
-import Login from "../login/page";
 import Loader from "@/components/Loader";
+import {  useState } from "react";
+import { IRecipe } from "@/types";
 
 const Dashboard: React.FC<{}> = () => {
   const { getAllRecipesQuery } = useRecipes();
   const allRecipes = getAllRecipesQuery.data;
+  const [filter, setFilter] = useState<IRecipe[]>([]);
 
   // Data para el menú lateral
   const options = [
@@ -45,16 +46,25 @@ const Dashboard: React.FC<{}> = () => {
         <div className="w-full px-4 lg:w-auto">
           <Menu options={options} />
         </div>
-        <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
-          {getAllRecipesQuery.isLoading ? (
-            <Loader type="gif" />
-          ) : (
-            allRecipes?.map(recipe => (
-              <div key={recipe.id} className="relative">
-                <ShowRecipe recipe={recipe} />
-              </div>
-            ))
-          )}
+        <div className="w-full flex flex-col items-center gap-4">
+          <SearchBar setFilter={setFilter} />
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
+            {getAllRecipesQuery.isLoading ? (
+              <Loader type="gif" />
+            ) : filter.length > 0 ? (
+              filter?.map(recipe => (
+                <div key={recipe.id} className="relative">
+                  <ShowRecipe recipe={recipe} />
+                </div>
+              ))
+            ) : (
+              allRecipes?.map(recipe => (
+                <div key={recipe.id} className="relative">
+                  <ShowRecipe recipe={recipe} />
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </main>
     </ProtectedRoute>

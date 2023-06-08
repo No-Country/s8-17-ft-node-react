@@ -1,7 +1,6 @@
-import { IRecipesForm } from "@/types";
+import { IRecipesForm, ISearch } from "@/types";
 import axios from "axios";
 import { checkSession } from "@/utils/checkSession";
-import { headers } from "next/dist/client/components/headers";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -40,10 +39,20 @@ export const createRecipe = async (data: IRecipesForm): Promise<any> => {
   return response;
 };
 
-export const getRecipesBySearch = async (data: string) => {
+export const getRecipesBySearch = async (data: ISearch) => {
   const token = checkSession();
 
-  const response = await axios.post(`${baseUrl}/api/search`, {});
+  if (!token) throw new Error("Not authorized");
+
+  const response = await axios.post(`${baseUrl}/api/recipe/search`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  if (!response.data) return [];
+
+  return response.data;
 };
 
 export const addRecipeToCalendar = async (recipeId: string, data: any) => {
