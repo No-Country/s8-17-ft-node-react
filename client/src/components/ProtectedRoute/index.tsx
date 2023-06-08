@@ -6,10 +6,9 @@ import { useEffect } from "react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  fallback: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, fallback }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const router = useRouter();
 
   // Verifica si el usuario está autenticado aquí
@@ -17,11 +16,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, fallback }) =
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.replace("/login");
+      router.push("/login");
     }
   }, [isAuthenticated, router]);
 
-  return isAuthenticated ? <>{children}</> : <>{fallback}</>;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

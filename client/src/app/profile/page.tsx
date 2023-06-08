@@ -10,7 +10,7 @@ const PageProfile = () => {
   const router = useRouter();
 
   return (
-    <ProtectedRoute fallback={<Login />}>
+    <ProtectedRoute>
       <main className="relative flex flex-col items-center min-h-screen justify-around gap-10 py-4 px-4">
         <div>
           <button

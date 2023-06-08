@@ -1,5 +1,5 @@
+import Link from "next/link";
 import React from "react";
-import { SearchBar } from "@/components";
 
 const Hero = () => {
   return (
@@ -10,8 +10,17 @@ const Hero = () => {
           What would you like to cook?
         </h1>
         <p className="font-title leading-snug text-white text-center font-semibold text-base shadow-2xl">
-          Discover recipes from all over the world, created by the best chefs.
+          Discover delectable recipes from all over the world, ingeniously crafted by our AI-powered
+          chef.
         </p>
+        <div className="flex gap-4">
+          <Link
+            href={"/register"}
+            className="text-center lg:mt-0 py-2 px-4 border border-primary-500 rounded-3xl bg-primary-500 text-white w-40 items-center"
+          >
+            Get Started
+          </Link>
+        </div>
       </div>
     </div>
   );

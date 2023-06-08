@@ -46,7 +46,7 @@ export default function Pricing() {
   };
 
   return (
-    <ProtectedRoute fallback={<Login />}>
+    <ProtectedRoute>
       <main className="w-full h-full flex flex-col items-center justify-center max-lg:h-[150vh] max-sm:h-[250vh]">
         <section className="w-full h-[20vh] flex flex-col items-center justify-center">
           <h1 className="text-[60px] font-bold max-lg:text-[4em] max-md:text-[3em] max-sm:text-[2em]">

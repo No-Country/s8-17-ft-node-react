@@ -68,7 +68,7 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen, links }) => {
       <div className="flex gap-2 justify-center items-center">
         {!isLoading && isAuthenticated
           ? userButtons.map(button => (
-              <>
+              <React.Fragment key={button.id}>
                 {role === "master_chef" && (
                   <Link href="/calendar">
                     <IconCalendarWeek />
@@ -76,12 +76,11 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen, links }) => {
                 )}
                 <Link
                   href={button.url}
-                  key={button.id}
                   className={`text-center lg:mt-0 py-2 px-4 border border-primary-500 rounded-3xl ${button.bgColor} ${button.textColor} w-40 items-center`}
                 >
                   {button.text}
                 </Link>
-              </>
+              </React.Fragment>
             ))
           : buttons.map(button => (
               <Link

@@ -11,6 +11,7 @@ import { IconHomeAlt, IconSoup, IconStar, IconSearch, IconCheck } from "@/compon
 import { createRecipe, getDiets } from "@/backend/recipes";
 import Login from "../login/page";
 import { ProtectedRoute } from "@/components";
+import Loader from "@/components/Loader";
 
 export default function Generator() {
   const router = useRouter();
@@ -202,14 +203,7 @@ export default function Generator() {
   return (
     // <ProtectedRoute fallback={<Login />}>
     <div className="w-full min-h-screen gap-7 px-4 py-[38px] flex justify-between">
-      {isLoading === true && (
-        <div className="flex flex-col items-center justify-center">
-          <div className="fixed z-200 top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center bg-[rgba(0,0,0,0.70)]">
-            <h1 className="text-3xl text-primary-500 font-bold mb-10">Creando Receta</h1>
-            <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
-          </div>
-        </div>
-      )}
+      {isLoading === true && <Loader type="gif" text="Generating recipe..." />}
       <div className=" w-[20%] max-[1000px]:w-[10%]">
         <div className="w-full px-4 lg:w-auto max-[1000px]:hidden">
           <Menu options={options} />
