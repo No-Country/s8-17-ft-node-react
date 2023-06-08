@@ -9,7 +9,11 @@ import { EventCalendarDto } from "../dto/calendar/eventCalendar.dto";
 import { EventService } from "../services/event.service";
 
 export class EventController {
-  constructor(private eventService: EventService, private userService: UserService, private recipeService: RecipeService) {}
+  constructor(
+    private eventService: EventService,
+    private userService: UserService,
+    private recipeService: RecipeService
+  ) {}
 
   async addRecipe(req: Request, res: Response): Promise<Response> {
     try {
@@ -52,7 +56,7 @@ export class EventController {
       const event = await this.eventService.deleteRecipe(user, deleteEventDto);
 
       return res.status(200).json({ message: "Event deleted" });
-    } catch(error: any) {
+    } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
   }
