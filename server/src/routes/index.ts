@@ -6,6 +6,7 @@ import dietRoutes from "./diet.routes";
 import seedRoutes from "./seed.routes";
 import subscriptionRoutes from "./subscription.routes";
 import newsRoutes from "./news.routes";
+import eventRoutes from "./event.routes";
 
 const rootRoutes = Router();
 
@@ -16,5 +17,6 @@ rootRoutes.use("/diet", dietRoutes);
 rootRoutes.use("/seed", seedRoutes);
 rootRoutes.use("/subscription", subscriptionRoutes);
 rootRoutes.use("/news", newsRoutes);
+rootRoutes.use("/calendary", eventRoutes);
 
 export default rootRoutes;

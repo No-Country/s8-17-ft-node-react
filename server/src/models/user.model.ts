@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Recipe } from "./recipe.model";
 import { UserRoles } from "../utils/types";
 
+
 export class User {
   @prop({
     required: true,
@@ -67,6 +68,26 @@ export class User {
     dateOfUpdate: Date;
     dateOfExpiration: Date;
   };
+  @prop({
+    required: false,
+    type: Array<Array< {
+      name?: string,
+      id?: string,
+    } | null>>,
+    default: [
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+      [null, null, null, null],
+    ],
+  })
+  public weekCalendar: Array<Array< {
+    name?: string,
+    id?: string,
+  } | null>>;
 }
 
 const UserModel = getModelForClass(User);

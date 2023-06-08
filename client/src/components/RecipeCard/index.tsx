@@ -7,6 +7,8 @@ import SliderImages from "../SliderImages";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { IconDownload, IconShare } from "@/components/icons";
+import { addRecipeToCalendar } from "@/backend/recipes";
+import Select from "react-select";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
@@ -15,10 +17,47 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   // const [recipe, setRecipe] = useState<IRecipe | null>(null);
   const recipe = getRecipeByIdQuery.data!;
 
-  console.log(recipe);
+  interface calendary {
+    DayOfWeek: number;
+    Moment: number;
+  }
+
+  const [calendar, setCalendar] = useState<calendary>({
+    DayOfWeek: 0,
+    Moment: 0
+  });
+
+  const daysOfWeek = [
+    { label: "Monday", value: 0 },
+    { label: "Tuesday", value: 1 },
+    { label: "Wednesday", value: 2 },
+    { label: "Thursday", value: 3 },
+    { label: "Friday", value: 4 },
+    { label: "Saturday", value: 5 },
+    { label: "Sunday", value: 6 }
+  ];
+
+  const momentOfDay = [
+    { label: "Breakfast", value: 0 },
+    { label: "Lunch", value: 1 },
+    { label: "NightTea", value: 2 },
+    { label: "Dinner", value: 3 }
+  ];
+
+  const handleOnChange = (e: any) => {
+    setCalendar({
+      ...calendar,
+      [e.target.name]: parseInt(e.target.value)
+    });
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    addRecipeToCalendar(recipe?.id, calendar);
+  };
 
   return (
-    <div className="min-w-sm mx-auto p-10 font-text">
+    <div className="min-w-sm mx-auto p-10 font-text mb-40">
       {getRecipeByIdQuery.error || recipe === null || recipe === undefined ? (
         <div>
           <div className="py-4">
@@ -60,13 +99,39 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
               </ul>
               {/* BUTTONS */}
               <div className="flex flex-col md:flex-row justify-evenly items-center mt-10 sm:mb-5">
-                <button className="flex items-center hover:bg-dark py-2 px-4 rounded-xl border-2 border-slate-300 w-fit">
+                <button className="flex items-center hover:bg-dark hover:transition-all hover:ease-out hover:delay-150 py-2 px-4 rounded-xl border-2 border-slate-300 w-fit">
                   <p className="capitalize font-bold text-primary-500">glossary</p>
                 </button>
-                <button className="flex items-center hover:bg-dark py-2 px-4 rounded-xl border-2 border-slate-300 w-fit m-5 md:m-0">
+                <button className="flex items-center hover:bg-dark hover:transition-all hover:ease-out hover:duration-150 py-2 px-4 rounded-xl border-2 border-slate-300 w-fit m-5 md:m-0">
                   <p className="capitalize font-bold text-primary-500">equivalence</p>
                 </button>
               </div>
+
+              <form
+                onSubmit={handleSubmit}
+                className="w-full flex items-center justify-evenly mb-10"
+                action=""
+              >
+                <Select
+                  options={daysOfWeek}
+                  onChange={handleOnChange}
+                  className="w-[30%]"
+                  name="DayOfWeek"
+                  placeholder="Select day"
+                />
+
+                <Select
+                  options={momentOfDay}
+                  onChange={handleOnChange}
+                  className="w-[30%]"
+                  name="Moment"
+                  placeholder="Select hour"
+                />
+
+                <button className="flex items-center hover:bg-dark hover:transition-all hover:ease-out hover:duration-150 py-2 px-4 rounded-xl border-2 border-slate-300 w-fit m-5 md:m-0 capitalize font-bold text-primary-500">
+                  Submit
+                </button>
+              </form>
             </div>
             {/* PREPARATION */}
             <div className="sm:w-3/5 py-10 sm:pl-10">

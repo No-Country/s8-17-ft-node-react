@@ -46,3 +46,20 @@ export interface NutritionalValues {
     cholesterol: number;
   };
 }
+
+export enum DayOfWeek {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday
+}
+
+export enum Moment {
+  breakfast,
+  lunch,
+  dinner,
+  snack
+}
