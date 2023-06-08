@@ -93,10 +93,9 @@ export default function Register() {
     <div className="container h-full bg-white flex items-center justify-center m-auto py-16 px-4">
       <section className="w-full md:w-1/3 flex flex-col items-center justify-center gap-5">
         <h1 className="text-center font-semibold text-4xl text-primary-500">Create account</h1>
-        <p className="font-light text-xs text-normal text-center">
-          Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de
-          tipografías o de borradores de diseño para probar el diseño visual Name is email password
-          Continue
+        <p className="font-light text-sm text-normal text-center">
+          Create a CookMeal account and unlock a world of culinary delights. Sign up now and embark
+          on a flavorful journey!
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
