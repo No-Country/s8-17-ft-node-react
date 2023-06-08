@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
             {isOpen ? <IconCloseOutline /> : <IconHamburgerMenu />}
           </button>
           <NavBarContent isOpen={isOpen} links={links} />
-          {!isLoading && isAuthenticated ? (
+          {isLoading || isAuthenticated ? (
             <div className="flex flex-wrap items-center">
               <button
                 onClick={toggleMenu}
