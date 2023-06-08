@@ -17,6 +17,7 @@ export interface UserProfile extends UserRegister {
   subscription: {
     active: string;
   };
+  weekCalendar: [];
 }
 
 export interface IRecipes {
