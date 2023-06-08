@@ -1,6 +1,7 @@
 import { IRecipesForm } from "@/types";
 import axios from "axios";
 import { checkSession } from "@/utils/checkSession";
+import { headers } from "next/dist/client/components/headers";
 
 const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -43,6 +44,29 @@ export const getRecipesBySearch = async (data: string) => {
   const token = checkSession();
 
   const response = await axios.post(`${baseUrl}/api/search`, {});
+};
+
+export const addRecipeToCalendar = async (recipeId: string, data: any) => {
+  const token = checkSession();
+
+  console.log(data);
+
+  const response = await axios.post(
+    `${baseUrl}/api/calendary/add-recipe/${recipeId}`,
+    {
+      moment: data.Moment,
+      dayOfWeek: data.DayOfWeek
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  console.log(response);
+
+  return response;
 };
 
 // export const getRecipeById = async ({

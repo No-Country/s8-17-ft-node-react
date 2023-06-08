@@ -7,7 +7,7 @@ const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 const token = checkSession();
 
 export const getAllSubscriptions = async (): Promise<any> => {
-  const response = await axios.get(`${baseUrl}/api/subscription/`, {
+  const response = await axios.get(`${baseUrl}/api/subscription`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
