@@ -14,6 +14,8 @@ export default function Pricing() {
   const { data } = useQuery(["prices"], getAllSubscriptions);
   const { role } = useAuth();
 
+  console.log(data);
+
   const roleActive = role.split("_").join(" ");
 
   const [plan, setPlan] = useState("free");
@@ -77,7 +79,7 @@ export default function Pricing() {
               The free plan
             </h3>
           </div>
-          {data.data?.map((e: any, i: number) => (
+          {data?.data.map((e: any, i: number) => (
             <div
               key={i}
               className="w-[30%] h-[80%] flex flex-col items-center justify-between border border-1 rounded-[10px] max-lg:h-[70%] max-md:h-[60%]  max-sm:w-[90%]"
