@@ -27,6 +27,8 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
     Moment: 0
   });
 
+  console.log(calendar);
+
   const daysOfWeek = [
     { label: "Monday", value: 0 },
     { label: "Tuesday", value: 1 },
@@ -44,10 +46,17 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
     { label: "Dinner", value: 3 }
   ];
 
-  const handleOnChange = (e: any) => {
+  const handleOnChangeDay = (e: any) => {
     setCalendar({
       ...calendar,
-      [e.target.name]: parseInt(e.target.value)
+      DayOfWeek: parseInt(e.value)
+    });
+  };
+
+  const handleOnChangeHour = (e: any) => {
+    setCalendar({
+      ...calendar,
+      Moment: parseInt(e.value)
     });
   };
 
@@ -114,7 +123,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
               >
                 <Select
                   options={daysOfWeek}
-                  onChange={handleOnChange}
+                  onChange={handleOnChangeDay}
                   className="w-[30%]"
                   name="DayOfWeek"
                   placeholder="Select day"
@@ -122,7 +131,7 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
 
                 <Select
                   options={momentOfDay}
-                  onChange={handleOnChange}
+                  onChange={handleOnChangeHour}
                   className="w-[30%]"
                   name="Moment"
                   placeholder="Select hour"
