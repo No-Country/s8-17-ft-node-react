@@ -39,7 +39,7 @@ export default function Calendar({}: Props) {
     "a"
   ];
   return (
-    <ProtectedRoute fallback={<Login />}>
+    <ProtectedRoute>
       <main className="w-full h-screen flex items-end justify-center">
         <div className="h-full w-[30%]">
           <section className="h-[10%] w-full flex items-center justify-center border-4 border-primary-500 rounded-tl-lg border-b-0 border-r-0">
