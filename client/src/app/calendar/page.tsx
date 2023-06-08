@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 type Props = {};
 
 export default function Calendar({}: Props) {
-  const days = ["Monday", "Thurday", "Wednesday", "Tuesday", "Friday", "Saturday", "Sunday"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   const hour = ["BreakFast", "Lunch", "Night Tea", "Dinner"];
 
   const { user } = useAuth();

@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 import { IconDownload, IconShare } from "@/components/icons";
 import { addRecipeToCalendar } from "@/backend/recipes";
 import Select from "react-select";
+import { useAuth } from "@/hooks/useAuth";
 
 const RecipeCard = ({ recipeId }: { recipeId: string }) => {
   const router = useRouter();
+  const { role } = useAuth();
 
   const { getRecipeByIdQuery } = useFindRecipeById(recipeId);
   // const [recipe, setRecipe] = useState<IRecipe | null>(null);
@@ -115,32 +117,33 @@ const RecipeCard = ({ recipeId }: { recipeId: string }) => {
                   <p className="capitalize font-bold text-primary-500">equivalence</p>
                 </button>
               </div>
+              {role === "master_chef" && (
+                <form
+                  onSubmit={handleSubmit}
+                  className="w-full flex items-center justify-evenly mb-10"
+                  action=""
+                >
+                  <Select
+                    options={daysOfWeek}
+                    onChange={handleOnChangeDay}
+                    className="w-[30%]"
+                    name="DayOfWeek"
+                    placeholder="Select day"
+                  />
 
-              <form
-                onSubmit={handleSubmit}
-                className="w-full flex items-center justify-evenly mb-10"
-                action=""
-              >
-                <Select
-                  options={daysOfWeek}
-                  onChange={handleOnChangeDay}
-                  className="w-[30%]"
-                  name="DayOfWeek"
-                  placeholder="Select day"
-                />
+                  <Select
+                    options={momentOfDay}
+                    onChange={handleOnChangeHour}
+                    className="w-[30%]"
+                    name="Moment"
+                    placeholder="Select hour"
+                  />
 
-                <Select
-                  options={momentOfDay}
-                  onChange={handleOnChangeHour}
-                  className="w-[30%]"
-                  name="Moment"
-                  placeholder="Select hour"
-                />
-
-                <button className="flex items-center hover:bg-dark hover:transition-all hover:ease-out hover:duration-150 py-2 px-4 rounded-xl border-2 border-slate-300 w-fit m-5 md:m-0 capitalize font-bold text-primary-500">
-                  Submit
-                </button>
-              </form>
+                  <button className="flex items-center hover:bg-dark hover:transition-all hover:ease-out hover:duration-150 py-2 px-4 rounded-xl border-2 border-slate-300 w-fit m-5 md:m-0 capitalize font-bold text-primary-500">
+                    Submit
+                  </button>
+                </form>
+              )}
             </div>
             {/* PREPARATION */}
             <div className="sm:w-3/5 py-10 sm:pl-10">
