@@ -66,7 +66,7 @@ const NavBarContent: React.FC<NavBarContentProps> = ({ isOpen, links }) => {
       ))}
 
       <div className="flex gap-2 justify-center items-center">
-        {isLoading && isAuthenticated
+        {isLoading || isAuthenticated
           ? userButtons.map(button => (
               <React.Fragment key={button.id}>
                 {role === "master_chef" && (
