@@ -143,7 +143,6 @@ export default function Generator() {
       }
     },
     onSuccess(data) {
-      console.log(data);
       if (data.status === 201 || data.status === 200) {
         alerts({ title: "Your Recipe was create succesfully", icon: "success" }).then(() => {
           router.push("/dashboard");
