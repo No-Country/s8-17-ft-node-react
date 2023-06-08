@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { UserRegisterDto } from "../dto/user/userRegister.dto";
 import { GoogleAuthDto } from "../dto/user/googleAuth.dto";
 import { UserUpdateDto } from "../dto/user/userUpdate.dto";
+import { Event } from "src/models/event.model";
 import { Recipe } from "../models/recipe.model";
 import { UserRoles } from "../utils/types";
 
