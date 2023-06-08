@@ -46,7 +46,7 @@ const RecipesFav = () => {
   ];
 
   return (
-    <ProtectedRoute fallback={<Login />}>
+    <ProtectedRoute>
       <main className="w-full min-h-screen flex flex-wrap md:flex-nowrap justify-around gap-7 px-4 py-[38px]">
         <div className="w-full px-4 lg:w-auto">
           <Menu options={options} />
