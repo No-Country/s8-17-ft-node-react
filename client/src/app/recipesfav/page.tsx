@@ -6,6 +6,7 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { IconSoup, IconHomeAlt, IconStar } from "@/components/icons";
 import Login from "../login/page";
+import Loader from "@/components/Loader";
 
 const RecipesFav = () => {
   const {
@@ -53,9 +54,7 @@ const RecipesFav = () => {
         </div>
         <div className="w-screen grid grid-cols-1 md:grid-cols-3 gap-7 px-4">
           {getAllFavoriteRecipesQuery.isLoading ? (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Image src="/recipes/loading_gif.gif" alt="loading" width={256} height={256} />
-            </div>
+            <Loader type="gif" />
           ) : favoriteRecipes?.length === 0 ? (
             <div className="w-[70rem] h-[70%] flex flex-col items-center justify-center">
               <Image src="/emptyFavourites.png" alt="" width="200" height="400" />
