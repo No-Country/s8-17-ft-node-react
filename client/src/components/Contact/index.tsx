@@ -21,9 +21,9 @@ function Contact() {
           alt="home contact image 2"
           className="hidden md:w-1/3 lg:w-max md:block absolute bottom-8 -left-1/3"
         />
-        <h3 className="font-semibold text-2xl md:text-3xl text-dark">Necesitas ayuda?</h3>
+        <h3 className="font-semibold text-2xl md:text-3xl text-dark">Need help?</h3>
         <p className="text-sm md:text-base lg:text-lg font-normal text-normal">
-          contáctenos si necesita un asistente furber
+          Contact us if you need a CookMeal assistant
         </p>
         <ContactForm />
         <Image
