@@ -1,7 +1,7 @@
 <img align="center" src="https://i.ibb.co/qDRy7pQ/cookmela.png">
 
 <h3 align="center"><b>You can check our website here:</b></h3>
-<h3 align="center"><a href="https://cookmeal.vercel.app/" target="_blank" rel="noopener noreferrer"> Cook Meal</a></h3>
+<h3 align="center"><a href="https://cookmeal.vercel.app/" target="_blank" rel="noopener noreferrer">CookMeal</a></h3>
 <p align="center">
   <a href="https://www.canva.com/design/DAFlPX9js9I/FjHwik7wENEGwWTAmOq8QQ/watch?utm_content=DAFlPX9js9I&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Watch%20Video-00C4CC?style=for-the-badge&logo=Canva&logoColor=FFFFFF"/>
@@ -37,7 +37,7 @@
 
 ## ✔ Frontend
 
-### 👉🏻 Task ✅
+### 👉🏻 Tasks ✅
 
 - Development of the view using dynamic components with TypeScript and React.
 - Adding styles with components and working on responsiveness.
@@ -84,8 +84,12 @@
 
 ![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=Discord&logoColor=fff) ![Trello](https://img.shields.io/badge/Trello-095ED8?style=for-the-badge&logo=Trello&logoColor=fff) ![Slack](https://img.shields.io/badge/Slack-%234A154B?style=for-the-badge&logo=Slack&logoColor=white) ![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=WhatsApp&logoColor=fff)  ![Zoom](https://img.shields.io/badge/Zoom-2D8CFF?style=for-the-badge&logo=Zoom&logoColor=fff)
 
-<h3 align="center"><b> 🎉 Thank you for visiting Cook Meal!</b></h3>
+<br/>
+
+<h3 align="center"><b>🎉 Thank you for visiting CookMeal! 🎉</b></h3>
+
+<br/>
 
 ## 📜 License
 
-Copyright © 2023 Cookify
+Copyright © 2023 CookMeal
