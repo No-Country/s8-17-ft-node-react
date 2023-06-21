@@ -3,26 +3,24 @@
 <h3 align="center"><b>You can check our website here:</b></h3>
 <h3 align="center"><a href="https://cookmeal.vercel.app/" target="_blank" rel="noopener noreferrer"> Cook Meal</a></h3>
 <p align="center">
-  <a href="#" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/Watch%20Video%20-%23FF0000.svg?&style=for-the-badge&logo=YouTube&logoColor=white"/>
+  <a href="https://www.canva.com/design/DAFlPX9js9I/FjHwik7wENEGwWTAmOq8QQ/watch?utm_content=DAFlPX9js9I&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Watch%20Video-00C4CC?style=for-the-badge&logo=Canva&logoColor=FFFFFF"/>
   </a>
 </p>
-
-<hr/>
-
-## ✔ Requirements 📋
-- 
-- 
-
 
 <hr/>
 
 ## ✔ Backend
 ### 👉🏻 Tasks ✅
 
-- 
-- 
-
+- Internal and third-party authentication (with Google and Facebook) through the Passport library.
+- Editing and updating of personal data by users in their profiles.
+- Autogeneration of recipes through the services provided by OpenAI.
+- Gateway and payment methods for subscriptions presented by the application through the services provided by Stripe.
+- User management, management of favorite recipes and management of different types of subscription.
+- Creation, structuring and connection of the database through MongoDB.
+- Preloading of some data in the database to feed the frontend so that it can work with them.
+- Deployment on Railway.
 
 ### 👉🏻 Technologies Used: 🛠️
 
@@ -88,6 +86,6 @@
 
 <h3 align="center"><b> 🎉 Thank you for visiting Cook Meal!</b></h3>
 
-## 📜 Licencia
+## 📜 License
 
 Copyright © 2023 Cookify
